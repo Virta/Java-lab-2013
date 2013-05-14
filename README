@@ -4,4 +4,12 @@ README kesken.
 
 Tämä on readme ohjelmoinnin harjoitustyölle. Aiheenani on tehdä miinaharava-peli.
 
+Miinaharavassa käyttäjä voi käynnistää uuden pelin kolmen ennalta määrätyn kentän koosta, tai
+valita oman kokoisensa kentän. Lisäksi pelaaja voi valita miinojen tiheyden kentässä.
+Aloitusnäkymästä käsin pääsee tarkastelemaan aikaisempia tuloksia. Tuloksissa näkyy
+kentän koko, miinojen tiheys, läpäistiinkö, missä ajassa peli loppui, ja klikkausten määrä.
 
+Pelaaja voi myös luoda oman pelaaja-profiilin, johon tallentuvat hänen pelinsä. Pelaaja voi
+kirjautua tai olla kirjautumatta peliin, ja silti pelata. Jos pelaaja ei kirjaudu, tallentuvat
+pelit anonyyminä, aivätkä minkään pelaajan alle. Pelaaja voi tarkastella myös muiden pelaajien
+tuloksia.
