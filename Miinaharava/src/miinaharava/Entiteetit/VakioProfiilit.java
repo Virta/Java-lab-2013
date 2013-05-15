@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package miinaharava.Entiteetit;
 
 /**
@@ -16,8 +12,8 @@ public class VakioProfiilit {
     
     public VakioProfiilit(){
         this.helppo = new KenttaProfiili("Helppo", 15, 20);
-        this.keskiVaikea = new KenttaProfiili("Keskivaikea", 30, 40);
-        this.vaikea = new KenttaProfiili("Vaikea", 50, 60);
+        this.keskiVaikea = new KenttaProfiili("Keskivaikea", 20, 40);
+        this.vaikea = new KenttaProfiili("Vaikea", 25, 100);
     }
 
     public KenttaProfiili getHelppo() {

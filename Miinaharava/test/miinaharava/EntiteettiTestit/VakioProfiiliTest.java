@@ -50,14 +50,14 @@ public class VakioProfiiliTest {
     @Test
     public void onKeskiVaikea(){
         assertEquals("Keskivaikea", vakiot.getKeskiVaikea().getNimi());
-        assertEquals(30, vakiot.getKeskiVaikea().getKoko());
+        assertEquals(20, vakiot.getKeskiVaikea().getKoko());
         assertEquals(40, vakiot.getKeskiVaikea().getMiinoja());
     }
     
     @Test
     public void onVaikea(){
         assertEquals("Helppo", vakiot.getHelppo().getNimi());
-        assertEquals(50, vakiot.getVaikea().getKoko());
-        assertEquals(60, vakiot.getVaikea().getMiinoja());
+        assertEquals(25, vakiot.getVaikea().getKoko());
+        assertEquals(100, vakiot.getVaikea().getMiinoja());
     }
 }

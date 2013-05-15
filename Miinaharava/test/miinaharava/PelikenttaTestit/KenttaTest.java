@@ -5,6 +5,7 @@
 package miinaharava.PelikenttaTestit;
 
 import miinaharava.Entiteetit.KenttaProfiili;
+import miinaharava.Entiteetit.VakioProfiilit;
 import miinaharava.Pelikentta.Kentta;
 import miinaharava.Pelikentta.Solu;
 import org.junit.After;
@@ -63,6 +64,54 @@ public class KenttaTest {
     }
     
     @Test
+    public void kentassaOikeaMaaraMiinojaVakioHelppo(){
+        VakioProfiilit vakiot = new VakioProfiilit();
+        kentta = new Kentta(vakiot.getHelppo());
+        int miinoja = 0;
+        for (int i=0;i<vakiot.getHelppo().getKoko();i++){
+            for (int k=0;k<vakiot.getHelppo().getKoko();k++){
+                Solu s = kentta.getSolu(i, k);
+                if (s.isMiina()){
+                    miinoja ++ ;
+                }
+            }
+        }
+        assertEquals(vakiot.getHelppo().getMiinoja(), miinoja);
+    }
+    
+    @Test
+    public void kentassaOikeaMaaraMiinojaVakioKeskivaikea(){
+        VakioProfiilit vakiot = new VakioProfiilit();
+        kentta = new Kentta(vakiot.getKeskiVaikea());
+        int miinoja = 0;
+        for (int i=0;i<vakiot.getKeskiVaikea().getKoko();i++){
+            for (int k=0;k<vakiot.getKeskiVaikea().getKoko();k++){
+                Solu s = kentta.getSolu(i, k);
+                if (s.isMiina()){
+                    miinoja ++ ;
+                }
+            }
+        }
+        assertEquals(vakiot.getKeskiVaikea().getMiinoja(), miinoja);
+    }
+    
+    @Test
+    public void kentassaOikeaMaaraMiinojaVakioVaikea(){
+        VakioProfiilit vakiot = new VakioProfiilit();
+        kentta = new Kentta(vakiot.getVaikea());
+        int miinoja = 0;
+        for (int i=0;i<vakiot.getVaikea().getKoko();i++){
+            for (int k=0;k<vakiot.getVaikea().getKoko();k++){
+                Solu s = kentta.getSolu(i, k);
+                if (s.isMiina()){
+                    miinoja ++ ;
+                }
+            }
+        }
+        assertEquals(vakiot.getVaikea().getMiinoja(), miinoja);
+    }
+    
+    @Test
     public void kentanMiinatietoPaivittyyOikein(){
         kentta.getSolu(1, 1);
         assertEquals(10, kentta.getMiinojaJaljella());
@@ -101,41 +150,41 @@ public class KenttaTest {
     private int laskeMiinat(int x, int y){
         int miinoja = 0;
         
-        int yla = x-1;
-        int ala = x+1;
-        int vasen = y-1;
-        int oikea = y+1;
-        
-        if (onKartallaJaMiina(yla, vasen)){
-            miinoja ++ ;
+        int yla = y - 1;
+        int ala = y + 1;
+        int vasen = x - 1;
+        int oikea = x + 1;
+
+        if (onKartallaJaMiina(vasen, yla)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(yla, y)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(x, yla)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(yla, oikea)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(oikea, yla)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(x, vasen)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(vasen, y)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(x, oikea)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(oikea, y)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(ala, vasen)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(vasen, ala)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(ala, y)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(x, ala)) {
+            miinoja++;
         }
-        if (onKartallaJaMiina(ala, oikea)){
-            miinoja ++ ;
+        if (onKartallaJaMiina(oikea, ala)) {
+            miinoja++;
         }
         
         return miinoja;
     }
     
     private boolean onKartallaJaMiina(int x, int y){
-        if (x>0 && y>0 && x<10 && y<10){
+        if (x>=0 && y>=0 && x<10 && y<10){
             return kentta.getSolu(x, y).isMiina();
         }
         return false;

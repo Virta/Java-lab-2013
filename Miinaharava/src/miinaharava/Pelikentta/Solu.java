@@ -43,11 +43,11 @@ public class Solu {
     }
     
     public void lisaaViereenMiinoja(){
-        this.vieressaMiinoja ++ ;
+        this.vieressaMiinoja+=1 ;
     }
 
-    public void setVieressaMiinoja(int vieressaMiinoja) {
-        this.vieressaMiinoja = vieressaMiinoja;
-    }
+//    public void setVieressaMiinoja(int vieressaMiinoja) {
+//        this.vieressaMiinoja = vieressaMiinoja;
+//    }
 
 }

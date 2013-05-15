@@ -85,8 +85,11 @@ public class SoluTest {
     }
     
     @Test
-    public void viereisetMiinatAsetusToimii(){
-        solu.setVieressaMiinoja(3);
-        assertEquals(3, solu.getVieressaMiinoja());
+    public void viereistenLisaaminenOikein(){
+        solu.lisaaViereenMiinoja();
+        assertEquals(1, solu.getVieressaMiinoja());
+        solu.lisaaViereenMiinoja();
+        assertEquals(2, solu.getVieressaMiinoja());
     }
+    
 }

@@ -57,36 +57,7 @@ public class Kentta {
 //    public int vieressaMiinoja(int x, int y){
 //        return this.solut[x][y].getVieressaMiinoja();
 //    }
-    private int arvoX(int koko) {
-        return (int) (Math.random() * (koko - 1));
-    }
-
-    private int arvoY(int koko) {
-        return (int) (Math.random() * (koko - 1));
-    }
-
-    private void luoKentta(int koko, int miinoja) {
-        for (int i = 0; i < koko; i++) {
-            for (int k = 0; k < koko; k++) {
-                Solu s = new Solu();
-                solut[i][k] = s;
-            }
-        }
-
-        for (int m = 0; m < miinoja; m++) {
-            int x = arvoX(koko);
-            int y = arvoY(koko);
-            solut[x][y].setMiina(true);
-        }
-        for (int i = 0; i < koko; i++) {
-            for (int k = 0; k < koko; k++) {
-                if (solut[i][k].isMiina()){
-                    paivitaViereistenMiinatieto(i, k);
-                }
-            }
-        }
-    }
-
+    
     private void paivitaMiinatieto() {
         int miinat = profiili.getMiinoja();
         for (int i = 0; i < profiili.getKoko(); i++) {
@@ -100,40 +71,69 @@ public class Kentta {
         miinatietoPaivitettava = false;
     }
 
-    private void paivitaViereistenMiinatieto(int x, int y) {
-        int yla = x - 1;
-        int ala = x + 1;
-        int vasen = y - 1;
-        int oikea = y + 1;
+    private void luoKentta(int koko, int miinoja) {
+        for (int i = 0; i < koko; i++) {
+            for (int k = 0; k < koko; k++) {
+                Solu s = new Solu();
+                solut[i][k] = s;
+            }
+        }
 
-        if (onKartallaJaEiMiina(yla, vasen)) {
-            solut[yla][vasen].lisaaViereenMiinoja();
+        for (int m = 0; m < miinoja; m++) {
+            int x = (int) (Math.random() * (koko - 1));
+            int y = (int) (Math.random() * (koko - 1));
+            if (!solut[x][y].isMiina()) {
+                solut[x][y].setMiina(true);
+            } else {
+                m--;
+            }
         }
-        if (onKartallaJaEiMiina(yla, y)) {
-            solut[yla][y].lisaaViereenMiinoja();
+
+        for (int i = 0; i < koko; i++) {
+            for (int k = 0; k < koko; k++) {
+                if (!solut[i][k].isMiina()) {
+                    paivitaViereistenMiinatieto(i, k);
+                }
+            }
         }
-        if (onKartallaJaEiMiina(yla, oikea)) {
-            solut[yla][oikea].lisaaViereenMiinoja();
+
+    }
+
+    private void paivitaViereistenMiinatieto(int x, int y) {
+        Solu solu = solut[x][y];
+        int yla = y - 1;
+        int ala = y + 1;
+        int vasen = x - 1;
+        int oikea = x + 1;
+
+        if (onKartallaJaMiina(vasen, yla)) {
+            solu.lisaaViereenMiinoja();
         }
-        if (onKartallaJaEiMiina(x, vasen)) {
-            solut[x][vasen].lisaaViereenMiinoja();
+        if (onKartallaJaMiina(x, yla)) {
+            solu.lisaaViereenMiinoja();
         }
-        if (onKartallaJaEiMiina(x, oikea)) {
-            solut[x][oikea].lisaaViereenMiinoja();
+        if (onKartallaJaMiina(oikea, yla)) {
+            solu.lisaaViereenMiinoja();
         }
-        if (onKartallaJaEiMiina(ala, vasen)) {
-            solut[ala][vasen].lisaaViereenMiinoja();
+        if (onKartallaJaMiina(vasen, y)) {
+            solu.lisaaViereenMiinoja();
         }
-        if (onKartallaJaEiMiina(ala, y)) {
-            solut[ala][y].lisaaViereenMiinoja();
+        if (onKartallaJaMiina(oikea, y)) {
+            solu.lisaaViereenMiinoja();
         }
-        if (onKartallaJaEiMiina(ala, oikea)) {
-            solut[ala][oikea].lisaaViereenMiinoja();
+        if (onKartallaJaMiina(vasen, ala)) {
+            solu.lisaaViereenMiinoja();
+        }
+        if (onKartallaJaMiina(x, ala)) {
+            solu.lisaaViereenMiinoja();
+        }
+        if (onKartallaJaMiina(oikea, ala)) {
+            solu.lisaaViereenMiinoja();
         }
     }
 
-    private boolean onKartallaJaEiMiina(int x, int y) {
-        if (x > 0 && y > 0 && x < solut.length && y < solut.length) {
+    private boolean onKartallaJaMiina(int x, int y) {
+        if (x >= 0 && y >= 0 && x < solut.length && y < solut.length) {
             return solut[x][y].isMiina();
         }
         return false;
