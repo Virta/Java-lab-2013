@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class Kayttaja {
     private String nimimerkki;
-    private Map<String, KenttaProfiili> profiilit;
+    private HashMap<String, KenttaProfiili> profiilit;
     
     public Kayttaja(String nimimerkki){
         this.nimimerkki = nimimerkki;
@@ -39,12 +39,16 @@ public class Kayttaja {
         }
     }
     
-    public Map<String, KenttaProfiili> getKaikkiProfiilit(){
+    public HashMap<String, KenttaProfiili> getKaikkiProfiilit(){
         return this.profiilit;
     }
     
     public KenttaProfiili getProfiili(String nimi){
-        return this.profiilit.get(nimi);
+        if (this.profiilit.containsKey(nimi)) {
+            return this.profiilit.get(nimi);
+        } else {
+            return null;
+        }
     }
     
 }
