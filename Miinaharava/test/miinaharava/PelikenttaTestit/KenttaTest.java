@@ -45,6 +45,11 @@ public class KenttaTest {
     }
     
     @Test
+    public void kenttaOlemassa(){
+        assertNotNull(kentta);
+    }
+    
+    @Test
     public void kentallaOnProfiiliJossaMiinoja(){
         assertEquals(10, kentta.getMiinojaJaljella());
     }

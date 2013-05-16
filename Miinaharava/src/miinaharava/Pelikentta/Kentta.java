@@ -57,7 +57,6 @@ public class Kentta {
 //    public int vieressaMiinoja(int x, int y){
 //        return this.solut[x][y].getVieressaMiinoja();
 //    }
-    
     private void paivitaMiinatieto() {
         int miinat = profiili.getMiinoja();
         for (int i = 0; i < profiili.getKoko(); i++) {
@@ -72,70 +71,104 @@ public class Kentta {
     }
 
     private void luoKentta(int koko, int miinoja) {
-        for (int i = 0; i < koko; i++) {
-            for (int k = 0; k < koko; k++) {
-                Solu s = new Solu();
-                solut[i][k] = s;
-            }
-        }
-
-        for (int m = 0; m < miinoja; m++) {
-            int x = (int) (Math.random() * (koko - 1));
-            int y = (int) (Math.random() * (koko - 1));
-            if (!solut[x][y].isMiina()) {
-                solut[x][y].setMiina(true);
-            } else {
-                m--;
-            }
-        }
-
-        for (int i = 0; i < koko; i++) {
-            for (int k = 0; k < koko; k++) {
-                if (!solut[i][k].isMiina()) {
-                    paivitaViereistenMiinatieto(i, k);
-                }
-            }
-        }
-
+        luoSolut(koko);
+        luoMiinat(miinoja, koko);
+        paivitaJaLinkita(koko);
     }
 
-    private void paivitaViereistenMiinatieto(int x, int y) {
+    private void paivitaJaLinkitaSolu(int x, int y) {
         Solu solu = solut[x][y];
         int yla = y - 1;
         int ala = y + 1;
         int vasen = x - 1;
         int oikea = x + 1;
 
-        if (onKartallaJaMiina(vasen, yla)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(vasen, yla)) {
+            if (solut[vasen][yla].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[vasen][yla]);
         }
-        if (onKartallaJaMiina(x, yla)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(x, yla)) {
+            if (solut[x][yla].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[x][yla]);
+            solu.lisaaSivuVierus(solut[x][yla]);
         }
-        if (onKartallaJaMiina(oikea, yla)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(oikea, yla)) {
+            if (solut[oikea][yla].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[oikea][yla]);
         }
-        if (onKartallaJaMiina(vasen, y)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(vasen, y)) {
+            if (solut[vasen][y].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[vasen][y]);
+            solu.lisaaSivuVierus(solut[vasen][y]);
         }
-        if (onKartallaJaMiina(oikea, y)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(oikea, y)) {
+            if (solut[oikea][y].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[oikea][y]);
+            solu.lisaaSivuVierus(solut[oikea][y]);
         }
-        if (onKartallaJaMiina(vasen, ala)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(vasen, ala)) {
+            if (solut[vasen][ala].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[vasen][ala]);
         }
-        if (onKartallaJaMiina(x, ala)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(x, ala)) {
+            if (solut[x][ala].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[x][ala]);
+            solu.lisaaSivuVierus(solut[x][ala]);
         }
-        if (onKartallaJaMiina(oikea, ala)) {
-            solu.lisaaViereenMiinoja();
+        if (onKartalla(oikea, ala)) {
+            if (solut[oikea][ala].isMiina()) {
+                solu.lisaaViereenMiinoja();
+            }
+            solu.lisaaVierusSolu(solut[oikea][ala]);
         }
     }
 
-    private boolean onKartallaJaMiina(int x, int y) {
-        if (x >= 0 && y >= 0 && x < solut.length && y < solut.length) {
-            return solut[x][y].isMiina();
+    private boolean onKartalla(int x, int y) {
+        return (x >= 0 && y >= 0 && x < solut.length && y < solut.length);
+    }
+
+    private void luoSolut(int koko) {
+        for (int i = 0; i < koko; i++) {
+            for (int k = 0; k < koko; k++) {
+                Solu s = new Solu();
+                solut[i][k] = s;
+            }
         }
-        return false;
+    }
+
+    private void luoMiinat(int miinoja, int koko) {
+        for (int m = 0; m < miinoja; m++) {
+            int x = (int) (Math.random() * (koko - 1));
+            int y = (int) (Math.random() * (koko - 1));
+            if (!solut[x][y].isMiina()) {
+                solut[x][y].setMiina();
+            } else {
+                m--;
+            }
+        }
+    }
+
+    private void paivitaJaLinkita(int koko) {
+        for (int i = 0; i < koko; i++) {
+            for (int k = 0; k < koko; k++) {
+                if (!solut[i][k].isMiina()) {
+                    paivitaJaLinkitaSolu(k, k);
+                }
+            }
+        }
     }
 }
