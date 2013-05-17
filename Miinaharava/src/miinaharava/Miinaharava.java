@@ -26,10 +26,14 @@ public class Miinaharava {
         System.out.println("Miinaharava!");
         while (true) {
             tulosta(testiProfiili, moottori);
-            System.out.print("syötä x koordinaatti (tai end lopettaaksesi): ");
+            System.out.print("syötä x koordinaatti (new uuteen peliin tai end lopettaaksesi): ");
             String xString = luki.nextLine();
             if (xString.equals("end")){
                 break;
+            } 
+            if (xString.equals("new")){
+                moottori = new Moottori(testiProfiili);
+                continue;
             }
             System.out.print("syötä y koordinaatti: ");
             String yString = luki.nextLine();
@@ -40,19 +44,21 @@ public class Miinaharava {
                 x = Integer.parseInt(xString);
                 y = Integer.parseInt(yString);
             } catch (Exception e){
-                System.out.println("Syötit vääriä arvoja!"+e.getLocalizedMessage());
+                System.out.println("Syötit vääriä arvoja!");
                 continue;
             }
             
-            int palaute = moottori.aukaise(x, y);
-            if (palaute == -1){
-                moottori.aukaiseKaikki();
-                tulosta(testiProfiili, moottori);
-                System.out.println("Miina! Peli loppui!");
-                break;
-            } else {
-                tulosta(testiProfiili, moottori);
+            if (x<0 || x>=testiProfiili.getKoko() || y<0 || y>=testiProfiili.getKoko()){
+                System.out.println("Syötit arvoja kentän ulkopuolella!");
+                continue;
             }
+            
+            int palaute = moottori.aukaiseYksi(x, y);
+            System.out.println(palaute);
+            if (palaute == -1){
+                tulosta(testiProfiili, moottori);
+                System.out.println("Miina! Peli loppui! Syötä new aloittaaksesi uuden pelin.");
+            } 
         }
     }
 
@@ -62,7 +68,7 @@ public class Miinaharava {
                 Solu s = m.getKentta().getSolu(i, k);
                 if (s.isAuki()) {
                     if (s.isMiina()){
-                        System.out.print("O ");
+                        System.out.print("M ");
                     }
                     else {
                         System.out.print(s.getVieressaMiinoja() + " ");

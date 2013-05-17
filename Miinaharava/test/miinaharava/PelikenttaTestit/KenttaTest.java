@@ -121,22 +121,22 @@ public class KenttaTest {
         kentta.getSolu(1, 1);
         assertEquals(10, kentta.getMiinojaJaljella());
         
-        kentta.getSolu(2, 2).setFlagit();
+        kentta.asetaFlagi(2, 2);
         assertEquals(9, kentta.getMiinojaJaljella());
         
-        kentta.getSolu(3, 3).setFlagit();
+        kentta.asetaFlagi(3, 3);
         assertEquals(8, kentta.getMiinojaJaljella());
     }
     
     @Test
     public void kentanMiinatietoPaivittyyOikein2(){
-        kentta.getSolu(2, 2).setFlagit();
+        kentta.asetaFlagi(2, 2);
         assertEquals(9, kentta.getMiinojaJaljella());
         
-        kentta.getSolu(2, 2).setFlagit();
+        kentta.asetaFlagi(2, 2);
         assertEquals(10, kentta.getMiinojaJaljella());
         
-        kentta.getSolu(2, 2).setFlagit();
+        kentta.asetaFlagi(2, 2);
         assertEquals(10, kentta.getMiinojaJaljella());
     }
     

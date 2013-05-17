@@ -46,7 +46,7 @@ public class MoottoriTest {
 
     @Test
     public void moottoriAukaiseeLuukut() {
-        moottori.aukaise(0, 0);
+        moottori.aukaiseYksi(0, 0);
         for (int i = 0; i < profiili.getKoko(); i++) {
             for (int k = 0; k < profiili.getKoko(); k++) {
                 assertEquals(true, moottori.getKentta().getSolu(i, k).isAuki());
@@ -62,7 +62,7 @@ public class MoottoriTest {
         for (int i = 0; i < miinaProfiili.getKoko(); i++) {
             for (int k = 0; k < miinaProfiili.getKoko(); k++) {
                 if (moottori.getKentta().getSolu(i, k).isMiina()) {
-                    assertEquals(-1, moottori.aukaise(i, k));
+                    assertEquals(-1, moottori.aukaiseYksi(i, k));
                 }
             }
         }
@@ -76,7 +76,7 @@ public class MoottoriTest {
         for (int i = 0; i < miinaProfiili.getKoko(); i++) {
             for (int k = 0; k < miinaProfiili.getKoko(); k++) {
                 if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja() > 0) {
-                    assertEquals(moottori.getKentta().getSolu(i, k).getVieressaMiinoja(), moottori.aukaise(i, k));
+                    assertEquals(0, moottori.aukaiseYksi(i, k));
                 }
             }
         }
@@ -84,15 +84,72 @@ public class MoottoriTest {
 
     @Test
     public void moottoriPalauttaaOikeanArvonVaarattomanAukaisusta() {
-        assertEquals(0, moottori.aukaise(0, 0));
+        assertEquals(0, moottori.aukaiseYksi(0, 0));
     }
 
     @Test
-    public void moottoriAukaiseeKaikkiToimii() {
+    public void moottoriAukaiseKaikkiToimii() {
         moottori.aukaiseKaikki();
         for (int i=0;i<profiili.getKoko();i++){
             for (int k=0;k<profiili.getKoko();k++){
                 assertEquals(true, moottori.getKentta().getSolu(i, k).isAuki());
+            }
+        }
+    }
+    
+    @Test
+    public void moottoriAukaiseeUseitaOikeinAvattaessaSuljettua(){
+        KenttaProfiili miinaProfiili = new KenttaProfiili("testi", 10, 10);
+        moottori = new Moottori(miinaProfiili);
+        
+        for (int i=0;i<miinaProfiili.getKoko();i++){
+            boolean keskeytaVaarattomanLoytyessa = false;
+            for (int k=0;k<miinaProfiili.getKoko();k++){
+                if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja()==0){
+                    moottori.aukaiseMonta(i, k);
+                    assertEquals(false, moottori.getKentta().getSolu(i, k).isAuki());
+                    keskeytaVaarattomanLoytyessa = true;
+                    break;
+                }
+            }
+            if (keskeytaVaarattomanLoytyessa){
+                break;
+            }
+        }
+        
+        for (int i=0;i<miinaProfiili.getKoko();i++){
+            for (int k=0;k<miinaProfiili.getKoko();k++){
+                assertEquals(false, moottori.getKentta().getSolu(i, k).isAuki());
+            }
+        }
+        
+    }
+    
+    @Test
+    public void moottoriEiAukaiseMiinaaAukaiseUseitaAvattaessaAvonaista(){
+        KenttaProfiili miinaProfiili = new KenttaProfiili("testi", 10, 10);
+        moottori = new Moottori(miinaProfiili);
+        
+        for (int i=0;i<miinaProfiili.getKoko();i++){
+            boolean keskeytaVaarattomanLoytyessa = false;
+            for (int k=0;k<miinaProfiili.getKoko();k++){
+                if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja()==0){
+                    moottori.aukaiseYksi(i, k);
+                    moottori.aukaiseMonta(i, k);
+                    keskeytaVaarattomanLoytyessa = true;
+                    break;
+                }
+            }
+            if (keskeytaVaarattomanLoytyessa){
+                break;
+            }
+        }
+        
+        for (int i=0;i<miinaProfiili.getKoko();i++){
+            for (int k=0;k<miinaProfiili.getKoko();k++){
+                if (moottori.getKentta().getSolu(i, k).isMiina()){
+                    assertEquals(false, moottori.getKentta().getSolu(i, k).isAuki());
+                }
             }
         }
     }
