@@ -16,7 +16,6 @@ public class Solu {
     private int vieressaMiinoja;
     private boolean auki;
     private LinkedList<Solu> vierukset;
-    private LinkedList<Solu> vieruksetSivuilla;
     
     public Solu(){
         this.miina = false;
@@ -24,15 +23,6 @@ public class Solu {
         this.lippu=0;
         this.vieressaMiinoja=0;
         this.vierukset = new LinkedList<>();
-        this.vieruksetSivuilla = new LinkedList<>();
-    }
-    
-    public void lisaaSivuVierus(Solu solu){
-        this.vieruksetSivuilla.add(solu);
-    }
-    
-    public LinkedList<Solu> getvieruksetSivuilla(){
-        return this.vieruksetSivuilla;
     }
     
     public void lisaaVierusSolu(Solu solu){

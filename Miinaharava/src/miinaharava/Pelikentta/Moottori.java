@@ -13,10 +13,16 @@ public class Moottori {
     private Kentta kentta;
     private KenttaProfiili profiili;
     
-    public Moottori(Kentta kentta, KenttaProfiili profiili){
+    public Moottori(KenttaProfiili profiili){
         this.profiili = profiili;
         this.kentta = new Kentta(profiili);
     }
+    
+    public Kentta getKentta(){
+        return this.kentta;
+    }
+    
+    
     
     public int aukaise(int x, int y){
         Solu solu = kentta.getSolu(x, y);
@@ -25,10 +31,12 @@ public class Moottori {
         } 
         
         else if (solu.isMiina()){
+            solu.setAuki();
             return -1;
         } 
         
         else if (solu.getVieressaMiinoja()>0){
+            solu.setAuki();
             return solu.getVieressaMiinoja();
         } 
         
@@ -38,8 +46,8 @@ public class Moottori {
             while (!pino.isEmpty()){
                 solu = pino.pop();
                 solu.setAuki();
-                for (Solu s : solu.getvieruksetSivuilla()){
-                    if (s.getVieressaMiinoja()==0){
+                for (Solu s : solu.getVierukset()){
+                    if (s.getVieressaMiinoja()==0 && !s.isAuki()){
                         pino.add(s);
                     } else {
                         s.setAuki();
@@ -47,7 +55,14 @@ public class Moottori {
                 }
             }
             return 0;
-            
+        }
+    }
+    
+    public void aukaiseKaikki(){
+        for (int i=0;i<profiili.getKoko();i++){
+            for (int k=0;k<profiili.getKoko();k++){
+                kentta.getSolu(i, k).setAuki();
+            }
         }
     }
     

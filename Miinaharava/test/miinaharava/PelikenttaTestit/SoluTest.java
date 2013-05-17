@@ -105,23 +105,16 @@ public class SoluTest {
     }
     
     @Test
-    public void solullaVieressaSolu(){
-        Solu s = new Solu();
-        solu.lisaaSivuVierus(solu);
-        assertEquals(s, solu.getvieruksetSivuilla().peek());
-    }
-    
-    @Test
     public void solullaVieressaUseitaSoluja(){
         Solu s = new Solu();
-        solu.lisaaSivuVierus(solu);
+        solu.lisaaVierusSolu(solu);
         Solu d = new Solu();
-        solu.lisaaSivuVierus(solu);
+        solu.lisaaVierusSolu(solu);
         Solu f = new Solu();
-        solu.lisaaSivuVierus(solu);
+        solu.lisaaVierusSolu(solu);
         Solu g = new Solu();
-        solu.lisaaSivuVierus(solu);
-        assertEquals(4, solu.getvieruksetSivuilla().size());
+        solu.lisaaVierusSolu(solu);
+        assertEquals(4, solu.getVierukset().size());
     }
     
     @Test

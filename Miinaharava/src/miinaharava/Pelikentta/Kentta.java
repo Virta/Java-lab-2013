@@ -94,7 +94,6 @@ public class Kentta {
                 solu.lisaaViereenMiinoja();
             }
             solu.lisaaVierusSolu(solut[x][yla]);
-            solu.lisaaSivuVierus(solut[x][yla]);
         }
         if (onKartalla(oikea, yla)) {
             if (solut[oikea][yla].isMiina()) {
@@ -107,14 +106,12 @@ public class Kentta {
                 solu.lisaaViereenMiinoja();
             }
             solu.lisaaVierusSolu(solut[vasen][y]);
-            solu.lisaaSivuVierus(solut[vasen][y]);
         }
         if (onKartalla(oikea, y)) {
             if (solut[oikea][y].isMiina()) {
                 solu.lisaaViereenMiinoja();
             }
             solu.lisaaVierusSolu(solut[oikea][y]);
-            solu.lisaaSivuVierus(solut[oikea][y]);
         }
         if (onKartalla(vasen, ala)) {
             if (solut[vasen][ala].isMiina()) {
@@ -127,7 +124,6 @@ public class Kentta {
                 solu.lisaaViereenMiinoja();
             }
             solu.lisaaVierusSolu(solut[x][ala]);
-            solu.lisaaSivuVierus(solut[x][ala]);
         }
         if (onKartalla(oikea, ala)) {
             if (solut[oikea][ala].isMiina()) {
@@ -166,7 +162,7 @@ public class Kentta {
         for (int i = 0; i < koko; i++) {
             for (int k = 0; k < koko; k++) {
                 if (!solut[i][k].isMiina()) {
-                    paivitaJaLinkitaSolu(k, k);
+                    paivitaJaLinkitaSolu(i, k);
                 }
             }
         }
