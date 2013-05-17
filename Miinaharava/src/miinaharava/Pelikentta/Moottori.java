@@ -23,7 +23,7 @@ public class Moottori {
     
     public int aukaiseYksi(int x, int y){
         Solu solu = kentta.getSolu(x, y);
-        if (solu.isAuki()){
+        if (solu.isAuki() || solu.getFlagi()==1){
             return 0;
         } 
         
@@ -59,7 +59,7 @@ public class Moottori {
         if (!kentta.getSolu(x, y).isAuki()){
             return 0;
         }
-        if (!flagienMaaraOikein(x, y)){
+        if (flagienMaaraOikein(x, y)>0){
             return 0;
         }
         for (int i=x-1;i<x+2;i++){
@@ -75,20 +75,20 @@ public class Moottori {
         return 0;
     }
     
-    private boolean flagienMaaraOikein(int x, int y){
-        int miinaLippu = 0;
+    private int flagienMaaraOikein(int x, int y){
+        int miinaLippuja = 0;
         for (int i=x-1;i<x+2;i++){
             for (int k=y-1;k<y+2;k++){
                 if (y==0 && k==0){
                     k++;
                 }
                 if (onKartalla(i, k) && !kentta.getSolu(i, k).isAuki() && kentta.getSolu(i, k).getFlagi()==1){
-                    miinaLippu++;
+                    miinaLippuja++;
                 }
             }
         }
         
-        return miinaLippu == kentta.getSolu(x, y).getVieressaMiinoja();
+        return kentta.getSolu(x, y).getVieressaMiinoja() - miinaLippuja;
         
     }
     
