@@ -11,12 +11,30 @@ import java.util.LinkedList;
  * @author virta
  */
 public class Solu {
+    /**
+     * Onko solu miina.
+     */
     private boolean miina;
+    /**
+     * Mikä lippu solulle on asetettu.
+     */
     private int lippu;
+    /**
+     * Kuinka paljon solun vieressä on miinoja, jos ei itse miina.
+     */
     private int vieressaMiinoja;
+    /**
+     * Onko solu avattu.
+     */
     private boolean auki;
+    /**
+     * Lista kaikista 8:sta viereisistä soluista.
+     */
     private LinkedList<Solu> vierukset;
     
+    /**
+     * Alustetaan solu: ei miina, kiinni, ei lippuja, ei vieresä miinoja, uusi lista vieruksille.
+     */
     public Solu(){
         this.miina = false;
         this.auki = false;
@@ -53,6 +71,13 @@ public class Solu {
         return lippu;
     }
 
+    /**
+     * Kutsuttaessa lisää lippu-lukua yhdellä.
+     * 
+     * Toimii syklillisesti, 0..2:n. Eli lippuja on kahdenlaisia: lippu 1 on miinalippu, lippu 2 on kysymysmerkki.
+     * Miinaksi liputettua ei voi aukaista (määritellään Moottori-luokassa) ja kysymysmerkki ei tee mitään: on vain käyttäjän muistilappu.
+     * 
+     */
     public void setFlagit() {
         lippu++;
         if (lippu==3){

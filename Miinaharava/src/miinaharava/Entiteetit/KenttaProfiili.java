@@ -5,10 +5,26 @@ package miinaharava.Entiteetit;
  * @author virta
  */
 public class KenttaProfiili {
+    /**
+     * Kenttäprofiilin nimi, määritellään konstruktorissa.
+     */
     private String nimi;
+    /**
+     * Kenttäprofiilin koko.
+     */
     private int koko;
+    /**
+     * Miinojen määrä kenttäprofiilissa.
+     */
     private int miinoja;
     
+    /**
+     * Konstruktori alustaa luokan sisäiset muuttujat.
+     * 
+     * @param nimi Profiilin nimi.
+     * @param koko Profiilin koko.
+     * @param miinoja Kentän miinojen lukumäärä.
+     */
     public KenttaProfiili(String nimi, int koko, int miinoja){
         this.nimi = nimi;
         this.koko = koko;

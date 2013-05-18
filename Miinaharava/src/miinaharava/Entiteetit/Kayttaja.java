@@ -10,9 +10,23 @@ import java.util.Map;
  * @author virta
  */
 public class Kayttaja {
+    /**
+     * Käyttäjän tiedot, ei salasana toiminnallisuutta koska ei välttämätön.
+     * 
+     */
     private String nimimerkki;
+    /**
+     * Käyttäjän customoidut kenttäprofiilit tallennetaan suorituksen yhteydessä hajautustauluun.
+     */
     private HashMap<String, KenttaProfiili> profiilit;
     
+    /**
+     * Luo uuden käyttäjän parametrina annetulla nimimerkillä, ja luo hajautustaulun kenttäprofiileille.
+     * 
+     * Konstruktori ottaa String-olion vastaan nimimerkkinä, nimimerkin pituuden tarkistus tehdään kutsuvassa metodissa.
+     * 
+     * @param nimimerkki String-olio, käyttäjän syöte.
+     */
     public Kayttaja(String nimimerkki){
         this.nimimerkki = nimimerkki;
         this.profiilit = new HashMap<String, KenttaProfiili>();
@@ -26,6 +40,12 @@ public class Kayttaja {
         this.nimimerkki = nimimerkki;
     }
     
+    /**
+     * Lisää uuden kenttäprofiilin käyttäjän kustomoituihin profiileihin.
+     * 
+     * @param profiili Kenttäprofiili, joka lisätään käyttäjän profiileihin.
+     * @return palauttaa true, jos lisäys onnistui eli samannimistä profiilia ei ole olemassa. Jos nimi on jo käytössä, palautetaan false.
+     */
     public boolean addProfiili(KenttaProfiili profiili){
         if (!this.profiilit.containsKey(profiili.getNimi())){
             this.profiilit.put(profiili.getNimi(), profiili);

@@ -12,27 +12,40 @@ import miinaharava.Entiteetit.KenttaProfiili;
  */
 public class Kentta {
 
+    /**
+     * Kentän sisäinen solu-matriisi.
+     */
     private Solu[][] solut;
+    /**
+     * Kenttä tietää tässä muuttujassa kuinka paljon miinoja on liputtamatta, voi mennä negatiiviseksi.
+     */
     private int miinojaJaljella;
+    /**
+     * Profiili jonka mukaan kenttä luodaan ja jonka arvojen avulla kentässä navigoidaan luokan sisäisesti.
+     */
     private KenttaProfiili profiili;
+    /**
+     * Deprecated, eli vanhentunut eikä käytetä tällä hektellä, pitää kirjaa täytyykö lippujen määrä laskea uudelleen.
+     */
     private boolean miinatietoPaivitettava;
 
+    /**
+     * Konstruktori alustaa luokan sisäiset muuttujat annetun profiilin perusteella ja luo kentän.
+     * @param profiili KenttaProfiili jolla kenttä alustetaan.
+     */
     public Kentta(KenttaProfiili profiili) {
         this.profiili = profiili;
-        int miinoja = profiili.getMiinoja();
-        int koko = profiili.getKoko();
-        solut = new Solu[koko][koko];
-        miinojaJaljella = miinoja;
-        miinatietoPaivitettava = false;
+        miinojaJaljella = profiili.getMiinoja();
+//        miinatietoPaivitettava = false;
 
-        luoKentta(koko, miinoja);
+        luoKentta();
 
     }
 
     public int getMiinojaJaljella() {
-        if (miinatietoPaivitettava) {
-            paivitaMiinatieto();
-        }
+//        if (miinatietoPaivitettava) {
+//            paivitaMiinatieto();
+//        }
         return this.miinojaJaljella;
     }
 
@@ -58,6 +71,13 @@ public class Kentta {
 //        return this.solut[x][y].getVieressaMiinoja();
 //    }
     
+    /**
+     * Metodi, jota käytetään käyttäjän asettaessa lipun solulle.
+     * Samalla päivitetään kentän miinatieto, eli kuinka paljon kentässä on liputtamattomia miinoja.
+     * 
+     * @param x Solun, jonka lippu asetetaan, x-koordinaatti.
+     * @param y Solun, jonka lippu asetetaan, y-koordinaatti.
+     */
     public void asetaFlagi(int x, int y){
         this.solut[x][y].setFlagit();
         int flagi = this.solut[x][y].getFlagi();
@@ -68,6 +88,9 @@ public class Kentta {
         }
     }
     
+    /**
+     * Deprecated, eli tällä hetkellä ei käytetä mutta jää vielä toistaiseksi, päivittää kentän miinatiedon laskemalla kaikkien solujen liput.
+     */
     private void paivitaMiinatieto() {
         int miinat = profiili.getMiinoja();
         for (int i = 0; i < profiili.getKoko(); i++) {
@@ -81,12 +104,30 @@ public class Kentta {
         miinatietoPaivitettava = false;
     }
 
-    private void luoKentta(int koko, int miinoja) {
+    /**
+     * Kutsutaan kostruktorissa kentän luomiseksi, käyttää luokan sisäistä kenttäprofiilia.
+     * 
+     * luoSolut(koko) kutsutaan solujen itsensä alustamiseksi matriisiin.
+     * luoMiinat(miinoja, koko) kutsutaan jotta soluihin asetetaan miinoja.
+     * paivitaJaLinkita(koko) kutsutaan, jotta solujen miinatieto päivitetään ja solut linkitetään toisiinsa.
+     * 
+     */
+    private void luoKentta() {
+        int koko = profiili.getKoko();
+        int miinoja = profiili.getMiinoja();
+        
         luoSolut(koko);
         luoMiinat(miinoja, koko);
         paivitaJaLinkita(koko);
     }
 
+    /**
+     * Käy läpi solun ympäristön, ei solua itseään, ja linkittää soluun itseensä ympärillä olevat solut.
+     * Samalla jos ympärillä on miinoja päivitetään solun miinatieto.
+     * 
+     * @param x Solun, joka päivitetään, x-koordinaatti.
+     * @param y Solun, joka päivitetään, y-koordinaatti.
+     */
     private void paivitaJaLinkitaSolu(int x, int y) {
         Solu solu = solut[x][y];
         int yla = y - 1;
@@ -110,10 +151,22 @@ public class Kentta {
 
     }
     
+    /**
+     * Tällä tarkistetaan onko annetut koordinaatit kentässä.
+     * 
+     * @param x Tarkistettava x-koordinaatti.
+     * @param y Tarkistettava y-koordinaatti.
+     * @return Palauttaa true, jos koordinaatit profiilin määrittelyn sisällä, false jos ulkopuolella.
+     */
     private boolean onKartalla(int x, int y) {
         return (x >= 0 && y >= 0 && x < solut.length && y < solut.length);
     }
 
+    /**
+     * Initialisoi kentän solumatriisiin solut.
+     * 
+     * @param koko Kentän koko, jotta silmukka toimii.
+     */
     private void luoSolut(int koko) {
         for (int i = 0; i < koko; i++) {
             for (int k = 0; k < koko; k++) {
@@ -123,6 +176,14 @@ public class Kentta {
         }
     }
 
+    /**
+     * Luo kenttään miinat, jossa ei vielä yhtään miinoja.
+     * 
+     * Käyttää Math.random menetelmää arpoakseen koordinaatit. Random antaa luvun 0..1, tämä kerrotaan kentän koolla, jotta saadaan hajonta koko kentän alueelle.
+     * 
+     * @param miinoja Kuinka monta miinaa kenttään luodaan.
+     * @param koko Kentän koko, jotta metodi arpoo koordinaatit kentän sisälle.
+     */
     private void luoMiinat(int miinoja, int koko) {
         for (int m = 0; m < miinoja; m++) {
             int x = (int) (Math.random() * (koko - 1));
@@ -135,6 +196,11 @@ public class Kentta {
         }
     }
 
+    /**
+     * Käy läpi solumatriisin kaikki solut, ja kutsuu jokaiselle tarkempaa metodia, joka tekee varsinaisen työn.
+     * 
+     * @param koko Kentän koko, jotta silmukka toimii.
+     */
     private void paivitaJaLinkita(int koko) {
         for (int i = 0; i < koko; i++) {
             for (int k = 0; k < koko; k++) {
