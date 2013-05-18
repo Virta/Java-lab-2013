@@ -35,7 +35,7 @@ public class Kentta {
      */
     public Kentta(KenttaProfiili profiili) {
         this.profiili = profiili;
-        miinojaJaljella = profiili.getMiinoja();
+        this.miinojaJaljella = profiili.getMiinoja();
 //        miinatietoPaivitettava = false;
 
         luoKentta();
