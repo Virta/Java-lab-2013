@@ -145,8 +145,19 @@ public class KenttaTest {
         for (int i=0;i<10;i++){
             for (int k=0;k<10;k++){
                 Solu solu = kentta.getSolu(i, k);
-                if (solu.getVieressaMiinoja()>0){
+                if (!solu.isMiina()){
                     assertEquals(laskeMiinat(i, k), solu.getVieressaMiinoja());
+                }
+            }
+        }
+    }
+    
+    @Test
+    public void miinoillaEiMerkittyViereisiaMiinoja(){
+        for (int i=0;i<10;i++){
+            for (int k=0;k<10;k++){
+                if (kentta.getSolu(i, k).isMiina()){
+                    assertEquals(0, kentta.getSolu(i, k).getVieressaMiinoja());
                 }
             }
         }

@@ -54,7 +54,7 @@ public class Kentta {
         return this.solut[x][y];
     }
 
-//    Mahdollisesti toteutettava, mennään ensin palauttamalla solmu kutsuvalle metodille. Jos toteutettava, muista miinatiedon päivitys.
+//    Mahdollisesti toteutettava, mennään ensin palauttamalla solu kutsuvalle metodille. Jos toteutettava, muista miinatiedon päivitys.
 //    private void setFlagi(int x, int y){
 //        this.solut[x][y].setFlagit();
 //    }
@@ -113,8 +113,8 @@ public class Kentta {
      * 
      */
     private void luoKentta() {
-        int koko = profiili.getKoko();
-        int miinoja = profiili.getMiinoja();
+        int koko = this.profiili.getKoko();
+        int miinoja = this.profiili.getMiinoja();
         
         luoSolut(koko);
         luoMiinat(miinoja, koko);
@@ -122,7 +122,7 @@ public class Kentta {
     }
 
     /**
-     * Käy läpi solun ympäristön, ei solua itseään, ja linkittää soluun itseensä ympärillä olevat solut.
+     * Käy läpi solun ympäristön, ei solua itseään, ja linkittää soluun ympärillä olevat solut.
      * Samalla jos ympärillä on miinoja päivitetään solun miinatieto.
      * 
      * @param x Solun, joka päivitetään, x-koordinaatti.
@@ -130,14 +130,10 @@ public class Kentta {
      */
     private void paivitaJaLinkitaSolu(int x, int y) {
         Solu solu = solut[x][y];
-        int yla = y - 1;
-        int ala = y + 1;
-        int vasen = x - 1;
-        int oikea = x + 1;
         
         for (int i=x-1;i<x+2;i++){
             for (int k=y-1;k<y+2;k++){
-                if (i==0 && k==0){
+                if (onKartalla(i, k) && solut[i][k]==solu){
                     k++;
                 }
                 if (onKartalla(i, k)){
@@ -168,6 +164,7 @@ public class Kentta {
      * @param koko Kentän koko, jotta silmukka toimii.
      */
     private void luoSolut(int koko) {
+        this.solut = new Solu[koko][koko];
         for (int i = 0; i < koko; i++) {
             for (int k = 0; k < koko; k++) {
                 Solu s = new Solu();
@@ -186,8 +183,8 @@ public class Kentta {
      */
     private void luoMiinat(int miinoja, int koko) {
         for (int m = 0; m < miinoja; m++) {
-            int x = (int) (Math.random() * (koko - 1));
-            int y = (int) (Math.random() * (koko - 1));
+            int x = (int) (Math.random() * (koko));
+            int y = (int) (Math.random() * (koko));
             if (!solut[x][y].isMiina()) {
                 solut[x][y].setMiina();
             } else {
