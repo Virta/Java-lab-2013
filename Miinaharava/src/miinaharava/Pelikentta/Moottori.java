@@ -147,7 +147,7 @@ public class Moottori {
      * @return Palauttaa 0 jos avaus onnistui, -1 jos liputettu väärin ja ...
      * miina.
      */
-    public int aukaiseMonta(int x, int y) {  //täytyy vielä korjata!
+    public int aukaiseMonta(int x, int y) {
         if (!kentta.getSolu(x, y).isAuki()) {
             return 0;
         }

@@ -288,7 +288,7 @@ public class MoottoriTest {
                     assertEquals(false, moottori.getKentta().getSolu(i, k).isAuki());
                 } 
                 else {
-                    assertEquals("Solu kiinni: "+i+", "+k+": miina: "+moottori.getKentta().getSolu(i, k).isMiina()+"lippu: "+moottori.getKentta().getSolu(i, k).getFlagi(),true, moottori.getKentta().getSolu(i, k).isAuki());
+                    assertEquals("Solu kiinni: "+i+", "+k+": miina: "+moottori.getKentta().getSolu(i, k).isMiina()+" lippu: "+moottori.getKentta().getSolu(i, k).getFlagi(),true, moottori.getKentta().getSolu(i, k).isAuki());
                 }
             }
         }
