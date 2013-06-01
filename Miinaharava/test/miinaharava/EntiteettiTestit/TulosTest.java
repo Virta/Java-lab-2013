@@ -42,7 +42,7 @@ public class TulosTest {
         pelaaja = new Kayttaja("Frans");
         profiili = new KenttaProfiili("TestiProfiili", 10, 10);
         vakio = new VakioProfiilit();
-        tulos = new Tulos("1:10", profiili, pelaaja);
+        tulos = new Tulos("1:10", profiili, pelaaja, true);
     }
     
     @After
@@ -61,13 +61,25 @@ public class TulosTest {
     
     @Test
     public void testaaVakioKenttaProfiili(){
-        tulos = new Tulos("1:10", vakio.getHelppo(), pelaaja);
+        tulos = new Tulos("1:10", vakio.getHelppo(), pelaaja, true);
         assertEquals("Helppo", tulos.getProfiili().getNimi());
     }
     
     @Test
     public void testaaTuloksenAika(){
         assertEquals("1:10", tulos.getAika());
+    }
+    
+    @Test
+    public void testaaEpaonnistunutTulos(){
+        tulos = new Tulos("1:11", profiili, pelaaja, false);
+        assertEquals(false, tulos.onnistuiko());
+    }
+    
+    @Test
+    public void testaaOnnistunutTulos(){
+        tulos = new Tulos("1:11", profiili, pelaaja, true);
+        assertEquals(true, tulos.onnistuiko());
     }
     
 }

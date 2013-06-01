@@ -4,12 +4,19 @@
  */
 package miinaharava.Kayttoliittyma;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
@@ -32,6 +39,7 @@ public class Kayttoliittyma implements Runnable {
         this.pelaajat = kayttajat;
         this.peliProfiilit = profiilit;
         this.tulokset = tulokset;
+        this.vakioProfiilit = new HashMap<>();
         this.vakioProfiilit.put("helppo", vakioProfiilit.getHelppo());
         this.vakioProfiilit.put("keskivaikea", vakioProfiilit.getKeskiVaikea());
         this.vakioProfiilit.put("vaikea", vakioProfiilit.getVaikea());
@@ -52,6 +60,31 @@ public class Kayttoliittyma implements Runnable {
     }
     
     private void luoKomponentit(Container container){
+        container.setLayout(new BorderLayout());
+        
+        JPanel ylaPaneeli = new JPanel(new GridLayout(2, 1));
+        ylaPaneeli.add(new JLabel("Tervetuloa pelaamaan miinaharavaa!"));
+        ylaPaneeli.add(new JLabel("Valitse jokin seuraavista:"));
+        container.add(ylaPaneeli, BorderLayout.NORTH);
+        
+        JPanel keskipaneeli = new JPanel(new GridLayout(4, 1));
+        JButton uusiPeli = new JButton("Uusi peli");
+        JButton tulokset = new JButton("Tulokset");
+        JButton kirjaudu = new JButton("Kirjaudu");
+//        JButton lopeta = new JButton("Lopeta");
+        
+        ActionListener aloitusnakumaKuuntelija = new AloitusNaymaKuuntelija(uusiPeli, tulokset, kirjaudu);
+        uusiPeli.addActionListener(aloitusnakumaKuuntelija);
+        tulokset.addActionListener(aloitusnakumaKuuntelija);
+        kirjaudu.addActionListener(aloitusnakumaKuuntelija);
+//        lopeta.addActionListener(aloitusnakumaKuuntelija);
+        
+        keskipaneeli.add(uusiPeli);
+        keskipaneeli.add(tulokset);
+        keskipaneeli.add(kirjaudu);
+//        keskipaneeli.add(lopeta);
+        
+        container.add(keskipaneeli, BorderLayout.CENTER);
         
     }
     
