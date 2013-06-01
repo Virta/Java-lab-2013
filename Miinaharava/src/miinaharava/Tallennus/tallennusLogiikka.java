@@ -7,9 +7,7 @@ package miinaharava.Tallennus;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -34,12 +32,12 @@ public class tallennusLogiikka {
      * Kaikki tulokset kirjoitetaan aina, tiedoston kaikki informaatio ylikirjoitetaan suoritushetkellä olioina olevasta tiedosta.
      * Ohjelma luo tiedoston aina sulkeutuessa sen hetkisellä informaatiolla; ensimmäisellä suorituskerralla ainoastaan saateviestillä.
      * @param tulokset
-     * @throws IOException 
+     * @throws Exception 
      */
-    public static void tallenna(LinkedList<Tulos> tulokset) throws IOException {
+    public static void tallenna(LinkedList<Tulos> tulokset) throws Exception {
         try {
             FileWriter kirjoittaja = new FileWriter("Tulokset.txt");
-            String alkuosa = "Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!";
+            String alkuosa = "Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!\n";
             kirjoittaja.write(alkuosa);
             for (Tulos tulos : tulokset) {
                 String tallennettava = tulos.getPelaaja().getNimimerkki()
@@ -52,12 +50,13 @@ public class tallennusLogiikka {
                         + " "
                         + tulos.getAika()
                         +" "
-                        + tulos.onnistuiko();
+                        + tulos.onnistuiko()
+                        +"\n";
                 kirjoittaja.write(tallennettava);
             }
             kirjoittaja.close();
-        } catch (IOException iOException) {
-            
+        } catch (Exception e) {
+            naytaVirheilmoitus(e.getMessage());
         }
     }
 
@@ -70,9 +69,9 @@ public class tallennusLogiikka {
      * @param kayttajat
      * @param profiilit
      * @param tulokset
-     * @throws IOException 
+     * @throws Exception 
      */
-    public static void palauta(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) throws IOException {
+    public static void palauta(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) throws Exception {
         try {
             File tulosTiedosto = new File("Tulokset.txt");
             Scanner lukija = new Scanner(tulosTiedosto, "UTF-8");
@@ -108,18 +107,22 @@ public class tallennusLogiikka {
             }
             lukija.close();
         } catch (Exception e){
-            naytaVirheilmoitus(e.toString());
+            naytaVirheilmoitus(e.getMessage());
         }
         
     }
     
+    /**
+     * Jos tulosten latauksessa tapahtuu virhe, kutsutaan tätä metodia, näytetään graafinen virheilmoitus; käyttäjän sulkiessa ikkunan ohjelma sulkeutuu.
+     * @param virheilmoitus 
+     */
     private static void naytaVirheilmoitus(String virheilmoitus){
         JFrame frame = new JFrame("Virhe!");
         frame.setPreferredSize(new Dimension(600, 100));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         frame.getContentPane().setLayout(new GridLayout(2, 1));
-        frame.getContentPane().add(new JLabel("Tulosten latauksessa tapahtui virhe, tuloksia ei voitu ladata:"));
+        frame.getContentPane().add(new JLabel("Tulosten käsittelyssä tapahtui virhe:"));
         frame.getContentPane().add(new JLabel(virheilmoitus));
         
         frame.pack();

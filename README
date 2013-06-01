@@ -1,13 +1,19 @@
 Ohjelmoinnin harjoitustyö
 
-README kesken.
+Tämä on miinaharava-peli!
 
-Tämä on readme ohjelmoinnin harjoitustyölle. Aiheenani on tehdä miinaharava-peli.
+Miinaharavassa voit käynnistää uuden pelin kolmen ennalta määrätyn kentän koolla. Voit myös itse valita kentän koon ja miinojen määrän kentässä.
 
-Miinaharavassa käyttäjä voi käynnistää uuden pelin kolmen ennalta määrätyn kentän koosta, tai
-valita oman kokoisensa kentän. Lisäksi pelaaja voi valita miinojen tiheyden kentässä.
-Aloitusnäkymästä käsin pääsee tarkastelemaan aikaisempia tuloksia. Tuloksissa näkyy
-kentän koko, miinojen tiheys, läpäistiinkö, missä ajassa peli loppui, ja klikkausten määrä.
+Aloitusnäkymästä käsin pääset tarkastelemaan aikaisempia tuloksia klikkaamalla "Tulokset". Tuloksissa näkyy kentän koko, miinojen tiheys, läpäistiinkö ja missä ajassa peli loppui. Tulokset on jaettu kahteen osioon: vakioprofiileilla pelattuihin ja omilla profiileilla pelattuihin.
 
-Pelaaja voi myös luoda oman pelaaja-profiilin, johon tallentuvat hänen pelinsä. Pelaaja voi
-kirjautua tai olla kirjautumatta peliin, ja silti pelata, salasanaa ei kysellä. Jos pelaaja ei kirjaudu, tallentuvat pelit anonyyminä, aivätkä minkään pelaajan alle. Pelaaja voi tarkastella myös muiden pelaajien tuloksia.
+Voit myös luoda oman pelaaja-profiilin, johon tallentuvat pelaamasi pelit! Sinun ei tarvitse kirjautua pelataksesi, mutta kirjautuaksesi sinun on syötettävä oikea nimimerkki, salasanaa ei kysellä. Jos et kirjaudu, tallentuvat pelit anonyyminä.
+
+Pelaaminen:
+Kun aloitat pelin saat uuden ikkunan, jossa on miinakenttä. Kentän ylälaidassa on juokseva kello ja liputtamattomien miinojen lukumäärä.
+Kello käynnistetään kun avaat ensimmäisen solun. Jos klikkaat miinaa kello pysähtyy, ja peli loppuu näyttäen kaikki miinat.
+
+Jos onnistut avaamaan kaikki solut, joissa ei ole miinoja peli päättyy onnistuneesti ja kello pysähtyy.
+
+Pelin päättymisen jälkeen sinulle näytetään pelin päättymiseen kulunut aika. Voit tarkastella tuloksia tulokset osiosta johon pääset sulkemalla ja valitsemalla päävalikosta "Tulokset".
+
+Hyviä pelihetkiä!
