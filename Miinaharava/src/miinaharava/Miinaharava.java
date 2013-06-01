@@ -1,11 +1,18 @@
 package miinaharava;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
+import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
+import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
+import miinaharava.Kayttoliittyma.Kayttoliittyma;
 import miinaharava.Pelikentta.Kentta;
 import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
+import miinaharava.Tallennus.tallennusLogiikka;
 
 /**
  *
@@ -14,69 +21,85 @@ import miinaharava.Pelikentta.Solu;
 public class Miinaharava {
 
     public static void main(String[] args) throws InterruptedException {
-
+        
+        HashMap<String, Kayttaja> pelaajat = new HashMap<>();
+        HashMap<String, KenttaProfiili> peliProfiilit = new HashMap<>();
         VakioProfiilit vakioProfiilit = new VakioProfiilit();
-        KenttaProfiili profiili = vakioProfiilit.getVaikea();
-        KenttaProfiili testiProfiili = new KenttaProfiili("SuperVaikea", 10, 1);
-        Kentta kentta = new Kentta(testiProfiili);
-        Moottori moottori = new Moottori(testiProfiili);
+        LinkedList<Tulos> tulokset = new LinkedList<>();
+        
+        tallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);
+        
+        Kayttoliittyma kayttoliittyma = new Kayttoliittyma(pelaajat, peliProfiilit, vakioProfiilit, tulokset);
+        SwingUtilities.invokeLater(kayttoliittyma);
+        
+        tallennusLogiikka.tallenna(tulokset);
+        
+    }
+    
+}
 
-        Scanner luki = new Scanner(System.in);
-        
-        tulostaFlageilla(testiProfiili, moottori);
-        for (int i = 0; i < testiProfiili.getKoko(); i++) {
-            boolean keskeyta = false;
-            for (int k = 0; k < testiProfiili.getKoko(); k++) {
-                if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja()>0) {
-                    moottori.aukaiseYksi(i, k);
-                    keskeyta = true;
-                }
-                if (keskeyta){
-                    break;
-                }
-            }
-            if (keskeyta){
-                break;
-            }
-        }
-        
-        tulostaFlageilla(testiProfiili, moottori);
-        for (int i = 0; i < testiProfiili.getKoko(); i++) {
-            for (int k = 0; k < testiProfiili.getKoko(); k++) {
-                if (moottori.getKentta().getSolu(i, k).isMiina()) {
-                    moottori.getKentta().asetaFlagi(i, k);
-                }
-            }
-        }
-        
-        tulostaFlageilla(testiProfiili, moottori);
-        
-        Thread.sleep(2000);
-        
-        for (int i = 0; i < testiProfiili.getKoko(); i++) {
-            boolean keskeyta = false;
-            for (int k = 0; k < testiProfiili.getKoko(); k++) {
-                if (moottori.getKentta().getSolu(i, k).isAuki()) {
-                    moottori.aukaiseMonta(i, k);
-                    keskeyta = true;
-                }
-                if (keskeyta){
-                    break;
-                }
-            }
-            if (keskeyta){
-                break;
-            }
-        }
-        
-        tulostaFlageilla(testiProfiili, moottori);
-        System.out.println(moottori.getAika());
-        int aika = (int) moottori.getAika();
-        System.out.println(aika);
+//        VakioProfiilit vakioProfiilit = new VakioProfiilit();
+//        KenttaProfiili profiili = vakioProfiilit.getVaikea();
+//        KenttaProfiili testiProfiili = new KenttaProfiili("SuperVaikea", 10, 1);
+//        Kentta kentta = new Kentta(testiProfiili);
+//        Moottori moottori = new Moottori(testiProfiili);
+//
+//        Scanner luki = new Scanner(System.in);
+//        
+//        tulostaFlageilla(testiProfiili, moottori);
+//        for (int i = 0; i < testiProfiili.getKoko(); i++) {
+//            boolean keskeyta = false;
+//            for (int k = 0; k < testiProfiili.getKoko(); k++) {
+//                if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja()>0) {
+//                    moottori.aukaiseYksi(i, k);
+//                    keskeyta = true;
+//                }
+//                if (keskeyta){
+//                    break;
+//                }
+//            }
+//            if (keskeyta){
+//                break;
+//            }
+//        }
+//        
+//        tulostaFlageilla(testiProfiili, moottori);
+//        for (int i = 0; i < testiProfiili.getKoko(); i++) {
+//            for (int k = 0; k < testiProfiili.getKoko(); k++) {
+//                if (moottori.getKentta().getSolu(i, k).isMiina()) {
+//                    moottori.getKentta().asetaFlagi(i, k);
+//                }
+//            }
+//        }
+//        
+//        tulostaFlageilla(testiProfiili, moottori);
+//        
+//        Thread.sleep(2000);
+//        
+//        for (int i = 0; i < testiProfiili.getKoko(); i++) {
+//            boolean keskeyta = false;
+//            for (int k = 0; k < testiProfiili.getKoko(); k++) {
+//                if (moottori.getKentta().getSolu(i, k).isAuki()) {
+//                    moottori.aukaiseMonta(i, k);
+//                    keskeyta = true;
+//                }
+//                if (keskeyta){
+//                    break;
+//                }
+//            }
+//            if (keskeyta){
+//                break;
+//            }
+//        }
+//        
+//        tulostaFlageilla(testiProfiili, moottori);
+//        System.out.println(moottori.getAika());
+//        int aika = (int) moottori.getAika();
+//        System.out.println(aika);
         
 //        tulostaFlageilla(testiProfiili, moottori);
-
-
+//
+//
 //        System.out.println("Miinaharava!");
 //        while (true) {
 //            tulosta(testiProfiili, moottori);
@@ -114,42 +137,42 @@ public class Miinaharava {
 //                System.out.println("Miina! Peli loppui! Syötä new aloittaaksesi uuden pelin.");
 //            } 
 //        }
-    }
-
-    private static void tulosta(KenttaProfiili testiProfiili, Moottori m) {
-        for (int i = 0; i < testiProfiili.getKoko(); i++) {
-            for (int k = 0; k < testiProfiili.getKoko(); k++) {
-                Solu s = m.getKentta().getSolu(i, k);
-                if (s.isAuki()) {
-                    if (s.isMiina()) {
-                        System.out.print("M ");
-                    } else {
-                        System.out.print(s.getVieressaMiinoja() + " ");
-                    }
-                } else {
-                    System.out.print("X ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-    }
-
-    private static void tulostaFlageilla(KenttaProfiili testiProfiili, Moottori moottori) {
-        for (int i = 0; i < testiProfiili.getKoko(); i++) {
-            for (int k = 0; k < testiProfiili.getKoko(); k++) {
-                if (moottori.getKentta().getSolu(i, k).getFlagi() == 1) {
-                    System.out.print("F ");
-                } else if (moottori.getKentta().getSolu(i, k).isMiina()) {
-                    System.out.print("M ");
-                } else if (!moottori.getKentta().getSolu(i, k).isAuki()) {
-                    System.out.print("K ");
-                } else {
-                    System.out.print("A ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-    }
-}
+//    }
+//
+//    private static void tulosta(KenttaProfiili testiProfiili, Moottori m) {
+//        for (int i = 0; i < testiProfiili.getKoko(); i++) {
+//            for (int k = 0; k < testiProfiili.getKoko(); k++) {
+//                Solu s = m.getKentta().getSolu(i, k);
+//                if (s.isAuki()) {
+//                    if (s.isMiina()) {
+//                        System.out.print("M ");
+//                    } else {
+//                        System.out.print(s.getVieressaMiinoja() + " ");
+//                    }
+//                } else {
+//                    System.out.print("X ");
+//                }
+//            }
+//            System.out.println("");
+//        }
+//        System.out.println("");
+//    }
+//
+//    private static void tulostaFlageilla(KenttaProfiili testiProfiili, Moottori moottori) {
+//        for (int i = 0; i < testiProfiili.getKoko(); i++) {
+//            for (int k = 0; k < testiProfiili.getKoko(); k++) {
+//                if (moottori.getKentta().getSolu(i, k).getFlagi() == 1) {
+//                    System.out.print("F ");
+//                } else if (moottori.getKentta().getSolu(i, k).isMiina()) {
+//                    System.out.print("M ");
+//                } else if (!moottori.getKentta().getSolu(i, k).isAuki()) {
+//                    System.out.print("K ");
+//                } else {
+//                    System.out.print("A ");
+//                }
+//            }
+//            System.out.println("");
+//        }
+//        System.out.println("");
+//    }
+//}
