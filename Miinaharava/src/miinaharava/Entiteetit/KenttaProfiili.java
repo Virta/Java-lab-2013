@@ -1,7 +1,8 @@
 package miinaharava.Entiteetit;
 
 /**
- *
+ * Luokka, joka hallinnoi kaikkia kenttäprofiileja, niin vakioita kuin käyttäjän tekemiä.
+ * 
  * @author virta
  */
 public class KenttaProfiili {

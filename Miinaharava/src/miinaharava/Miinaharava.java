@@ -16,8 +16,10 @@ import miinaharava.Pelikentta.Solu;
 import miinaharava.Tallennus.tallennusLogiikka;
 
 /**
- *
+ * Tämä on Miinaharavan pääluokka, se palauttaa tulokset tiedostosta, käynnistää käyttöliittymän ja tallentaa tulokset lopetettaessa.
  * @author frojala
+ * 
+ * 
  */
 public class Miinaharava {
 

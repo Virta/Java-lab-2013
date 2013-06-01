@@ -7,6 +7,8 @@ package miinaharava.Pelikentta;
 import miinaharava.Entiteetit.KenttaProfiili;
 
 /**
+ * 
+ * Tämä luokka hallinnoi yhteenkytkettyjä soluja solumatrsiisissa, ja niiden toimintoja ja luo uuden matriisin aina uuden pelin alkaessa ylemmän Moottori-luokan kutsusta.
  *
  * @author virta
  */

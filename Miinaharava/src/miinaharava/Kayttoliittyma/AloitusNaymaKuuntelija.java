@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
+ * 
+ * Tämä luokka kuuntelee aloitusnäkymässä tapahtuvia nappuloiden panalluksia ja kutsuu muita luokkia painallusten mukaisesti.
  *
  * @author virta
  */

@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import miinaharava.Entiteetit.KenttaProfiili;
 
 /**
+ * Varsinainen pelimoottori; käyttöliittymä kutsuu tämän luokan metodeja aina pelin edetessä, ja saa palautteen kustakin toiminnosta; 
+ * tämä luokka käyttää Kenttä-luokkaa joka hallinnoi itse soluja ja niiden kytkeytymisiä.
+ * 
  *
  * @author virta
  */

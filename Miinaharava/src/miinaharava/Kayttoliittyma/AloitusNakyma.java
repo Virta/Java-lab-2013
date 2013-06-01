@@ -24,6 +24,8 @@ import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
 
 /**
+ * 
+ * Tämä luokka on koko miinaharava-pelin graafisen käyttöliittymän alku ja juuri; täältä pelaaja valitsee haluamansa toiminnot aina kun ohjelma suoritetaan.
  *
  * @author virta
  */

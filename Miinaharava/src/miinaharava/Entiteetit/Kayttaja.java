@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Luokka hallinnoimaan käyttäjän tietoja ajon aikana.
+ * 
  * @author virta
  */
 public class Kayttaja {

@@ -1,6 +1,7 @@
 package miinaharava.Entiteetit;
 
 /**
+ * Luokka, joka muodostaa pelin vakioprofiilit, jotka ovat kovakoodattuja.
  *
  * @author virta
  */

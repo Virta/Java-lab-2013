@@ -7,6 +7,8 @@ package miinaharava.Pelikentta;
 import java.util.LinkedList;
 
 /**
+ * Luokka joka määrittelee kunkin solun kentässä, solu tietää vain itsensä tiedot ja ketä vieruksia sillä on, 
+ * kaikki varsinainen hallinnointi tapahtuu tätä luokkaa käyttävässä Kenttä-luokassa.
  *
  * @author virta
  */

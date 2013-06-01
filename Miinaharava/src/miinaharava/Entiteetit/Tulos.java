@@ -1,6 +1,7 @@
 package miinaharava.Entiteetit;
 
 /**
+ * Luokka jonka olioina kaikki tulokset ilmenevät, olioita ei suoraan tallenneta tiedostoon, vaan ne muunnetaan H(uman)R(eadable)-muotoon ja tallennetaan tiedostoon.
  *
  * @author virta
  */

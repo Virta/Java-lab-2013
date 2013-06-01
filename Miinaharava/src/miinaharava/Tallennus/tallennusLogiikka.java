@@ -21,6 +21,9 @@ import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 
 /**
+ * 
+ * Luokka joka hallinnoin tallennus logiikkaa; tällä luokalla ei ole kontruktoria, sillä sen ei tarvitse tehdä muuta kuin kirjoittaa
+ * sille annettu informaatio tiedostoon, ja palauttaa informaatio tiedostosta ohjelman käynnistyessä.
  *
  * @author virta
  */
