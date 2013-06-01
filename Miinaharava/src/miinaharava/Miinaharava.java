@@ -1,5 +1,6 @@
 package miinaharava;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
-import miinaharava.Kayttoliittyma.Kayttoliittyma;
+import miinaharava.Kayttoliittyma.AloitusNakyma;
 import miinaharava.Pelikentta.Kentta;
 import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
@@ -20,7 +21,7 @@ import miinaharava.Tallennus.tallennusLogiikka;
  */
 public class Miinaharava {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         
         HashMap<String, Kayttaja> pelaajat = new HashMap<>();
         HashMap<String, KenttaProfiili> peliProfiilit = new HashMap<>();
@@ -29,7 +30,7 @@ public class Miinaharava {
         
         tallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);
         
-        Kayttoliittyma kayttoliittyma = new Kayttoliittyma(pelaajat, peliProfiilit, vakioProfiilit, tulokset);
+        AloitusNakyma kayttoliittyma = new AloitusNakyma(pelaajat, peliProfiilit, vakioProfiilit, tulokset);
         SwingUtilities.invokeLater(kayttoliittyma);
         
         tallennusLogiikka.tallenna(tulokset);

@@ -26,6 +26,13 @@ import miinaharava.Entiteetit.Tulos;
  */
 public class tallennusLogiikka {
 
+    /**
+     * Tallentaa parametrina saadun tuloslistan tietostoon Tulokset.txt.
+     * Kaikki tulokset kirjoitetaan aina, tiedoston kaikki informaatio ylikirjoitetaan suoritushetkellä olioina olevasta tiedosta.
+     * Ohjelma luo tiedoston aina sulkeutuessa sen hetkisellä informaatiolla; ensimmäisellä suorituskerralla ainoastaan saateviestillä.
+     * @param tulokset
+     * @throws IOException 
+     */
     public static void tallenna(LinkedList<Tulos> tulokset) throws IOException {
         try {
             FileWriter kirjoittaja = new FileWriter("Tulokset.txt");
@@ -47,13 +54,28 @@ public class tallennusLogiikka {
             }
             kirjoittaja.close();
         } catch (IOException iOException) {
+            
         }
     }
 
+    /**
+     * Palauttaa tiedostosta Tulokset.txt kaikki tulokset jotka siihen on tallennettu.
+     * Kaikki tulokset palautetaan ja ladataan olioiksi ohjelmaan.
+     * Ohjelman ensimmäisellä suorituskerralla lataaminen palauttaa virheilmoituksen, jos tiedostoa ei ole manuaalisesti luotu.
+     * Kun ohjelma suljetaan heti tämän jälkeen luodaan tiedosto tyhjällä sisällöllä, ainoastaan saateviestillä.
+     * Seuraava suorituskerta ei anna virhettä.
+     * @param kayttajat
+     * @param profiilit
+     * @param tulokset
+     * @throws IOException 
+     */
     public static void palauta(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) throws IOException {
         try {
             File tulosTiedosto = new File("Tulokset.txt");
             Scanner lukija = new Scanner(tulosTiedosto, "UTF-8");
+            if (lukija.hasNextLine()){
+                lukija.nextLine();
+            }
             while (lukija.hasNextLine()) {
                 String tulosString = lukija.nextLine();
                 
@@ -90,7 +112,7 @@ public class tallennusLogiikka {
     
     private static void naytaVirheilmoitus(String virheilmoitus){
         JFrame frame = new JFrame("Virhe!");
-        frame.setPreferredSize(new Dimension(100, 300));
+        frame.setPreferredSize(new Dimension(600, 100));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         frame.getContentPane().setLayout(new GridLayout(2, 1));

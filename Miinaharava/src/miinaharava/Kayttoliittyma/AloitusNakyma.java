@@ -27,7 +27,7 @@ import miinaharava.Entiteetit.VakioProfiilit;
  *
  * @author virta
  */
-public class Kayttoliittyma implements Runnable {
+public class AloitusNakyma implements Runnable {
     
     private JFrame frame;
     private HashMap<String, Kayttaja> pelaajat;
@@ -35,7 +35,7 @@ public class Kayttoliittyma implements Runnable {
     HashMap<String, KenttaProfiili> vakioProfiilit;
     LinkedList<Tulos> tulokset;
     
-    public Kayttoliittyma (HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset){
+    public AloitusNakyma (HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset){
         this.pelaajat = kayttajat;
         this.peliProfiilit = profiilit;
         this.tulokset = tulokset;
@@ -61,12 +61,24 @@ public class Kayttoliittyma implements Runnable {
     
     private void luoKomponentit(Container container){
         container.setLayout(new BorderLayout());
+        lisaaAloitusteksti(container);
         
+        lisaaAloitusNapit(container);
+        
+    }
+    
+    public JFrame getFrame(){
+        return frame;
+    }
+
+    private void lisaaAloitusteksti(Container container) {
         JPanel ylaPaneeli = new JPanel(new GridLayout(2, 1));
         ylaPaneeli.add(new JLabel("Tervetuloa pelaamaan miinaharavaa!"));
         ylaPaneeli.add(new JLabel("Valitse jokin seuraavista:"));
         container.add(ylaPaneeli, BorderLayout.NORTH);
-        
+    }
+
+    private void lisaaAloitusNapit(Container container) {
         JPanel keskipaneeli = new JPanel(new GridLayout(4, 1));
         JButton uusiPeli = new JButton("Uusi peli");
         JButton tulokset = new JButton("Tulokset");
@@ -85,11 +97,6 @@ public class Kayttoliittyma implements Runnable {
 //        keskipaneeli.add(lopeta);
         
         container.add(keskipaneeli, BorderLayout.CENTER);
-        
-    }
-    
-    public JFrame getFrame(){
-        return frame;
     }
     
 }

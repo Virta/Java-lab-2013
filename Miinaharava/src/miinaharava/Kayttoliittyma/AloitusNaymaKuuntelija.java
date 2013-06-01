@@ -18,13 +18,15 @@ public class AloitusNaymaKuuntelija implements  ActionListener {
     private JButton uusiPeli;
     private JButton tulokset;
     private JButton kirjaudu;
-    private JButton lopeta;
+//    private JButton lopeta;
+//    private JFrame frame;
     
-    public AloitusNaymaKuuntelija(JButton uusiPeli, JButton tulokset, JButton kirjaudu, JButton lopeta, JFrame frame){
+    public AloitusNaymaKuuntelija(JButton uusiPeli, JButton tulokset, JButton kirjaudu){
         this.uusiPeli = uusiPeli;
         this.tulokset = tulokset;
         this.kirjaudu = kirjaudu;
-        this.lopeta = lopeta;
+//        this.lopeta = lopeta;
+//        this.frame = frame;
     }
 
     @Override
@@ -35,9 +37,7 @@ public class AloitusNaymaKuuntelija implements  ActionListener {
             
         } else if (e.getSource() == kirjaudu){
             
-        } else {
-            
-        }
+        } 
     }
     
     private void aloitaUusiPeli(){
