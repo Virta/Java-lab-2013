@@ -25,7 +25,7 @@ public class Moottori {
     /**
      * Totuusarvo, jolla vältetään kellon asettaminen useasti.
      */
-    boolean kelloAloitettu;
+    private boolean kelloAloitettu;
     
     /**
      * Muuttuja, johon taltioidaan järjsestelmän aika aloitushetkellä.
@@ -75,9 +75,9 @@ public class Moottori {
      * Aukaisee yhden solun annetuissa koordinaateissa.
      *
      * Ei avaa solua joka on jo auki, eikä sellaista solua joka on liputettu
-     * miinaksi. Jos avattava solu on miina, palautetaan -1, eli peli päättyy.
+     * miinaksi. Jos avattava solu on miina, palautetaan false, eli peli päättyy.
      * Samalla avataan kentän kaikki solut, paljastaen pelaajan virheet. Jos
-     * avattavalla solulla on vieressä miinoja palautetaan 0 ja avataan ko.
+     * avattavalla solulla on vieressä miinoja palautetaan true ja avataan ko.
      * solu. Jos avattavalla solulla ei ole vieressä miinoja, eli on nk.
      * vaaraton, avataan samalla kaikki viereiset vaarattomat solut ja jokainen
      * niiden viereinen solu jolla on vieressä miinoja. Kun pelaaja aukaisee ensimmäisen solun
@@ -86,50 +86,34 @@ public class Moottori {
      *
      * @param x
      * @param y
-     * @return Palauttaa 0 jos aukaisu onnistui, eli solu ei ollut miina.
-     * Palauttaa -1 jos avattu solu oli miina.
+     * @return Palauttaa true jos aukaisu onnistui, eli solu ei ollut miina. Palauttaa false jos avattu solu oli miina.
      */
-    public int aukaiseYksi(int x, int y) {
+    public boolean aukaiseYksi(int x, int y) {
         Solu solu = kentta.getSolu(x, y);
         
-        if (!kelloAloitettu) {
-            this.aikaAlussa = System.currentTimeMillis();
-            kelloAloitettu = true;
-        }
+        aloitaKello();
         
         if (solu.isAuki() || solu.getFlagi() == 1) {
-            return 0;
+            return true;
             
         } else if (solu.isMiina()) {
             aukaiseKaikki();
             this.aikaLopussa = System.currentTimeMillis();
-            return -1;
+            return false;
             
         } else if (solu.getVieressaMiinoja() > 0) {
             solu.setAuki();
-            return 0;
+            return true;
             
         } else {
-            LinkedList<Solu> pino = new LinkedList<>();
-            pino.add(solu);
-            while (!pino.isEmpty()) {
-                solu = pino.pop();
-                solu.setAuki();
-                for (Solu s : solu.getVierukset()) {
-                    if (s.getVieressaMiinoja() == 0 && !s.isAuki()) {
-                        pino.add(s);
-                    } else {
-                        s.setAuki();
-                    }
-                }
-            }
+            vaaratonAukaiseVerkko(solu);
         }
         
         if (peliLoppuiOnnistuneesti() && kelloAloitettu) {
             this.aikaLopussa = System.currentTimeMillis();
         }
         
-        return 0;
+        return true;
     }
 
     /**
@@ -142,36 +126,34 @@ public class Moottori {
      * merkitty 2 viereistä miinaa ja tämän solun ympäröivistä soluista vain 1
      * on liputettu miinaksi, avaus ei onnistu. Vastaavasti jos miinalippuja on
      * oikea määrä tai enemmän, aukaisu onnistuu ja metodissa käydään läpi
-     * kaikki ympärillä olevat solut aukaiseYksi - metodilla, palauttaen -1 jos
-     * oli virheellinen liputus, 0 jos avaus onnistui.
+     * kaikki ympärillä olevat solut aukaiseYksi - metodilla, palauttaen false jos
+     * oli virheellinen liputus, true jos avaus onnistui.
      *
      * @param x Solun, josta halutaan avata monta, x-koordinaatti.
      * @param y Solun, josta halutaan avata monta, y-koordinaatti.
-     * @return Palauttaa 0 jos avaus onnistui, -1 jos liputettu väärin ja ...
-     * miina.
+     * @return Palauttaa true jos avaus onnistui, false jos liputettu väärin ja miina.
      */
-    public int aukaiseMonta(int x, int y) {
+    public boolean aukaiseMonta(int x, int y) {
         if (!kentta.getSolu(x, y).isAuki()) {
-            return 0;
+            return true;
         }
         
-        if (flagienMaaraOikein(x, y) > 0) {
-            return 0;
+        if (flagienMaaraOikein(x, y)) {
+            return true;
         }
         
-        int palautettava = 0;
         for (int i = x - 1; i < x + 2; i++) {
             for (int k = y - 1; k < y + 2; k++) {
                 if (onKartalla(i, k)) {
-                    int avausPalaute = aukaiseYksi(i, k);
-                    if (avausPalaute == -1) {
-                        palautettava = -1;
+                    boolean avausPalaute = aukaiseYksi(i, k);
+                    if (!avausPalaute) {
+                        return false;
                     }
                 }
             }
         }
         
-        return palautettava;
+        return true;
     }
 
     /**
@@ -179,10 +161,9 @@ public class Moottori {
      *
      * @param x Solun, jonka ympäristö lasketaan, x-koordinaatti.
      * @param y Solun, jonka ympäristö lasketaan, y-koordinaatti.
-     * @return Palauttaa lippujen - ja miinojen määrän erotuksen: -1 jos liikaa
-     * lippuja, 0 jos sama määrä lippuja, 1 jos liian vähän lippuja.
+     * @return Palauttaa lippujen - ja miinojen määrän erotuksen: true jos sama määrä tai enemmän, false jos liian vähän.
      */
-    private int flagienMaaraOikein(int x, int y) {
+    private boolean flagienMaaraOikein(int x, int y) {
         Solu solu = kentta.getSolu(x, y);
         
         int miinaLippuja = 0;
@@ -197,7 +178,7 @@ public class Moottori {
             }
         }
 
-        return kentta.getSolu(x, y).getVieressaMiinoja() - miinaLippuja;
+        return kentta.getSolu(x, y).getVieressaMiinoja() <= miinaLippuja;
 
     }
 
@@ -241,5 +222,35 @@ public class Moottori {
      */
     private boolean onKartalla(int x, int y) {
         return x >= 0 && x < profiili.getKoko() && y >= 0 && y < profiili.getKoko();
+    }
+
+    /**
+     * Sisäinen metodi, jota kutsutaan aukaiseYksi -metodista käynnistämään kellon pelin alkaessa, muutoin ei tee mitään.
+     */
+    private void aloitaKello() {
+        if (!kelloAloitettu) {
+            this.aikaAlussa = System.currentTimeMillis();
+            kelloAloitettu = true;
+        }
+    }
+
+    /**
+     * Eriytetty metodi aukaiseYksi -metodista, aukaisee verkon soluja jos avattava solu oli vaaraton (ei miina ja ei lähellä miinoja).
+     * @param solu 
+     */
+    private void vaaratonAukaiseVerkko(Solu solu) {
+        LinkedList<Solu> pino = new LinkedList<>();
+        pino.add(solu);
+        while (!pino.isEmpty()) {
+            solu = pino.pop();
+            solu.setAuki();
+            for (Solu s : solu.getVierukset()) {
+                if (s.getVieressaMiinoja() == 0 && !s.isAuki()) {
+                    pino.add(s);
+                } else {
+                    s.setAuki();
+                }
+            }
+        }
     }
 }

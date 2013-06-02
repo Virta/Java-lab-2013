@@ -65,9 +65,9 @@ public class MoottoriTest {
             boolean keskeyta = false;
             for (int k = 0; k < miinaProfiili.getKoko(); k++) {
                 if (moottori.getKentta().getSolu(i, k).isMiina()) {
-                    int palaute = moottori.aukaiseYksi(i, k);
+                    boolean palaute = moottori.aukaiseYksi(i, k);
                     miinojaAukaistu++;
-                    assertEquals("Väärin palautettu: "+palaute+", koordinaatit: "+i+", "+k+", monesko: "+miinojaAukaistu, -1, palaute);
+                    assertEquals("Väärin palautettu: "+palaute+", koordinaatit: "+i+", "+k+", monesko: "+miinojaAukaistu, false, palaute);
                     keskeyta = true;
                 }
                 if (keskeyta){
@@ -174,10 +174,10 @@ public class MoottoriTest {
             boolean keskeyta = false;
             for (int k=0;k<miinaProfiili.getKoko();k++){
                 if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja()>0){
-                    int palauteYhdesta = moottori.aukaiseYksi(i, k);
-                    assertEquals(0, palauteYhdesta);
-                    int palauteMonesta = moottori.aukaiseMonta(i, k);
-                    assertEquals(0, palauteMonesta);
+                    boolean palauteYhdesta = moottori.aukaiseYksi(i, k);
+                    assertEquals(true, palauteYhdesta);
+                    boolean palauteMonesta = moottori.aukaiseMonta(i, k);
+                    assertEquals(true, palauteMonesta);
                     keskeyta = true;
                 }
                 if (keskeyta){
@@ -207,10 +207,10 @@ public class MoottoriTest {
             boolean keskeyta = false;
             for (int k=0;k<miinaProfiili.getKoko();k++){
                 if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja()>0 && moottori.getKentta().getSolu(i, k).getFlagi()==0){
-                    int palauteYhdesta = moottori.aukaiseYksi(i, k);
-                    assertEquals(0, palauteYhdesta);
-                    int palauteMonesta = moottori.aukaiseMonta(i, k);
-                    assertEquals(-1, palauteMonesta);
+                    boolean palauteYhdesta = moottori.aukaiseYksi(i, k);
+                    assertEquals(true, palauteYhdesta);
+                    boolean palauteMonesta = moottori.aukaiseMonta(i, k);
+                    assertEquals(false, palauteMonesta);
                     assertEquals(true, moottori.getKentta().getSolu(i, k).isAuki());
                     keskeyta = true;
                 }
@@ -269,8 +269,8 @@ public class MoottoriTest {
             boolean keskeyta = false;
             for (int k=0;k<miinaProfiili.getKoko();k++){
                 if (moottori.getKentta().getSolu(i, k).isAuki()){
-                    int palaute = moottori.aukaiseMonta(i, k);
-                    assertEquals(0, palaute);
+                    boolean palaute = moottori.aukaiseMonta(i, k);
+                    assertEquals(true, palaute);
                     keskeyta = true;
                 }
                 if (keskeyta){
