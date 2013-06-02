@@ -7,12 +7,10 @@ package miinaharava.Kayttoliittyma;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,9 +31,9 @@ public class AloitusNakyma implements Runnable {
     
     private JFrame frame;
     private HashMap<String, Kayttaja> pelaajat;
-    HashMap<String, KenttaProfiili> peliProfiilit;
-    HashMap<String, KenttaProfiili> vakioProfiilit;
-    LinkedList<Tulos> tulokset;
+    private HashMap<String, KenttaProfiili> peliProfiilit;
+    private HashMap<String, KenttaProfiili> vakioProfiilit;
+    private LinkedList<Tulos> tulokset;
     
     public AloitusNakyma (HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset){
         this.pelaajat = kayttajat;

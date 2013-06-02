@@ -126,6 +126,28 @@ public class tallennusLogiikkaTest {
         assertEquals(true, kayttajat.containsKey("Jaska"));
         assertEquals(true, profiilit.containsKey("joku"));
         assertEquals(Tulos.class, tulokset.getFirst().getClass());
+        assertEquals(Kayttaja.class, kayttajat.get("Jaska").getClass());
+        assertEquals(KenttaProfiili.class, profiilit.get("joku").getClass());
+    }
+    
+    @Test
+    public void palauttaaMontaTulostaOikein() throws Exception{
+        LinkedList<Tulos> tulokset = new LinkedList<>();
+        lisaaTulosListaan(tulokset);
+        lisaaTulosListaan(tulokset);
+        lisaaTulosListaan(tulokset);
+        tallennusLogiikka.tallenna(tulokset);
+        
+        tulokset.clear();
+        
+        HashMap<String, Kayttaja> kayttajat = new HashMap<>();
+        HashMap<String, KenttaProfiili> profiilit = new HashMap<>();
+        
+        tallennusLogiikka.palauta(kayttajat, profiilit, tulokset);
+        
+        assertEquals(3, tulokset.size());
+        assertEquals(1, kayttajat.size());
+        assertEquals(1, profiilit.size());
     }
     
     private void lisaaTulosListaan(LinkedList<Tulos> tulokset){

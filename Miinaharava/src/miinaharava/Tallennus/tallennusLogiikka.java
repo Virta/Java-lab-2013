@@ -103,6 +103,10 @@ public class tallennusLogiikka {
                     profiilit.put(kenttaProfiiliNimi, profiili);
                 }
                 
+                if (!kayttajat.get(nimimerkki).getKaikkiProfiilit().containsKey(kenttaProfiiliNimi)){
+                    kayttajat.get(nimimerkki).addProfiili(profiili);
+                }
+                
                 tulokset.add(tulos);
             }
             lukija.close();
