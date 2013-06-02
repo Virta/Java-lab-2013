@@ -88,7 +88,7 @@ public class MoottoriTest {
         for (int i = 0; i < miinaProfiili.getKoko(); i++) {
             for (int k = 0; k < miinaProfiili.getKoko(); k++) {
                 if (moottori.getKentta().getSolu(i, k).getVieressaMiinoja() > 0) {
-                    assertEquals(0, moottori.aukaiseYksi(i, k));
+                    assertEquals(true, moottori.aukaiseYksi(i, k));
                 }
             }
         }
@@ -99,7 +99,7 @@ public class MoottoriTest {
         KenttaProfiili profiili = new KenttaProfiili("Ei Miinoja", 10, 0);
         this.moottori = new Moottori(profiili);
         
-        assertEquals(0, moottori.aukaiseYksi(0, 0));
+        assertEquals(true, moottori.aukaiseYksi(0, 0));
     }
 
     @Test
