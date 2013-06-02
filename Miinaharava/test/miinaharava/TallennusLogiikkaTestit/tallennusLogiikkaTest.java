@@ -6,6 +6,7 @@ package miinaharava.TallennusLogiikkaTestit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 import miinaharava.Entiteetit.Kayttaja;
@@ -55,9 +56,8 @@ public class tallennusLogiikkaTest {
 
     @Test
     public void tallentaaTuloksen() throws Exception {
-        Tulos tulos = new Tulos("1:11", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
         LinkedList<Tulos> tulokset = new LinkedList<>();
-        tulokset.add(tulos);
+        lisaaTulosListaan(tulokset);
 
         tallennusLogiikka.tallenna(tulokset);
         File tulosTiedosto = new File("Tulokset.txt");
@@ -78,7 +78,7 @@ public class tallennusLogiikkaTest {
         assertEquals("joku", purkaja.next());
         assertEquals("10", purkaja.next());
         assertEquals("10", purkaja.next());
-        assertEquals("1:11", purkaja.next());
+        assertEquals("1:10", purkaja.next());
         assertEquals("true", purkaja.next());
         purkaja.close();
 
@@ -86,13 +86,10 @@ public class tallennusLogiikkaTest {
 
     @Test
     public void tallentaaUseitaTuloksia() throws Exception {
-        Tulos tulos1 = new Tulos("1:10", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
-        Tulos tulos2 = new Tulos("1:10", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
-        Tulos tulos3 = new Tulos("1:10", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
         LinkedList<Tulos> tulokset = new LinkedList<>();
-        tulokset.add(tulos1);
-        tulokset.add(tulos2);
-        tulokset.add(tulos3);
+        lisaaTulosListaan(tulokset);
+        lisaaTulosListaan(tulokset);
+        lisaaTulosListaan(tulokset);
 
         tallennusLogiikka.tallenna(tulokset);
 
@@ -112,5 +109,27 @@ public class tallennusLogiikkaTest {
         }
         lukija.close();
         
+    }
+    
+    @Test
+    public void palauttaaTuloksenOikein() throws Exception{
+        LinkedList<Tulos> tulokset = new LinkedList<>();
+        lisaaTulosListaan(tulokset);
+        tallennusLogiikka.tallenna(tulokset);
+        
+        tulokset.clear();
+        HashMap<String, Kayttaja> kayttajat = new HashMap<>();
+        HashMap<String, KenttaProfiili> profiilit = new HashMap<>();
+        
+        tallennusLogiikka.palauta(kayttajat, profiilit, tulokset);
+        
+        assertEquals(true, kayttajat.containsKey("Jaska"));
+        assertEquals(true, profiilit.containsKey("joku"));
+        assertEquals(Tulos.class, tulokset.getFirst().getClass());
+    }
+    
+    private void lisaaTulosListaan(LinkedList<Tulos> tulokset){
+        Tulos tulos = new Tulos("1:10", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
+        tulokset.add(tulos);
     }
 }

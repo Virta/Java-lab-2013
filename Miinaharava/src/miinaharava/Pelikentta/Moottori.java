@@ -138,7 +138,7 @@ public class Moottori {
             return true;
         }
         
-        if (flagienMaaraOikein(x, y)) {
+        if (!flagienMaaraOikein(x, y)) {
             return true;
         }
         
