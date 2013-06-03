@@ -96,18 +96,27 @@ public class AloitusNakyma implements Runnable {
         JButton kirjauduNappula = new JButton("Kirjaudu");
 //        JButton lopeta = new JButton("Lopeta");
         
+        lisaaKuuntelija(uusiPeliNappula, tulosNappula, kirjauduNappula);
+        
+        lisaaNapitPaneeliin(keskipaneeli, uusiPeliNappula, tulosNappula, kirjauduNappula);
+        
+        container.add(keskipaneeli, BorderLayout.CENTER);
+    }
+
+    private void lisaaKuuntelija(JButton uusiPeliNappula, JButton tulosNappula, JButton kirjauduNappula) {
         ActionListener aloitusnakumaKuuntelija = new AloitusNaymaKuuntelija(uusiPeliNappula, tulosNappula, kirjauduNappula, frame, this);
         uusiPeliNappula.addActionListener(aloitusnakumaKuuntelija);
         tulosNappula.addActionListener(aloitusnakumaKuuntelija);
         kirjauduNappula.addActionListener(aloitusnakumaKuuntelija);
 //        lopeta.addActionListener(aloitusnakumaKuuntelija);
         
+    }
+
+    private void lisaaNapitPaneeliin(JPanel keskipaneeli, JButton uusiPeliNappula, JButton tulosNappula, JButton kirjauduNappula) {
         keskipaneeli.add(uusiPeliNappula);
         keskipaneeli.add(tulosNappula);
         keskipaneeli.add(kirjauduNappula);
 //        keskipaneeli.add(lopeta);
-        
-        container.add(keskipaneeli, BorderLayout.CENTER);
     }
     
 }
