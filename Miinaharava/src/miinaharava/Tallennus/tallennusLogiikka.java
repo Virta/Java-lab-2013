@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -39,24 +40,32 @@ public class tallennusLogiikka {
             FileWriter kirjoittaja = new FileWriter("Tulokset.txt");
             String alkuosa = "Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!\n";
             kirjoittaja.write(alkuosa);
-            for (Tulos tulos : tulokset) {
-                String tallennettava = tulos.getPelaaja().getNimimerkki()
-                        + " "
-                        + tulos.getProfiili().getNimi()
-                        + " "
-                        + tulos.getProfiili().getKoko()
-                        + " "
-                        + tulos.getProfiili().getMiinoja()
-                        + " "
-                        + tulos.getAika()
-                        +" "
-                        + tulos.onnistuiko()
-                        +"\n";
-                kirjoittaja.write(tallennettava);
-            }
+            
+            kirjoitaTulosStringit(tulokset, kirjoittaja);
+            
             kirjoittaja.close();
+            
         } catch (Exception e) {
-            naytaVirheilmoitus(e.getMessage());
+            tallennuksenVirheilmoitus.naytaVirheilmoitus(e.getMessage());
+        }
+        
+    }
+    
+    private static void kirjoitaTulosStringit(LinkedList<Tulos> tulokset, FileWriter kirjoittaja) throws IOException {
+        for (Tulos tulos : tulokset) {
+            String tallennettava = tulos.getPelaaja().getNimimerkki()
+                    + " "
+                    + tulos.getProfiili().getNimi()
+                    + " "
+                    + tulos.getProfiili().getKoko()
+                    + " "
+                    + tulos.getProfiili().getMiinoja()
+                    + " "
+                    + tulos.getAika()
+                    +" "
+                    + tulos.getOnnistuiko()
+                    +"\n";
+            kirjoittaja.write(tallennettava);
         }
     }
 
@@ -78,58 +87,57 @@ public class tallennusLogiikka {
             if (lukija.hasNextLine()){
                 lukija.nextLine();
             }
-            while (lukija.hasNextLine()) {
-                String tulosString = lukija.nextLine();
-                
-                Scanner purkaja = new Scanner(tulosString);
-                String nimimerkki = purkaja.next();
-                String kenttaProfiiliNimi = purkaja.next();
-                String kentanKoko = purkaja.next();
-                String kentassaMiinoja = purkaja.next();
-                String tuloksenAika = purkaja.next();
-                String onnistuiko = purkaja.next();
-                purkaja.close();
-                
-                Kayttaja kayttaja = new Kayttaja(nimimerkki);
-                KenttaProfiili profiili = new KenttaProfiili(kenttaProfiiliNimi, Integer.parseInt(kentanKoko), Integer.parseInt(kentassaMiinoja));
-                boolean onnistui = Boolean.parseBoolean(onnistuiko);
-                Tulos tulos = new Tulos(tuloksenAika, profiili, kayttaja, onnistui);
-                
-                if (!kayttajat.containsKey(nimimerkki)) {
-                    kayttajat.put(nimimerkki, kayttaja);
-                }
-                
-                if (!profiilit.containsKey(kenttaProfiiliNimi)) {
-                    profiilit.put(kenttaProfiiliNimi, profiili);
-                }
-                
-                if (!kayttajat.get(nimimerkki).getKaikkiProfiilit().containsKey(kenttaProfiiliNimi)){
-                    kayttajat.get(nimimerkki).addProfiili(profiili);
-                }
-                
-                tulokset.add(tulos);
-            }
+            
+            lueJaPuraTulokset(lukija, kayttajat, profiilit, tulokset);
+            
             lukija.close();
+            
         } catch (Exception e){
-            naytaVirheilmoitus(e.getMessage());
+            tallennuksenVirheilmoitus.naytaVirheilmoitus(e.getMessage());
+        }
+        
+    }
+
+    private static void lueJaPuraTulokset(Scanner lukija, HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) throws NumberFormatException {
+        
+        while (lukija.hasNextLine()) {
+            String tulosString = lukija.nextLine();
+            
+            Scanner purkaja = new Scanner(tulosString);
+            String nimimerkki = purkaja.next();
+            String kenttaProfiiliNimi = purkaja.next();
+            String kentanKoko = purkaja.next();
+            String kentassaMiinoja = purkaja.next();
+            String tuloksenAika = purkaja.next();
+            String onnistuiko = purkaja.next();
+            purkaja.close();
+            
+            Kayttaja kayttaja = new Kayttaja(nimimerkki);
+            KenttaProfiili profiili = new KenttaProfiili(kenttaProfiiliNimi, Integer.parseInt(kentanKoko), Integer.parseInt(kentassaMiinoja));
+            boolean onnistui = Boolean.parseBoolean(onnistuiko);
+            Tulos tulos = new Tulos(tuloksenAika, profiili, kayttaja, onnistui);
+            
+            lisaaOliotListoihin(kayttajat, nimimerkki, kayttaja, profiilit, kenttaProfiiliNimi, profiili);
+            
+            tulokset.add(tulos);
+            
+        }
+        
+    }
+
+    private static void lisaaOliotListoihin(HashMap<String, Kayttaja> kayttajat, String nimimerkki, Kayttaja kayttaja, HashMap<String, KenttaProfiili> profiilit, String kenttaProfiiliNimi, KenttaProfiili profiili) {
+        if (!kayttajat.containsKey(nimimerkki)) {
+            kayttajat.put(nimimerkki, kayttaja);
+        }
+        
+        if (!profiilit.containsKey(kenttaProfiiliNimi)) {
+            profiilit.put(kenttaProfiiliNimi, profiili);
+        }
+        
+        if (!kayttajat.get(nimimerkki).getKaikkiProfiilit().containsKey(kenttaProfiiliNimi)){
+            kayttajat.get(nimimerkki).addProfiili(profiili);
         }
         
     }
     
-    /**
-     * Jos tulosten latauksessa tapahtuu virhe, kutsutaan tätä metodia, näytetään graafinen virheilmoitus; käyttäjän sulkiessa ikkunan ohjelma sulkeutuu.
-     * @param virheilmoitus 
-     */
-    private static void naytaVirheilmoitus(String virheilmoitus){
-        JFrame frame = new JFrame("Virhe!");
-        frame.setPreferredSize(new Dimension(600, 100));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
-        frame.getContentPane().setLayout(new GridLayout(2, 1));
-        frame.getContentPane().add(new JLabel("Tulosten käsittelyssä tapahtui virhe:"));
-        frame.getContentPane().add(new JLabel(virheilmoitus));
-        
-        frame.pack();
-        frame.setVisible(true);
-    }
 }

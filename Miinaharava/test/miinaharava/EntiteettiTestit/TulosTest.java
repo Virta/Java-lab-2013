@@ -73,13 +73,13 @@ public class TulosTest {
     @Test
     public void testaaEpaonnistunutTulos(){
         tulos = new Tulos("1:11", profiili, pelaaja, false);
-        assertEquals(false, tulos.onnistuiko());
+        assertEquals(false, tulos.getOnnistuiko());
     }
     
     @Test
     public void testaaOnnistunutTulos(){
         tulos = new Tulos("1:11", profiili, pelaaja, true);
-        assertEquals(true, tulos.onnistuiko());
+        assertEquals(true, tulos.getOnnistuiko());
     }
     
 }

@@ -1,5 +1,6 @@
 package miinaharava;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -29,7 +30,7 @@ public class Miinaharava {
         VakioProfiilit vakioProfiilit = new VakioProfiilit();
         LinkedList<Tulos> tulokset = new LinkedList<>();
         Tulos tulos = new Tulos("1:11", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
-        tulokset.add(tulos);
+//        tulokset.add(tulos);
 //        tallennusLogiikka.tallenna(tulokset);
         tallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);
 //        tulokset.clear();

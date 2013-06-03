@@ -1,11 +1,15 @@
 package miinaharava.Entiteetit;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Luokka jonka olioina kaikki tulokset ilmenevät, olioita ei suoraan tallenneta tiedostoon, vaan ne muunnetaan H(uman)R(eadable)-muotoon ja tallennetaan tiedostoon.
  *
  * @author virta
  */
-public class Tulos {
+public class Tulos implements Comparable<Object>{
     /**
      * Aika tallennetaan suoritus aikana tässä vaiheessa String-oliona.
      */
@@ -49,8 +53,26 @@ public class Tulos {
         return this.pelaaja;
     }
     
-    public boolean onnistuiko(){
+    public boolean getOnnistuiko(){
         return this.loppuikoOnnistuneesti;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Tulos verrattava = (Tulos) o;
+        String[] verrattavanAika = verrattava.getAika().split(":");
+        int verrattavanMinuutit = Integer.parseInt(verrattavanAika[0]);
+        int verrattavanSekunnit = Integer.parseInt(verrattavanAika[1]);
+        
+        String[] tamanAika = this.aika.split(":");
+        int tamanMinuutit = Integer.parseInt(tamanAika[0]);
+        int tamanSekunnit = Integer.parseInt(tamanAika[1]);
+        
+        if (verrattavanMinuutit==tamanMinuutit){
+            return tamanSekunnit-verrattavanSekunnit;
+        } else {
+            return tamanMinuutit-verrattavanMinuutit;
+        }
     }
     
 }

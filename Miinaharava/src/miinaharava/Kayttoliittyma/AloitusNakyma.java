@@ -32,19 +32,14 @@ public class AloitusNakyma implements Runnable {
     private JFrame frame;
     private HashMap<String, Kayttaja> pelaajat;
     private HashMap<String, KenttaProfiili> peliProfiilit;
-    private HashMap<String, KenttaProfiili> vakioProfiilit;
+    private VakioProfiilit vakioProfiilit;
     private LinkedList<Tulos> tulokset;
     
     public AloitusNakyma (HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset){
         this.pelaajat = kayttajat;
         this.peliProfiilit = profiilit;
         this.tulokset = tulokset;
-        this.vakioProfiilit = new HashMap<>();
-        this.vakioProfiilit.put("helppo", vakioProfiilit.getHelppo());
-        this.vakioProfiilit.put("keskivaikea", vakioProfiilit.getKeskiVaikea());
-        this.vakioProfiilit.put("vaikea", vakioProfiilit.getVaikea());
-        
-        
+        this.vakioProfiilit = vakioProfiilit;
     }
 
     @Override
@@ -71,6 +66,22 @@ public class AloitusNakyma implements Runnable {
         return frame;
     }
 
+    public HashMap<String, Kayttaja> getPelaajat() {
+        return pelaajat;
+    }
+
+    public HashMap<String, KenttaProfiili> getPeliProfiilit() {
+        return peliProfiilit;
+    }
+
+    public VakioProfiilit getVakioProfiilit() {
+        return vakioProfiilit;
+    }
+
+    public LinkedList<Tulos> getTulokset() {
+        return tulokset;
+    }
+
     private void lisaaAloitusteksti(Container container) {
         JPanel ylaPaneeli = new JPanel(new GridLayout(2, 1));
         ylaPaneeli.add(new JLabel("Tervetuloa pelaamaan miinaharavaa!"));
@@ -80,20 +91,20 @@ public class AloitusNakyma implements Runnable {
 
     private void lisaaAloitusNapit(Container container) {
         JPanel keskipaneeli = new JPanel(new GridLayout(4, 1));
-        JButton uusiPeli = new JButton("Uusi peli");
-        JButton tulokset = new JButton("Tulokset");
-        JButton kirjaudu = new JButton("Kirjaudu");
+        JButton uusiPeliNappula = new JButton("Uusi peli");
+        JButton tulosNappula = new JButton("Tulokset");
+        JButton kirjauduNappula = new JButton("Kirjaudu");
 //        JButton lopeta = new JButton("Lopeta");
         
-        ActionListener aloitusnakumaKuuntelija = new AloitusNaymaKuuntelija(uusiPeli, tulokset, kirjaudu);
-        uusiPeli.addActionListener(aloitusnakumaKuuntelija);
-        tulokset.addActionListener(aloitusnakumaKuuntelija);
-        kirjaudu.addActionListener(aloitusnakumaKuuntelija);
+        ActionListener aloitusnakumaKuuntelija = new AloitusNaymaKuuntelija(uusiPeliNappula, tulosNappula, kirjauduNappula, frame, this);
+        uusiPeliNappula.addActionListener(aloitusnakumaKuuntelija);
+        tulosNappula.addActionListener(aloitusnakumaKuuntelija);
+        kirjauduNappula.addActionListener(aloitusnakumaKuuntelija);
 //        lopeta.addActionListener(aloitusnakumaKuuntelija);
         
-        keskipaneeli.add(uusiPeli);
-        keskipaneeli.add(tulokset);
-        keskipaneeli.add(kirjaudu);
+        keskipaneeli.add(uusiPeliNappula);
+        keskipaneeli.add(tulosNappula);
+        keskipaneeli.add(kirjauduNappula);
 //        keskipaneeli.add(lopeta);
         
         container.add(keskipaneeli, BorderLayout.CENTER);
