@@ -4,6 +4,7 @@
  */
 package miinaharava.Kayttoliittyma;
 
+import com.sun.imageio.plugins.jpeg.JPEG;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -11,6 +12,7 @@ import java.awt.GridLayout;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +21,9 @@ import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
+import com.sun.imageio.plugins.jpeg.JPEG;
+import java.awt.Color;
+import javax.swing.JButton;
 
 /**
  *
@@ -27,22 +32,24 @@ import miinaharava.Entiteetit.VakioProfiilit;
 public class TulosNakyma implements Runnable {
 
     private JFrame frame;
+    private SisaltoFrame nakyma;
     private HashMap<String, Kayttaja> pelaajat;
     private HashMap<String, KenttaProfiili> peliProfiilit;
     private LinkedList<Tulos> tulokset;
 
-    public TulosNakyma(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) {
-        this.pelaajat = kayttajat;
-        this.peliProfiilit = profiilit;
-        this.tulokset = tulokset;
+    public TulosNakyma(SisaltoFrame nakyma) {
+        this.nakyma = nakyma;
+        this.frame = nakyma.getFrame();
+        this.pelaajat = nakyma.getPelaajat();
+        this.peliProfiilit = nakyma.getPeliProfiilit();
+        this.tulokset = nakyma.getTulokset();
     }
 
     @Override
     public void run() {
-        frame = new JFrame("Miinaharava - tulokset");
-        frame.setPreferredSize(new Dimension(300, 300));
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
+        frame.getContentPane().removeAll();
+        
         luoKomponentit(frame.getContentPane());
 
         frame.pack();
@@ -54,16 +61,34 @@ public class TulosNakyma implements Runnable {
     }
 
     private void luoKomponentit(Container container) {
+        container.setLayout(new GridLayout(4, 1));
         lisaaAlkuTesksti(container);
         lisaaVakioTulokset(container);
         lisaaMuutTuloksetProfiileittain(container);
+        lisaaTakaisinNappula(container);
     }
 
     private void lisaaAlkuTesksti(Container container) {
-        JPanel ylapaneeli = new JPanel(new GridLayout(2, 1));
+        
+        GridLayout containerLayout = new GridLayout(2, 1);
+        JPanel ylapaneeli = new JPanel(containerLayout);
+        
+        
+        ylapaneeli.setBorder(BorderFactory.createLineBorder(Color.yellow));
+        
+        
+        
+        
         ylapaneeli.add(new JLabel("Miinaharavan pelitulokset"));
         lisaaKenttienOtsikot(ylapaneeli);
-        container.add(ylapaneeli, BorderLayout.NORTH);
+        container.add(ylapaneeli);
+    }
+    
+    private void lisaaTakaisinNappula(Container container){
+        JButton takaisinNappula = new JButton("Takaisin");
+        NakymaKuuntelija kuuntelija = new NakymaKuuntelija(takaisinNappula, this.nakyma);
+        takaisinNappula.addActionListener(kuuntelija);
+        container.add(takaisinNappula);
     }
 
     private void lisaaKenttienOtsikot(JPanel paneeli) {
@@ -84,52 +109,48 @@ public class TulosNakyma implements Runnable {
         lisaaTulosPaneeli(vakioTulokset, "Keskivaikea");
         lisaaTulosPaneeli(vakioTulokset, "Vaikea");
 
-        container.add(vakioTulokset, BorderLayout.CENTER);
+        container.add(vakioTulokset);
     }
 
     private void lisaaTulosPaneeli(JPanel tulosPaneeli, String profiiliNimi) {
-        JPanel tulosProfiiliPaneeli = new JPanel(new GridLayout(10, 6));
-        lisaaTulosLista(tulosProfiiliPaneeli, profiiliNimi);
-        tulosPaneeli.add(tulosProfiiliPaneeli);
-    }
-
-    private void lisaaTulosLista(JPanel tulosPaneeli, String profiili) {
         LinkedList<Tulos> tulosLista = new LinkedList<>();
         for (Tulos tulos : this.tulokset) {
-            if (tulos.getProfiili().getNimi().equals(profiili)) {
+            if (tulos.getProfiili().getNimi().equals(profiiliNimi)) {
                 tulosLista.add(tulos);
             }
         }
 
-        Collections.sort(tulosLista);
-
-        lisaaTulosPaneeliin(tulosLista, tulosPaneeli);
+        JPanel tulosProfiiliPaneeli = new JPanel(new GridLayout(tulosLista.size(), 1));
+        lisaaTulosLista(tulosProfiiliPaneeli, tulosLista);
+        tulosPaneeli.add(tulosProfiiliPaneeli);
     }
 
-    private void lisaaTulosPaneeliin(LinkedList<Tulos> tulosLista, JPanel tulosPaneeli) {
-        int i=1;
+    private void lisaaTulosLista(JPanel tulosPaneeli, LinkedList<Tulos> tulosLista) {
+        Collections.sort(tulosLista);
         for (Tulos tulos : tulosLista) {
-            tulosPaneeli.add(new JLabel(tulos.getPelaaja().getNimimerkki()));
-            tulosPaneeli.add(new JLabel(tulos.getProfiili().getNimi()));
-            tulosPaneeli.add(new JLabel(tulos.getProfiili().getKoko() + ""));
-            tulosPaneeli.add(new JLabel(tulos.getProfiili().getMiinoja() + ""));
-            tulosPaneeli.add(new JLabel(tulos.getOnnistuiko() + ""));
-            tulosPaneeli.add(new JLabel(tulos.getAika()));
-            i++;
-            if (i==10){
-                break;
-            }
+            tulosPaneeli.add(lisaaYksittainenTulosPaneeliin(tulos));
         }
     }
 
+    private JPanel lisaaYksittainenTulosPaneeliin(Tulos tulos) {
+        JPanel tulosRiviPaneeli = new JPanel(new GridLayout(1, 6));
+        tulosRiviPaneeli.add(new JLabel(tulos.getPelaaja().getNimimerkki()));
+        tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getNimi()));
+        tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getKoko() + ""));
+        tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getMiinoja() + ""));
+        tulosRiviPaneeli.add(new JLabel(tulos.getOnnistuiko() + ""));
+        tulosRiviPaneeli.add(new JLabel(tulos.getAika()));
+
+        return tulosRiviPaneeli;
+    }
+
     public void lisaaMuutTuloksetProfiileittain(Container container) {
-        JPanel muutTuloksetPaneeli = new JPanel(new GridLayout(this.peliProfiilit.size(), 1));
+        JPanel muutTuloksetPaneeli = new JPanel(new GridLayout(this.peliProfiilit.keySet().size(), 1));
 
         for (String profiiliNimi : this.peliProfiilit.keySet()) {
             lisaaTulosPaneeli(muutTuloksetPaneeli, profiiliNimi);
         }
 
-        container.add(muutTuloksetPaneeli, BorderLayout.SOUTH);
+        container.add(muutTuloksetPaneeli);
     }
-
 }

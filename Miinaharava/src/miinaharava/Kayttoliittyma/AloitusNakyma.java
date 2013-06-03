@@ -6,20 +6,12 @@ package miinaharava.Kayttoliittyma;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-import miinaharava.Entiteetit.Kayttaja;
-import miinaharava.Entiteetit.KenttaProfiili;
-import miinaharava.Entiteetit.Tulos;
-import miinaharava.Entiteetit.VakioProfiilit;
 
 /**
  * 
@@ -30,23 +22,18 @@ import miinaharava.Entiteetit.VakioProfiilit;
 public class AloitusNakyma implements Runnable {
     
     private JFrame frame;
-    private HashMap<String, Kayttaja> pelaajat;
-    private HashMap<String, KenttaProfiili> peliProfiilit;
-    private VakioProfiilit vakioProfiilit;
-    private LinkedList<Tulos> tulokset;
+    private SisaltoFrame nakyma;
+
     
-    public AloitusNakyma (HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset){
-        this.pelaajat = kayttajat;
-        this.peliProfiilit = profiilit;
-        this.tulokset = tulokset;
-        this.vakioProfiilit = vakioProfiilit;
+    public AloitusNakyma (SisaltoFrame nakyma){
+        this.nakyma = nakyma;
+        this.frame = nakyma.getFrame();
     }
 
     @Override
     public void run() {
-        frame = new JFrame("Miinaharava");
-        frame.setPreferredSize(new Dimension(300, 300));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        frame.getContentPane().removeAll();
         
         luoKomponentit(frame.getContentPane());
         
@@ -64,22 +51,6 @@ public class AloitusNakyma implements Runnable {
     
     public JFrame getFrame(){
         return frame;
-    }
-
-    public HashMap<String, Kayttaja> getPelaajat() {
-        return pelaajat;
-    }
-
-    public HashMap<String, KenttaProfiili> getPeliProfiilit() {
-        return peliProfiilit;
-    }
-
-    public VakioProfiilit getVakioProfiilit() {
-        return vakioProfiilit;
-    }
-
-    public LinkedList<Tulos> getTulokset() {
-        return tulokset;
     }
 
     private void lisaaAloitusteksti(Container container) {
@@ -104,7 +75,7 @@ public class AloitusNakyma implements Runnable {
     }
 
     private void lisaaKuuntelija(JButton uusiPeliNappula, JButton tulosNappula, JButton kirjauduNappula) {
-        ActionListener aloitusnakumaKuuntelija = new AloitusNaymaKuuntelija(uusiPeliNappula, tulosNappula, kirjauduNappula, frame, this);
+        ActionListener aloitusnakumaKuuntelija = new NakymaKuuntelija(uusiPeliNappula, tulosNappula, kirjauduNappula, this.nakyma);
         uusiPeliNappula.addActionListener(aloitusnakumaKuuntelija);
         tulosNappula.addActionListener(aloitusnakumaKuuntelija);
         kirjauduNappula.addActionListener(aloitusnakumaKuuntelija);

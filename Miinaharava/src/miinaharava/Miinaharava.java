@@ -10,6 +10,7 @@ import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
 import miinaharava.Kayttoliittyma.AloitusNakyma;
+import miinaharava.Kayttoliittyma.SisaltoFrame;
 import miinaharava.Pelikentta.Kentta;
 import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
@@ -34,7 +35,7 @@ public class Miinaharava {
 //        tallennusLogiikka.tallenna(tulokset);
         tallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);
 //        tulokset.clear();
-        AloitusNakyma kayttoliittyma = new AloitusNakyma(pelaajat, peliProfiilit, vakioProfiilit, tulokset);
+        SisaltoFrame kayttoliittyma = new SisaltoFrame(pelaajat, peliProfiilit, vakioProfiilit, tulokset);
         SwingUtilities.invokeLater(kayttoliittyma);
         
         tallennusLogiikka.tallenna(tulokset);

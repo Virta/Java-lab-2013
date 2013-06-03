@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import miinaharava.Entiteetit.Tulos;
 
 /**
  *
@@ -17,24 +18,32 @@ import javax.swing.SwingUtilities;
  *
  * @author virta
  */
-public class AloitusNaymaKuuntelija implements ActionListener {
-
+public class NakymaKuuntelija implements ActionListener {
+    
     private JButton uusiPeli;
     private JButton tulokset;
     private JButton kirjaudu;
-//    private JButton lopeta;
     private JFrame frame;
-    private AloitusNakyma nakyma;
-
-    public AloitusNaymaKuuntelija(JButton uusiPeli, JButton tulokset, JButton kirjaudu, JFrame frame, AloitusNakyma nakyma) {
+    private SisaltoFrame nakyma;
+    private JButton takaisinNappula;
+    
+    public NakymaKuuntelija(JButton uusiPeli, JButton tulokset, JButton kirjaudu, SisaltoFrame nakyma) {
         this.uusiPeli = uusiPeli;
         this.tulokset = tulokset;
         this.kirjaudu = kirjaudu;
-//        this.lopeta = lopeta;
-        this.frame = frame;
-        this.nakyma = nakyma;
+        lisaaNakymaJaFrame(nakyma);
     }
-
+    
+    public NakymaKuuntelija(JButton takaisinNappula, SisaltoFrame nakyma) {
+        lisaaNakymaJaFrame(nakyma);
+        this.takaisinNappula = takaisinNappula;
+    }
+    
+    private void lisaaNakymaJaFrame(SisaltoFrame nakyma) {
+        this.nakyma = nakyma;
+        this.frame = nakyma.getFrame();
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == uusiPeli) {
@@ -43,19 +52,24 @@ public class AloitusNaymaKuuntelija implements ActionListener {
             avaaTulokset();
         } else if (e.getSource() == kirjaudu) {
             kirjautuminen();
+        } else if (e.getSource() == takaisinNappula) {
+            takaisinAloitusNakymaan();
         }
     }
-
+    
     private void aloitaUusiPeli() {
     }
-
+    
     private void avaaTulokset() {
-        TulosNakyma tulosNakyma = new TulosNakyma(nakyma.getPelaajat(), nakyma.getPeliProfiilit(), nakyma.getTulokset());
-        frame.setVisible(false);
+        TulosNakyma tulosNakyma = new TulosNakyma(nakyma);
         SwingUtilities.invokeLater(tulosNakyma);
-        frame.setVisible(true);
     }
-
+    
     private void kirjautuminen() {
+    }
+    
+    private void takaisinAloitusNakymaan() {
+        AloitusNakyma aloitusNakyma = new AloitusNakyma(this.nakyma);
+        SwingUtilities.invokeLater(aloitusNakyma);
     }
 }

@@ -130,7 +130,11 @@ public class tallennusLogiikka {
             kayttajat.put(nimimerkki, kayttaja);
         }
         
-        if (!profiilit.containsKey(kenttaProfiiliNimi)) {
+        if (!profiilit.containsKey(kenttaProfiiliNimi) 
+                && !kenttaProfiiliNimi.equals("Helppo")
+                && !kenttaProfiiliNimi.equals("Keskivaikea")
+                && !kenttaProfiiliNimi.equals("Vaikea")) {
+            
             profiilit.put(kenttaProfiiliNimi, profiili);
         }
         
