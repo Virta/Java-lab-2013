@@ -1,9 +1,5 @@
 package miinaharava.Entiteetit;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.util.Date;
-
 /**
  * Luokka jonka olioina kaikki tulokset ilmenevät, olioita ei suoraan tallenneta tiedostoon, vaan ne muunnetaan H(uman)R(eadable)-muotoon ja tallennetaan tiedostoon.
  *

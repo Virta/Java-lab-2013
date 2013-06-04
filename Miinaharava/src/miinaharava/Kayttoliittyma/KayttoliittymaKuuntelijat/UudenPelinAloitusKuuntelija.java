@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import miinaharava.Kayttoliittyma.AloitusNakyma;
+import miinaharava.Kayttoliittyma.PelikenttaNakyma;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
 
 /**
@@ -50,18 +51,22 @@ public class UudenPelinAloitusKuuntelija implements ActionListener {
     }
 
     private void uusiHelppoPeli() {
-//        AloitusNakyma nak = new AloitusNakyma(nakyma);
-//        SwingUtilities.invokeLater(nak);
+        PelikenttaNakyma pelikentta = new PelikenttaNakyma(nakyma, this.nakyma.getVakioProfiilit().getHelppo());
+        SwingUtilities.invokeLater(pelikentta);
     }
 
     private void uusiKeskivaikeaPeli() {
+        PelikenttaNakyma pelikentta = new PelikenttaNakyma(nakyma, this.nakyma.getVakioProfiilit().getKeskiVaikea());
+        SwingUtilities.invokeLater(pelikentta);
     }
 
     private void uusiVaikeaPeli() {
+        PelikenttaNakyma pelikentta = new PelikenttaNakyma(nakyma, this.nakyma.getVakioProfiilit().getVaikea());
+        SwingUtilities.invokeLater(pelikentta);
     }
 
     private void uusiCustomPeli() {
-        AloitusNakyma nak = new AloitusNakyma(nakyma);
-        SwingUtilities.invokeLater(nak);
+        PelikenttaNakyma pelikentta = new PelikenttaNakyma(nakyma, this.nakyma.getPeliProfiilit().get(geneerinen.getText()));
+        SwingUtilities.invokeLater(pelikentta);
     }
 }

@@ -1,9 +1,6 @@
 package miinaharava.Entiteetit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Luokka hallinnoimaan käyttäjän tietoja ajon aikana.

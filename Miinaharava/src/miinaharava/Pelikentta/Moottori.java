@@ -66,7 +66,7 @@ public class Moottori {
      */
     public double getAika(){
         if (this.aikaLopussa==0){
-            return (System.currentTimeMillis()-this.aikaAlussa)/1000;
+            return 0;
         }
         return (this.aikaLopussa-this.aikaAlussa)/1000;
     }

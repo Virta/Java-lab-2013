@@ -65,7 +65,7 @@ public class TulosNakyma implements Runnable {
     }
 
     private void lisaaAlkuTesksti(Container container) {
-        container.add(new JLabel("Miinaharavan pelitulokset"));
+        container.add(new JLabel("Miinaharava - pelitulokset"));
         lisaaKenttienOtsikot(container);
     }
     

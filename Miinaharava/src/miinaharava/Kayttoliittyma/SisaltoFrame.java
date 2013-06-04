@@ -4,11 +4,9 @@
  */
 package miinaharava.Kayttoliittyma;
 
-import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
