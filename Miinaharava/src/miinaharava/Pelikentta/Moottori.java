@@ -65,8 +65,10 @@ public class Moottori {
      * @return Palauttaa metodin kutsuhetkellä kulunut aika pelin aloituksesta, tai pelin lopetukseen kulunut aika.
      */
     public double getAika(){
-        if (this.aikaLopussa==0){
+        if (this.aikaAlussa==0){
             return 0;
+        } else if (this.aikaLopussa == 0){
+            return System.currentTimeMillis()-this.aikaAlussa;
         }
         return (this.aikaLopussa-this.aikaAlussa)/1000;
     }
