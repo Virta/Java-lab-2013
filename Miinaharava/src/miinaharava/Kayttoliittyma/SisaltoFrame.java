@@ -40,7 +40,6 @@ public class SisaltoFrame implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Miinaharava");
-        frame.setPreferredSize(new Dimension(1000, 600));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         AloitusNakyma aloitusNakyma = new AloitusNakyma(this);

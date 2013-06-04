@@ -5,9 +5,11 @@
 package miinaharava.Kayttoliittyma;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,9 +35,8 @@ public class AloitusNakyma implements Runnable {
 
     @Override
     public void run() {
-        
         frame.getContentPane().removeAll();
-        
+        frame.setPreferredSize(new Dimension(500, 200));
         luoKomponentit(frame.getContentPane());
         
         frame.pack();
@@ -43,10 +44,10 @@ public class AloitusNakyma implements Runnable {
     }
     
     private void luoKomponentit(Container container){
-        container.setLayout(new BorderLayout());
-        lisaaAloitusteksti(container);
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.add(lisaaAloitusteksti());
         
-        lisaaAloitusNapit(container);
+        container.add(lisaaAloitusNapit());
         
     }
     
@@ -54,18 +55,20 @@ public class AloitusNakyma implements Runnable {
         return frame;
     }
 
-    private void lisaaAloitusteksti(Container container) {
-        JPanel ylaPaneeli = new JPanel(new GridLayout(3, 1));
+    private Component lisaaAloitusteksti() {
+        JPanel ylaPaneeli = new JPanel();
+        ylaPaneeli.setLayout(new BoxLayout(ylaPaneeli, BoxLayout.Y_AXIS));
         ylaPaneeli.add(new JLabel("Tervetuloa pelaamaan miinaharavaa!"));
         if (!this.nakyma.getKirjautunutNimimerkki().equals("Anon")){
             ylaPaneeli.add(new JLabel("Olet kirjautuneena nimimerkillä "+this.nakyma.getKirjautunutNimimerkki()+"."));
         }
         ylaPaneeli.add(new JLabel("Valitse jokin seuraavista:"));
-        container.add(ylaPaneeli, BorderLayout.NORTH);
+        return ylaPaneeli;
     }
 
-    private void lisaaAloitusNapit(Container container) {
-        JPanel keskipaneeli = new JPanel(new GridLayout(4, 1));
+    private Component lisaaAloitusNapit() {
+        JPanel keskipaneeli = new JPanel();
+        keskipaneeli.setLayout(new BoxLayout(keskipaneeli, BoxLayout.Y_AXIS));
         JButton uusiPeliNappula = new JButton("Uusi peli");
         JButton tulosNappula = new JButton("Tulokset");
         JButton kirjauduNappula = new JButton("Kirjaudu");
@@ -75,7 +78,7 @@ public class AloitusNakyma implements Runnable {
         
         lisaaNapitPaneeliin(keskipaneeli, uusiPeliNappula, tulosNappula, kirjauduNappula);
         
-        container.add(keskipaneeli, BorderLayout.CENTER);
+        return keskipaneeli;
     }
 
     private void lisaaKuuntelija(JButton uusiPeliNappula, JButton tulosNappula, JButton kirjauduNappula) {

@@ -7,11 +7,11 @@ package miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import miinaharava.Kayttoliittyma.KirjautumisNakyma;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
 import miinaharava.Kayttoliittyma.TulosNakyma;
+import miinaharava.Kayttoliittyma.UudenPelinAloitusNakyma;
 
 /**
  *
@@ -44,7 +44,8 @@ public class PaavalikkoKuuntelija implements ActionListener {
     }
     
     private void uusiPeli(){
-        
+        UudenPelinAloitusNakyma uusiPeliNakyma = new UudenPelinAloitusNakyma(nakyma);
+        SwingUtilities.invokeLater(uusiPeliNakyma);
     }
     
     private void tulokset(){

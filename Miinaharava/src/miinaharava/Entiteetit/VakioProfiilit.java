@@ -1,5 +1,8 @@
 package miinaharava.Entiteetit;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 /**
  * Luokka, joka muodostaa pelin vakioprofiilit, jotka ovat kovakoodattuja.
  *
@@ -38,6 +41,12 @@ public class VakioProfiilit {
 
     public KenttaProfiili getVaikea() {
         return vaikea;
+    }
+    
+    public LinkedList<KenttaProfiili> getVakioProfiilit(){
+        LinkedList<KenttaProfiili> kaikki = new LinkedList<>();
+        Collections.addAll(kaikki, this.helppo, this.keskiVaikea, this.vaikea);
+        return kaikki;
     }
     
 }

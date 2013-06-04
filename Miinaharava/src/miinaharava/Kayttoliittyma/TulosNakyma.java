@@ -16,6 +16,7 @@ import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
@@ -44,7 +45,7 @@ public class TulosNakyma implements Runnable {
     @Override
     public void run() {
         frame.getContentPane().removeAll();
-        
+        frame.setPreferredSize(new Dimension(1000, 600));
         luoKomponentit(frame.getContentPane());
 
         frame.pack();
@@ -60,7 +61,7 @@ public class TulosNakyma implements Runnable {
         lisaaAlkuTesksti(container);
         lisaaVakioTulokset(container);
         lisaaMuutTuloksetProfiileittain(container);
-        lisaaTakaisinNappula(container);
+        container.add(luoTakaisinNappi());
     }
 
     private void lisaaAlkuTesksti(Container container) {
@@ -68,11 +69,11 @@ public class TulosNakyma implements Runnable {
         lisaaKenttienOtsikot(container);
     }
     
-    private void lisaaTakaisinNappula(Container container){
-        JButton takaisinNappula = new JButton("Takaisin");
-        TakaisinNappiKuuntelija kuuntelija = new TakaisinNappiKuuntelija(takaisinNappula, nakyma);
-        takaisinNappula.addActionListener(kuuntelija);
-        container.add(takaisinNappula);
+    private JButton luoTakaisinNappi() {
+        JButton takaisinNappi = new JButton("Takaisin");
+        TakaisinNappiKuuntelija kuuntelija = new TakaisinNappiKuuntelija(takaisinNappi, nakyma);
+        takaisinNappi.addActionListener(kuuntelija);
+        return takaisinNappi;
     }
 
     private void lisaaKenttienOtsikot(Container container) {

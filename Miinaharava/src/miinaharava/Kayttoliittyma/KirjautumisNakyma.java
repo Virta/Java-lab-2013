@@ -6,6 +6,7 @@ package miinaharava.Kayttoliittyma;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ public class KirjautumisNakyma implements Runnable {
     @Override
     public void run() {
         frame.getContentPane().removeAll();
-
+        frame.setPreferredSize(new Dimension(500, 200));
         luoKomponentit(frame.getContentPane());
 
         frame.pack();
