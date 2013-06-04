@@ -12,10 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.PaavalikkoKuuntelija;
 
 /**
  * 
- * Tämä luokka on koko miinaharava-pelin graafisen käyttöliittymän alku ja juuri; täältä pelaaja valitsee haluamansa toiminnot aina kun ohjelma suoritetaan.
+ * Tämä luokka on miinaharava-pelin graafisen käyttöliittymän alku; täältä pelaaja valitsee haluamansa toiminnot aina kun ohjelma suoritetaan.
  *
  * @author virta
  */
@@ -25,7 +26,7 @@ public class AloitusNakyma implements Runnable {
     private SisaltoFrame nakyma;
 
     
-    public AloitusNakyma (SisaltoFrame nakyma){
+    public AloitusNakyma(SisaltoFrame nakyma){
         this.nakyma = nakyma;
         this.frame = nakyma.getFrame();
     }
@@ -54,8 +55,11 @@ public class AloitusNakyma implements Runnable {
     }
 
     private void lisaaAloitusteksti(Container container) {
-        JPanel ylaPaneeli = new JPanel(new GridLayout(2, 1));
+        JPanel ylaPaneeli = new JPanel(new GridLayout(3, 1));
         ylaPaneeli.add(new JLabel("Tervetuloa pelaamaan miinaharavaa!"));
+        if (!this.nakyma.getKirjautunutNimimerkki().equals("Anon")){
+            ylaPaneeli.add(new JLabel("Olet kirjautuneena nimimerkillä "+this.nakyma.getKirjautunutNimimerkki()+"."));
+        }
         ylaPaneeli.add(new JLabel("Valitse jokin seuraavista:"));
         container.add(ylaPaneeli, BorderLayout.NORTH);
     }
@@ -75,11 +79,10 @@ public class AloitusNakyma implements Runnable {
     }
 
     private void lisaaKuuntelija(JButton uusiPeliNappula, JButton tulosNappula, JButton kirjauduNappula) {
-        ActionListener aloitusnakumaKuuntelija = new NakymaKuuntelija(uusiPeliNappula, tulosNappula, kirjauduNappula, this.nakyma);
-        uusiPeliNappula.addActionListener(aloitusnakumaKuuntelija);
-        tulosNappula.addActionListener(aloitusnakumaKuuntelija);
-        kirjauduNappula.addActionListener(aloitusnakumaKuuntelija);
-//        lopeta.addActionListener(aloitusnakumaKuuntelija);
+        PaavalikkoKuuntelija kuuntelija = new PaavalikkoKuuntelija(tulosNappula, kirjauduNappula, uusiPeliNappula, nakyma);
+        uusiPeliNappula.addActionListener(kuuntelija);
+        tulosNappula.addActionListener(kuuntelija);
+        kirjauduNappula.addActionListener(kuuntelija);
         
     }
 
@@ -87,7 +90,6 @@ public class AloitusNakyma implements Runnable {
         keskipaneeli.add(uusiPeliNappula);
         keskipaneeli.add(tulosNappula);
         keskipaneeli.add(kirjauduNappula);
-//        keskipaneeli.add(lopeta);
     }
     
 }

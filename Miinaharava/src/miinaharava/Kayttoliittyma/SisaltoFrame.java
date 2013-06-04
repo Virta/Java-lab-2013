@@ -16,7 +16,8 @@ import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
 
 /**
- *
+ * Tämä luokka on miinaharavan käyttöliittymän pohja; tätä luokkaa ja sen JFramea liikutellaan käyttöliittymän eri osien välillä, ja sen 
+ * JFrameen tehdään muutoksia aina kyseessä olevan näkymän mukaisesti.
  * @author frojala
  */
 public class SisaltoFrame implements Runnable {
@@ -26,12 +27,14 @@ public class SisaltoFrame implements Runnable {
     private HashMap<String, KenttaProfiili> peliProfiilit;
     private VakioProfiilit vakioProfiilit;
     private LinkedList<Tulos> tulokset;
+    private String kirjautunutNimimerkki;
 
     public SisaltoFrame(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset) {
         this.pelaajat = kayttajat;
         this.peliProfiilit = profiilit;
         this.tulokset = tulokset;
         this.vakioProfiilit = vakioProfiilit;
+        this.kirjautunutNimimerkki = "Anon";
     }
 
     @Override
@@ -42,6 +45,14 @@ public class SisaltoFrame implements Runnable {
         
         AloitusNakyma aloitusNakyma = new AloitusNakyma(this);
         aloitusNakyma.run();
+    }
+
+    public String getKirjautunutNimimerkki() {
+        return kirjautunutNimimerkki;
+    }
+
+    public void setKirjautunutNimimerkki(String kirjautunutNimimerkki) {
+        this.kirjautunutNimimerkki = kirjautunutNimimerkki;
     }
 
     public JFrame getFrame() {

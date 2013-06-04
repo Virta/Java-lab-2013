@@ -4,29 +4,25 @@
  */
 package miinaharava.Kayttoliittyma;
 
-import com.sun.imageio.plugins.jpeg.JPEG;
-import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
-import miinaharava.Entiteetit.VakioProfiilit;
-import com.sun.imageio.plugins.jpeg.JPEG;
-import java.awt.Color;
+import java.awt.Component;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
 
 /**
- *
+ * Tässä luokassa näytetään tulokset, jotka otetaan pääluokalta SisaltoFramesta.
+ * 
  * @author virta
  */
 public class TulosNakyma implements Runnable {
@@ -47,7 +43,6 @@ public class TulosNakyma implements Runnable {
 
     @Override
     public void run() {
-
         frame.getContentPane().removeAll();
         
         luoKomponentit(frame.getContentPane());
@@ -61,7 +56,7 @@ public class TulosNakyma implements Runnable {
     }
 
     private void luoKomponentit(Container container) {
-        container.setLayout(new GridLayout(4, 1));
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         lisaaAlkuTesksti(container);
         lisaaVakioTulokset(container);
         lisaaMuutTuloksetProfiileittain(container);
@@ -69,29 +64,18 @@ public class TulosNakyma implements Runnable {
     }
 
     private void lisaaAlkuTesksti(Container container) {
-        
-        GridLayout containerLayout = new GridLayout(2, 1);
-        JPanel ylapaneeli = new JPanel(containerLayout);
-        
-        
-        ylapaneeli.setBorder(BorderFactory.createLineBorder(Color.yellow));
-        
-        
-        
-        
-        ylapaneeli.add(new JLabel("Miinaharavan pelitulokset"));
-        lisaaKenttienOtsikot(ylapaneeli);
-        container.add(ylapaneeli);
+        container.add(new JLabel("Miinaharavan pelitulokset"));
+        lisaaKenttienOtsikot(container);
     }
     
     private void lisaaTakaisinNappula(Container container){
         JButton takaisinNappula = new JButton("Takaisin");
-        NakymaKuuntelija kuuntelija = new NakymaKuuntelija(takaisinNappula, this.nakyma);
+        TakaisinNappiKuuntelija kuuntelija = new TakaisinNappiKuuntelija(takaisinNappula, nakyma);
         takaisinNappula.addActionListener(kuuntelija);
         container.add(takaisinNappula);
     }
 
-    private void lisaaKenttienOtsikot(JPanel paneeli) {
+    private void lisaaKenttienOtsikot(Container container) {
         JPanel otsikot = new JPanel(new GridLayout(1, 6));
         otsikot.add(new JLabel("Nimimerkki"));
         otsikot.add(new JLabel("Kenttä Profiili"));
@@ -99,20 +83,18 @@ public class TulosNakyma implements Runnable {
         otsikot.add(new JLabel("Miinoja"));
         otsikot.add(new JLabel("Läpäisy"));
         otsikot.add(new JLabel("Aika"));
-        paneeli.add(otsikot);
+        container.add(otsikot);
     }
 
     private void lisaaVakioTulokset(Container container) {
-        JPanel vakioTulokset = new JPanel(new GridLayout(3, 1));
 
-        lisaaTulosPaneeli(vakioTulokset, "Helppo");
-        lisaaTulosPaneeli(vakioTulokset, "Keskivaikea");
-        lisaaTulosPaneeli(vakioTulokset, "Vaikea");
+        lisaaTulosPaneeli(container, "Helppo");
+        lisaaTulosPaneeli(container, "Keskivaikea");
+        lisaaTulosPaneeli(container, "Vaikea");
 
-        container.add(vakioTulokset);
     }
 
-    private void lisaaTulosPaneeli(JPanel tulosPaneeli, String profiiliNimi) {
+    private void lisaaTulosPaneeli(Container container, String profiiliNimi) {
         LinkedList<Tulos> tulosLista = new LinkedList<>();
         for (Tulos tulos : this.tulokset) {
             if (tulos.getProfiili().getNimi().equals(profiiliNimi)) {
@@ -120,37 +102,37 @@ public class TulosNakyma implements Runnable {
             }
         }
 
-        JPanel tulosProfiiliPaneeli = new JPanel(new GridLayout(tulosLista.size(), 1));
-        lisaaTulosLista(tulosProfiiliPaneeli, tulosLista);
-        tulosPaneeli.add(tulosProfiiliPaneeli);
+        if (tulosLista.size()==0){ return; }
+        
+        lisaaTulosLista(container, tulosLista);
     }
 
-    private void lisaaTulosLista(JPanel tulosPaneeli, LinkedList<Tulos> tulosLista) {
+    private void lisaaTulosLista(Container container, LinkedList<Tulos> tulosLista) {
         Collections.sort(tulosLista);
         for (Tulos tulos : tulosLista) {
-            tulosPaneeli.add(lisaaYksittainenTulosPaneeliin(tulos));
+            container.add(lisaaYksittainenTulosPaneeliin(tulos));
         }
     }
 
-    private JPanel lisaaYksittainenTulosPaneeliin(Tulos tulos) {
-        JPanel tulosRiviPaneeli = new JPanel(new GridLayout(1, 6));
+    private Component lisaaYksittainenTulosPaneeliin(Tulos tulos) {
+        JPanel tulosRiviPaneeli = new JPanel();
+        tulosRiviPaneeli.setLayout(new GridLayout(1, 6));
+        
         tulosRiviPaneeli.add(new JLabel(tulos.getPelaaja().getNimimerkki()));
         tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getNimi()));
         tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getKoko() + ""));
         tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getMiinoja() + ""));
         tulosRiviPaneeli.add(new JLabel(tulos.getOnnistuiko() + ""));
         tulosRiviPaneeli.add(new JLabel(tulos.getAika()));
-
+        
         return tulosRiviPaneeli;
     }
 
     public void lisaaMuutTuloksetProfiileittain(Container container) {
-        JPanel muutTuloksetPaneeli = new JPanel(new GridLayout(this.peliProfiilit.keySet().size(), 1));
 
         for (String profiiliNimi : this.peliProfiilit.keySet()) {
-            lisaaTulosPaneeli(muutTuloksetPaneeli, profiiliNimi);
+            lisaaTulosPaneeli(container, profiiliNimi);
         }
 
-        container.add(muutTuloksetPaneeli);
     }
 }
