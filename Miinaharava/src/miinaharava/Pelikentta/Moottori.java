@@ -68,7 +68,7 @@ public class Moottori {
         if (this.aikaAlussa==0){
             return 0;
         } else if (this.aikaLopussa == 0){
-            return System.currentTimeMillis()-this.aikaAlussa;
+            return (System.currentTimeMillis()-this.aikaAlussa)/1000;
         }
         return (this.aikaLopussa-this.aikaAlussa)/1000;
     }
