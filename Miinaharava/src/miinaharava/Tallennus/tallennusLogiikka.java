@@ -4,17 +4,12 @@
  */
 package miinaharava.Tallennus;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.WindowConstants;
 import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;

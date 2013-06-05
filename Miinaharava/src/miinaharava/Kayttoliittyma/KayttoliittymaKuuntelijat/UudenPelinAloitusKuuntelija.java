@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
-import miinaharava.Kayttoliittyma.AloitusNakyma;
 import miinaharava.Kayttoliittyma.PelikenttaNakyma;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
 

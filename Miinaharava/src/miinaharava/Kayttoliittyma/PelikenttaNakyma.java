@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import miinaharava.Entiteetit.KenttaProfiili;
+import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.KelloPaivittaja;
 import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.PelikenttaKuuntelija;
 import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
 import miinaharava.Pelikentta.Moottori;
@@ -30,6 +31,8 @@ public class PelikenttaNakyma implements Runnable {
     private KenttaProfiili profiili;
     private JButton[][] soluPainikkeet;
     private JLabel kello;
+    private JLabel miinatieto;
+    private KelloPaivittaja paivittaja;
 
     public PelikenttaNakyma(SisaltoFrame nakyma, KenttaProfiili profiili) {
         this.nakyma = nakyma;
@@ -51,7 +54,7 @@ public class PelikenttaNakyma implements Runnable {
     private void luoKomponentit(Container container){
         container.add(luoAlkutekstit());
         luoMoottori();
-        container.add(luoKello());
+        container.add(luoKelloJaMiinaKentat());
         container.add(luoPelikentta());
         container.add(luoTakaisinNappi());
     }
@@ -122,13 +125,17 @@ public class PelikenttaNakyma implements Runnable {
         this.moottori=new Moottori(profiili);
     }
     
-    private Component luoKello(){
+    private Component luoKelloJaMiinaKentat(){
         JPanel kelloPaneeli = new JPanel();
         kelloPaneeli.setLayout(new BoxLayout(kelloPaneeli, BoxLayout.X_AXIS));
+        
         int aika = (int) moottori.getAika();
         String aikaString = (aika/60)+":"+(aika-(aika/60));
-        JLabel kello = new JLabel(aikaString);
-        this.kello = kello;
+        
+        this.kello = new JLabel(aikaString);
+        this.miinatieto = new JLabel(moottori.getKentta().getMiinojaJaljella()+"");
+        this.paivittaja = new KelloPaivittaja(kello, moottori, miinatieto);
+        
         kelloPaneeli.add(kello);
         return kelloPaneeli;
     }

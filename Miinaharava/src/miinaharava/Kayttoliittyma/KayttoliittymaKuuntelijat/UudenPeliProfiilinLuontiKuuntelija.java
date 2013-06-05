@@ -67,6 +67,7 @@ public class UudenPeliProfiilinLuontiKuuntelija implements ActionListener {
         String miinojaString = (String) miinoja.getSelectedItem();
         int kentanKokoInteger = 0;
         int miinojaInteger = 0;
+        
         try {
             kentanKokoInteger = Integer.parseInt(kentanKokoString);
             miinojaInteger = Integer.parseInt(miinojaString);
@@ -74,23 +75,7 @@ public class UudenPeliProfiilinLuontiKuuntelija implements ActionListener {
             naytaVirheilmoitus(e.getMessage());
         }
         
-        if (miinojaInteger < kentanKokoInteger*kentanKokoInteger){
-            String profiiliNimiString = this.profiiliNimi.getText();
-            if (profiiliNimiString.length()<11 && !this.nakyma.getPeliProfiilit().keySet().contains(profiiliNimiString)){
-                KenttaProfiili uusiProfiili = new KenttaProfiili(profiiliNimiString, miinojaInteger, miinojaInteger);
-                this.nakyma.getPeliProfiilit().put(profiiliNimiString, uusiProfiili);
-                this.nakyma.getPelaajat().get(this.nakyma.getKirjautunutNimimerkki()).addProfiili(uusiProfiili);
-                
-                UudenPelinAloitusNakyma uudenPelinAloitusNakyma = new UudenPelinAloitusNakyma(nakyma);
-                SwingUtilities.invokeLater(uudenPelinAloitusNakyma);
-                
-            } else {
-                viestikentta.setText("Profiilinimi ei kelpaa: on jo käytössä tai väärän pituinen.");
-            }
-        } else {
-            viestikentta.setText("Liikaa miinoja valitussa kentän koossa, valitse toinen kombinaatio!");
-        }
-        
+        tarkistaJaToimi(miinojaInteger, kentanKokoInteger);
     }
     
     private void naytaVirheilmoitus(String virheilmoText){
@@ -103,6 +88,28 @@ public class UudenPeliProfiilinLuontiKuuntelija implements ActionListener {
         
         virheFrame.pack();
         virheFrame.setVisible(true);
+    }
+
+    private void luoProfiiliJaPalaaPaavalikkoon(String profiiliNimiString, int kentanKokoInteger, int miinojaInteger) {
+        KenttaProfiili uusiProfiili = new KenttaProfiili(profiiliNimiString, kentanKokoInteger, miinojaInteger);
+        this.nakyma.getPeliProfiilit().put(profiiliNimiString, uusiProfiili);
+        this.nakyma.getPelaajat().get(this.nakyma.getKirjautunutNimimerkki()).addProfiili(uusiProfiili);
+        
+        UudenPelinAloitusNakyma uudenPelinAloitusNakyma = new UudenPelinAloitusNakyma(nakyma);
+        SwingUtilities.invokeLater(uudenPelinAloitusNakyma);
+    }
+
+    private void tarkistaJaToimi(int miinojaInteger, int kentanKokoInteger) {
+        if (miinojaInteger < kentanKokoInteger*kentanKokoInteger){
+            String profiiliNimiString = this.profiiliNimi.getText();
+            if (profiiliNimiString.length()<11 && !this.nakyma.getPeliProfiilit().keySet().contains(profiiliNimiString)){
+                luoProfiiliJaPalaaPaavalikkoon(profiiliNimiString, kentanKokoInteger, miinojaInteger);
+            } else {
+                viestikentta.setText("Profiilinimi ei kelpaa: on jo käytössä tai väärän pituinen.");
+            }
+        } else {
+            viestikentta.setText("Liikaa miinoja valitussa kentän koossa, valitse toinen kombinaatio!");
+        }
     }
     
 }

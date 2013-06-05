@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package miinaharava.Pelikentta;
 
 import miinaharava.Entiteetit.KenttaProfiili;
@@ -26,10 +22,6 @@ public class Kentta {
      * Profiili jonka mukaan kenttä luodaan ja jonka arvojen avulla kentässä navigoidaan luokan sisäisesti.
      */
     private KenttaProfiili profiili;
-    /**
-     * Deprecated, eli vanhentunut eikä käytetä tällä hektellä, pitää kirjaa täytyykö lippujen määrä laskea uudelleen.
-     */
-    private boolean miinatietoPaivitettava;
 
     /**
      * Konstruktori alustaa luokan sisäiset muuttujat annetun profiilin perusteella ja luo kentän.
@@ -38,40 +30,16 @@ public class Kentta {
     public Kentta(KenttaProfiili profiili) {
         this.profiili = profiili;
         this.miinojaJaljella = profiili.getMiinoja();
-//        miinatietoPaivitettava = false;
-
         luoKentta();
-
     }
 
     public int getMiinojaJaljella() {
-//        if (miinatietoPaivitettava) {
-//            paivitaMiinatieto();
-//        }
         return this.miinojaJaljella;
     }
 
     public Solu getSolu(int x, int y) {
-//        miinatietoPaivitettava = true;
         return this.solut[x][y];
     }
-
-//    Mahdollisesti toteutettava, mennään ensin palauttamalla solu kutsuvalle metodille. Jos toteutettava, muista miinatiedon päivitys.
-//    private void setFlagi(int x, int y){
-//        this.solut[x][y].setFlagit();
-//    }
-//    
-//    private int getFlagi(int x, int y){
-//        return this.solut[x][y].getFlagi();
-//    }
-//    
-//    public boolean isMiina(int x, int y){
-//        return this.solut[x][y].isMiina();
-//    }
-//    
-//    public int vieressaMiinoja(int x, int y){
-//        return this.solut[x][y].getVieressaMiinoja();
-//    }
     
     /**
      * Metodi, jota käytetään käyttäjän asettaessa lipun solulle.
@@ -88,22 +56,6 @@ public class Kentta {
         } else if (flagi == 2) {
             this.miinojaJaljella++;
         }
-    }
-    
-    /**
-     * Deprecated, eli tällä hetkellä ei käytetä mutta jää vielä toistaiseksi, päivittää kentän miinatiedon laskemalla kaikkien solujen liput.
-     */
-    private void paivitaMiinatieto() {
-        int miinat = profiili.getMiinoja();
-        for (int i = 0; i < profiili.getKoko(); i++) {
-            for (int k = 0; k < profiili.getKoko(); k++) {
-                if (solut[i][k].getFlagi() == 1) {
-                    miinat--;
-                }
-            }
-        }
-        miinojaJaljella = miinat;
-        miinatietoPaivitettava = false;
     }
 
     /**

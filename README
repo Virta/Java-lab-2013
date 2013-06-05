@@ -2,18 +2,30 @@ Ohjelmoinnin harjoitustyö
 
 Tämä on miinaharava-peli!
 
-Miinaharavassa voit käynnistää uuden pelin kolmen ennalta määrätyn kentän koolla. Voit myös itse valita kentän koon ja miinojen määrän kentässä.
+Miinaharavassa voit käynnistää uuden pelin kolmen ennalta määrätyn kentän koolla. Voit myös itse valita kentän koon ja miinojen määrän kentässä. Jotta voi tehdä kustomoidun pelin sinun tulee luoda itsellesi nimimerkki.
 
 Aloitusnäkymästä käsin pääset tarkastelemaan aikaisempia tuloksia klikkaamalla "Tulokset". Tuloksissa näkyy kentän koko, miinojen tiheys, läpäistiinkö ja missä ajassa peli loppui. Tulokset on jaettu kahteen osioon: vakioprofiileilla pelattuihin ja omilla profiileilla pelattuihin.
 
 Voit myös luoda oman pelaaja-profiilin, johon tallentuvat pelaamasi pelit! Sinun ei tarvitse kirjautua pelataksesi, mutta kirjautuaksesi sinun on syötettävä oikea nimimerkki, salasanaa ei kysellä. Jos et kirjaudu, tallentuvat pelit anonyyminä.
 
-Pelaaminen:
+
+Pelin kulku:
 Kun aloitat pelin saat uuden ikkunan, jossa on miinakenttä. Kentän ylälaidassa on juokseva kello ja liputtamattomien miinojen lukumäärä.
-Kello käynnistetään kun avaat ensimmäisen solun. Jos klikkaat miinaa kello pysähtyy, ja peli loppuu näyttäen kaikki miinat.
+Kello käynnistetään kun avaat ensimmäisen solun. Jos klikkaat miinaa kello pysähtyy ja peli loppuu näyttäen kaikki miinat.
+Jos onnistut avaamaan kaikki solut, joissa ei ole miinoja peli päättyy onnistuneesti ja kello pysähtyy. Sinun ei tarvitse liputtaa soluja, kunhan avaat ne!
 
-Jos onnistut avaamaan kaikki solut, joissa ei ole miinoja peli päättyy onnistuneesti ja kello pysähtyy.
+Pelin päättymisen jälkeen näet pelin päättymiseen kuluneen ajan kellosta. Voit tarkastella tuloksia tulokset osiosta johon pääset päävalikon kautta valitsemalla "Tulokset".
+Tuloksesi tallennetaan kun suljet ohjelman! Älä siis kaada ohjelmaa väkisin, vaan sulje se ikkunan ruksista.
 
-Pelin päättymisen jälkeen sinulle näytetään pelin päättymiseen kulunut aika. Voit tarkastella tuloksia tulokset osiosta johon pääset sulkemalla ja valitsemalla päävalikosta "Tulokset".
+Itse pelaaminen:
+Avaa yksi solmu klikkaamalla sitä hiiren vasemmalla näppäimellä.
+Avaa monta solua klikkaamalla samanaikaisesti hiiren vasenta ja oikeaa näppäintä.
+Liputa miina hiiren oikealla näppäimellä, soluun ilmestyy huutomerkki miinalipun merkiksi. Klikkaamalla uudestaan jo liputettua solua asetat solulle kysymysmerkin. Jos klikkaat vielä kerran poistuu solulta lippu.
+
+Liput: 1. klikkaus: miina, 2. klikkaus: kysymysmerkki, 3. klikkaus: poistaa lipun
+
+Kun solu aukeaa, paljastuu onko se vaaraton (tyhjä solu), vaarallinen (numero, joka osoittaa vieressä olevien miinojen määrän) tai oliko solu miina (ruksi (X).
+
+Kun olet liputtanut solun miinaksi, voit kokeilla avata sen vieressä olevasta vaaralliseksi merkitystä solusta useamman solun. Jos solussa oleva lukumäärä lippuja löytyy viereisistä soluista avautuu kaikki 8 ympäröivää solua joita ei ole liputettu miinaksi. Jos liputut väärin peli loppuu koska räjäytit miinan. Jos et ole liputtanut tarpeeksi ympäröiviä soluja ei useamman avaaminen onnistu. Kysymysmerkki lippuna ei lukitse solua, se on vain merkki itsellesi, ja peli käsittelee sitä kuin liputtamatonta solua.
 
 Hyviä pelihetkiä!
