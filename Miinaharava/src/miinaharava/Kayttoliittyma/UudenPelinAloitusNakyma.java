@@ -21,13 +21,24 @@ import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPeliProfiilinLu
 import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPelinAloitusKuuntelija;
 
 /**
- *
+ * Tämä luokka vastaa uuden pelin aloituksesta.
  * @author virta
  */
 public class UudenPelinAloitusNakyma implements Runnable {
     
+    /**
+     * SisaltoFrame joka on kaikille käyttöliittymän näkymille yhteinen.
+     */
     private SisaltoFrame nakyma;
+    
+    /**
+     * JFrame, jonka ContentPane (Container-olio) tulee sisältämään kaikki piirrettävät komponentit.
+     */
     private JFrame frame;
+    
+    /**
+     * Käyttäjä joka haetaan SisaltoFramen käyttäjälistasta kirjautuneen nimimerkin perusteella.
+     */
     private Kayttaja kayttaja;
     
     public UudenPelinAloitusNakyma(SisaltoFrame nakyma){
@@ -41,7 +52,7 @@ public class UudenPelinAloitusNakyma implements Runnable {
     @Override
     public void run() {
         frame.getContentPane().removeAll();
-//        frame.setContentPane(new Container());
+        frame.repaint();
         frame.setPreferredSize(new Dimension(500, 500));
         
         luoKomponentit(frame.getContentPane());
@@ -50,6 +61,10 @@ public class UudenPelinAloitusNakyma implements Runnable {
         frame.setVisible(true);
     }
     
+    /**
+     * Luo piirrettävät komponentit parametrina saatuun container-olioon.
+     * @param container 
+     */
     private void luoKomponentit(Container container){
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(luoAlkuTekstit());
@@ -62,6 +77,11 @@ public class UudenPelinAloitusNakyma implements Runnable {
         container.add(luoTakaisinNappi());
     }
     
+    /**
+     * Luo JPanel-olion joka sisältää JLabel-olioita aloitustekstille ja saateviestille.
+     * 
+     * @return JPanel olion komponenttina, joka voidaan lisätä sisältöön, joka sisältää em. oliot.
+     */
     private Component luoAlkuTekstit(){
         JPanel teksitPaneeli = new JPanel();
         teksitPaneeli.setLayout(new BoxLayout(teksitPaneeli, BoxLayout.Y_AXIS));
@@ -75,6 +95,10 @@ public class UudenPelinAloitusNakyma implements Runnable {
         return teksitPaneeli;
     }
     
+    /**
+     * Luo JPanel-olion joka sisältää napit pelin aloittamiselle vakioprofiileista.
+     * @return JPanel-olion sisältäen em. napit komponenttina, joka voidaan lisätä sisältöön.
+     */
     private Component luoVakioProfiilinapit(){
         JPanel vakioProfiiliPaneeli = new JPanel();
         vakioProfiiliPaneeli.setLayout(new BoxLayout(vakioProfiiliPaneeli, BoxLayout.Y_AXIS));
@@ -92,6 +116,10 @@ public class UudenPelinAloitusNakyma implements Runnable {
         return vakioProfiiliPaneeli;
     }
     
+    /**
+     * Luo JPanel-olion johon lisätään napit pelin aloittamiselle käyttäjän omista profiileista.
+     * @return JPanel-olion komponenttina, joka sisältää em. napit.
+     */
     private Component luoMuutProfiiliNapit(){
         JPanel muutProfiilitPaneeli = new JPanel();
         muutProfiilitPaneeli.setLayout(new BoxLayout(muutProfiilitPaneeli, BoxLayout.Y_AXIS));
@@ -112,6 +140,11 @@ public class UudenPelinAloitusNakyma implements Runnable {
         return muutProfiilitPaneeli;
     }
     
+    /**
+     * Luo JPanel-olion joka sisältää joko saateviestin käyttäjän profiileille, tai saateviestin ettei pelaaja ole kirjautunut.
+     * @param onProfiileja
+     * @return JPanel-olion komponenttina, joka sisältää em. JLabel-oliot.
+     */
     private Component lisaaOmaProfiiliSaateTeksti(boolean onProfiileja){
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.X_AXIS));
@@ -125,6 +158,10 @@ public class UudenPelinAloitusNakyma implements Runnable {
         return paneeli;
     }
     
+    /**
+     * Luo JPanel-olion joka sisältää JButton-olion jota painamalla pääsee uuden peliprofiilin luontiin.
+     * @return JPanel-olion komponenttina, sisältäen em. oliot.
+     */
     private Component luoUudenProfiilinLuontiNappi(){
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.Y_AXIS));
@@ -137,6 +174,11 @@ public class UudenPelinAloitusNakyma implements Runnable {
         return paneeli;
     }
     
+    /**
+     * Luo uuden JPanel-olion joka sisältää napin uuden pelin aloittamiseksi parametrina saadusta profiilista, sekä JLabel-olion jossa kentän kuvaus.
+     * @param profiili
+     * @return JPanel-olion komponenttina, joka sisältää em oliot.
+     */
     private JPanel luoUusiPeliNappiPaneeli(KenttaProfiili profiili){
         JPanel nappiPaneeli = new JPanel();
         nappiPaneeli.setLayout(new BoxLayout(nappiPaneeli, BoxLayout.X_AXIS));
@@ -150,6 +192,12 @@ public class UudenPelinAloitusNakyma implements Runnable {
         return nappiPaneeli;
     }
 
+    /**
+     * Luo ja lisää parametrina saatuihin nappeihin uuden kuuntelijan vakioprofiili-aloitusnapeille.
+     * @param helppo
+     * @param keskivaikea
+     * @param vaikea 
+     */
     private void luoJaLisaaKuuntelijaVakioProfiileille(JPanel helppo, JPanel keskivaikea, JPanel vaikea) {
         JButton helppoNappi = (JButton) helppo.getComponent(0);
         JButton keskiVNappi = (JButton) keskivaikea.getComponent(0);
@@ -162,17 +210,25 @@ public class UudenPelinAloitusNakyma implements Runnable {
         vaikeaN.addActionListener(vakioKuuntelija);
     }
     
+    /**
+     * Luo ja lisää parametrina saadun listan kullekin JPanel-olion sisältämälle JButton-oliolle toimintokuuntelijan.
+     * @param paneelit 
+     */
     private void luoJaLisaaKuuntelijaMuilleProfiileille(LinkedList<JPanel> paneelit){
         LinkedList<JButton> napit = new LinkedList<>();
         for (JPanel jPanel : paneelit) {
             napit.add((JButton) jPanel.getComponent(0));
         }
         for (JButton jButton : napit) {
-            UudenPelinAloitusKuuntelija kuuntelija = new UudenPelinAloitusKuuntelija(jButton, nakyma);
+            UudenPelinAloitusKuuntelija kuuntelija = new UudenPelinAloitusKuuntelija(jButton, nakyma, jButton.getText());
             jButton.addActionListener(kuuntelija);
         }
     }
     
+    /**
+     * Luo geneerisen takaisin-napin, joka vie päävalikkoon.
+     * @return JButton-olion joka voidaan lisätä sisältöön.
+     */
     private JButton luoTakaisinNappi() {
         JButton takaisinNappi = new JButton("Takaisin");
         TakaisinNappiKuuntelija kuuntelija = new TakaisinNappiKuuntelija(takaisinNappi, nakyma);

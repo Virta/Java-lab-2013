@@ -15,18 +15,48 @@ import miinaharava.Entiteetit.VakioProfiilit;
 
 /**
  * Tämä luokka on miinaharavan käyttöliittymän pohja; tätä luokkaa ja sen JFramea liikutellaan käyttöliittymän eri osien välillä, ja sen 
- * JFrameen tehdään muutoksia aina kyseessä olevan näkymän mukaisesti.
+ * JFrameen tehdään muutoksia aina kyseessä olevan näkymän mukaisesti. Koskaan ei siis piirretä uutta ikkunaa, vaan tämän ikkunan sisältä korvataan ko. näkymän sisällöllä.
  * @author frojala
  */
 public class SisaltoFrame implements Runnable {
 
+    /**
+     * JFrame, johon kaikki piirrettävät komponentit lisätään.
+     */
     private JFrame frame;
+    
+    /**
+     * Hajautustaulu joka sisältää tuloksista ladatut ja uudet ohjelman suorituksen aikana luodut käyttäjät.
+     */
     private HashMap<String, Kayttaja> pelaajat;
+    
+    /**
+     * Hajautustaulu joka sisältää tuloksista ladatut ja uudet ohjelman suorituksen aikana luodut peliprofiilit.
+     */
     private HashMap<String, KenttaProfiili> peliProfiilit;
+    
+    /**
+     * 
+     */
     private VakioProfiilit vakioProfiilit;
+    
+    /**
+     * Lista joka sisältää tulokset; ohjelman suorituksen aikana luodut sekä tulostiedostosta ladatut.
+     */
     private LinkedList<Tulos> tulokset;
+    
+    /**
+     * String-olio jota käytetään kirjautumisen näyttämiseen sekä profiilien hakemiseen.
+     */
     private String kirjautunutNimimerkki;
 
+    /**
+     * 
+     * @param kayttajat
+     * @param profiilit
+     * @param vakioProfiilit
+     * @param tulokset 
+     */
     public SisaltoFrame(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, VakioProfiilit vakioProfiilit, LinkedList<Tulos> tulokset) {
         this.pelaajat = kayttajat;
         this.peliProfiilit = profiilit;

@@ -22,6 +22,7 @@ public class UudenPelinAloitusKuuntelija implements ActionListener {
     private JButton keskivaikeaNappi;
     private JButton vaikeaNappi;
     private JButton geneerinen;
+    private String profiiliNimi;
 
     public UudenPelinAloitusKuuntelija(JButton helppoN, JButton keskivN, JButton vaikaN, SisaltoFrame nakyma) {
         this.nakyma = nakyma;
@@ -30,9 +31,10 @@ public class UudenPelinAloitusKuuntelija implements ActionListener {
         this.vaikeaNappi = vaikaN;
     }
 
-    public UudenPelinAloitusKuuntelija(JButton nappi, SisaltoFrame nakyma) {
+    public UudenPelinAloitusKuuntelija(JButton nappi, SisaltoFrame nakyma, String profiili) {
         this.geneerinen = nappi;
         this.nakyma = nakyma;
+        this.profiiliNimi = profiili;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class UudenPelinAloitusKuuntelija implements ActionListener {
     }
 
     private void uusiCustomPeli() {
-        PelikenttaNakyma pelikentta = new PelikenttaNakyma(nakyma, this.nakyma.getPeliProfiilit().get(geneerinen.getText()));
+        PelikenttaNakyma pelikentta = new PelikenttaNakyma(nakyma, this.nakyma.getPeliProfiilit().get(profiiliNimi));
         SwingUtilities.invokeLater(pelikentta);
     }
 }

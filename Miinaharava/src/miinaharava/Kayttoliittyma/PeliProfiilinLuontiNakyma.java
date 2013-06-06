@@ -18,15 +18,35 @@ import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntel
 import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPeliProfiilinLuontiKuuntelija;
 
 /**
- *
+ * Tämä luokka vastaa uuden peliprofiillin näkymän piirtämisestä.
+ * 
  * @author virta
  */
 public class PeliProfiilinLuontiNakyma implements Runnable {
 
+    /**
+     * SisaltoFrame, joka on kaikille käyttöliittymäluokille yhteinen, käytetään samaa ikkunaa.
+     */
     private SisaltoFrame nakyma;
+    
+    /**
+     * JFrame, jonka ContentPane (Container-olio) tulee sisältämään kaikki luokan näkyvät komponentit.
+     */
     private JFrame frame;
+    
+    /**
+     * Kenttä johon käyttäjä voi syöttää haluamansa profiilin nimen.
+     */
     private JTextField profiiliNimikentta;
+    
+    /**
+     * Alasvetovalikko josta käyttäjä voi valita haluamansa kentän koon, koko ei ole muuten valittavissa.
+     */
     private JComboBox kentanKoko;
+    
+    /**
+     * Alasvetovalikko josta käyttäjä voi valita haluamansa määrän miinoja kenttään, miinojen määrä ei ole muuten valittavissa, miinojen määräksi sallitaan vain vähemmän kuin koko*koko.
+     */
     private JComboBox miinoja;
 
     public PeliProfiilinLuontiNakyma(SisaltoFrame nakyma) {
@@ -37,6 +57,7 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
     @Override
     public void run() {
         frame.getContentPane().removeAll();
+        frame.repaint();
         frame.setPreferredSize(new Dimension(600, 300));
         luoKomponentit(frame.getContentPane());
 
@@ -44,6 +65,10 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         frame.setVisible(true);
     }
 
+    /**
+     * Luo näkymäkomponentit parametrina saatuun container-olioon.
+     * @param container 
+     */
     private void luoKomponentit(Container container) {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
@@ -54,6 +79,11 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         container.add(luoTakaisinNappi());
     }
 
+    /**
+     * Luo JPanel-olion johon lisätään JLabel saateviestillä sekä JTextField johon pelaaja kirjoittaa haluamansa nimen profiilille.
+     * 
+     * @return Palauttaa JPanel-olion komponenttina, joka sisältää em. oliot.
+     */
     private Component luoProfiiliNimikentta() {
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.X_AXIS));
@@ -67,6 +97,11 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         return paneeli;
     }
 
+    /**
+     * Luo JPanel-olion johon lisätään JComboBox-alasvetovalitsimet kovakoodatuilla valinnoilla.
+     * 
+     * @return JPanel-olion joka sisältää em. oliot komponettina.
+     */
     private Component luoKokoJaMiinaValitsimet() {
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.X_AXIS));
@@ -77,6 +112,11 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         return paneeli;
     }
 
+    /**
+     * Luo JPanel-olion johon lisätään saateviesti JLabel oliona, sekä JComboBox kovakoodatuilla arvoilla.
+     * 
+     * @return Palauttaa JPanel-olion komponenttina, joka sitältää em. oliot.
+     */
     private Component luoKokoValitsin() {
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.Y_AXIS));
@@ -92,6 +132,11 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         return paneeli;
     }
 
+    /**
+     * Luo JPanel-olion johon lisätään saateviesti JLabel-oliona, sekä JComboBox kovakoodatuilla arvoilla.
+     * 
+     * @return Palauttaa JPanel-olion komponenttina, joka sisältää em. oliot.
+     */
     private Component luoMiinaValitsin() {
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.Y_AXIS));
@@ -107,6 +152,12 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         return paneeli;
     }
 
+    /**
+     * Luo JButton olion jota painamalla pelaaja saa luotuoa uuden profiilin annetuilla arvoilla.
+     * Profiilin luonti ei onnistu jos miinoja on enemmän kuin koko*koko, eikä jos nimi on liian pitkä tai tyhjä.
+     * 
+     * @return Palauttaa JPanel-olion komponenttina, jossa em. oliot.
+     */
     private Component luoLuomisNappula() {
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new BoxLayout(paneeli, BoxLayout.X_AXIS));
@@ -123,6 +174,11 @@ public class PeliProfiilinLuontiNakyma implements Runnable {
         return paneeli;
     }
 
+    /**
+     * Luo geneerisen takaisin-nappulan, jota painamalla näkymä siirtyy päävalikkoon.
+     * 
+     * @return JButton-olion, joka voidaan lisätä sisältöön komponenttina.
+     */
     private JButton luoTakaisinNappi() {
         JButton takaisinNappi = new JButton("Takaisin");
         TakaisinNappiKuuntelija kuuntelija = new TakaisinNappiKuuntelija(takaisinNappi, nakyma);

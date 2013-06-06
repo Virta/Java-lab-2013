@@ -93,6 +93,14 @@ public class tallennusLogiikka {
         
     }
 
+    /**
+     * Lukee ja purkaa yksittäisen tulosrivin komponentteihin ja kutsuu saaduilla olioilla lisaaOliotListoihin-metodia.
+     * @param lukija
+     * @param kayttajat
+     * @param profiilit
+     * @param tulokset
+     * @throws NumberFormatException Jos kentän koko tai miinojen määrässä on virheellistä informaatiota, esim. jos tuloslistaa on käsin muokattu, heitetään poikkeus ja näytetään virheilmoitus.
+     */
     private static void lueJaPuraTulokset(Scanner lukija, HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) throws NumberFormatException {
         
         while (lukija.hasNextLine()) {
@@ -120,16 +128,21 @@ public class tallennusLogiikka {
         
     }
 
+    /**
+     * Lisää parametrina saadut oliot käyttäjistä, tuloksista ja peliprofiileista asianmukaisiin listoihin jos niitä ei ole vielä lisätty.
+     * @param kayttajat
+     * @param nimimerkki
+     * @param kayttaja
+     * @param profiilit
+     * @param kenttaProfiiliNimi
+     * @param profiili 
+     */
     private static void lisaaOliotListoihin(HashMap<String, Kayttaja> kayttajat, String nimimerkki, Kayttaja kayttaja, HashMap<String, KenttaProfiili> profiilit, String kenttaProfiiliNimi, KenttaProfiili profiili) {
         if (!kayttajat.containsKey(nimimerkki)) {
             kayttajat.put(nimimerkki, kayttaja);
         }
         
-        if (!profiilit.containsKey(kenttaProfiiliNimi) 
-                && !kenttaProfiiliNimi.equals("Helppo")
-                && !kenttaProfiiliNimi.equals("Keskivaikea")
-                && !kenttaProfiiliNimi.equals("Vaikea")) {
-            
+        if (!profiilit.containsKey(kenttaProfiiliNimi)) {
             profiilit.put(kenttaProfiiliNimi, profiili);
         }
         

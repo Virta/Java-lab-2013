@@ -37,6 +37,10 @@ public class KelloPaivittaja implements Runnable {
             String aikaString = (aika/60)+":"+(aika-((aika/60)*60));
             kello.setText(aikaString);
             
+            if (moottori.peliLoppuiOnnistuneesti()){
+                break;
+            }
+            
         }
     }
     
