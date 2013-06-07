@@ -74,9 +74,9 @@ public class tallennusLogiikka {
     /**
      * Palauttaa tiedostosta Tulokset.txt kaikki tulokset jotka siihen on tallennettu.
      * Kaikki tulokset palautetaan ja ladataan olioiksi ohjelmaan.
-     * Ohjelman ensimmäisellä suorituskerralla lataaminen palauttaa virheilmoituksen, jos tiedostoa ei ole manuaalisesti luotu.
-     * Kun ohjelma suljetaan heti tämän jälkeen luodaan tiedosto tyhjällä sisällöllä, ainoastaan saateviestillä.
-     * Seuraava suorituskerta ei anna virhettä.
+     * Ohjelman ensimmäisellä suorituskerralla lataaminen palauttaa virheilmoituksen, jos tiedostoa ei ole manuaalisesti luotu,
+     * ja luo uuden tulostiedoston tyhjästä listasta.
+     * 
      * @param kayttajat
      * @param profiilit
      * @param tulokset
