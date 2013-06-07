@@ -14,8 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPeliProfiilinLuontiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.TakaisinNappiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.UudenPeliProfiilinLuontiKuuntelija;
 
 /**
  * Tämä luokka vastaa uuden peliprofiillin näkymän piirtämisestä.

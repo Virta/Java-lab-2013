@@ -48,7 +48,7 @@ public class tallennusLogiikka {
     
     private static void kirjoitaTulosStringit(LinkedList<Tulos> tulokset, FileWriter kirjoittaja) throws IOException {
         for (Tulos tulos : tulokset) {
-            String tallennettava = tulos.getPelaaja().getNimimerkki()
+            String tallennettava = tulos.getPelaaja()
                     + " "
                     + tulos.getProfiili().getNimi()
                     + " "
@@ -118,7 +118,7 @@ public class tallennusLogiikka {
             Kayttaja kayttaja = new Kayttaja(nimimerkki);
             KenttaProfiili profiili = new KenttaProfiili(kenttaProfiiliNimi, Integer.parseInt(kentanKoko), Integer.parseInt(kentassaMiinoja));
             boolean onnistui = Boolean.parseBoolean(onnistuiko);
-            Tulos tulos = new Tulos(tuloksenAika, profiili, kayttaja, onnistui);
+            Tulos tulos = new Tulos(tuloksenAika, profiili, nimimerkki, onnistui);
             
             lisaaOliotListoihin(kayttajat, nimimerkki, kayttaja, profiilit, kenttaProfiiliNimi, profiili);
             
@@ -138,7 +138,7 @@ public class tallennusLogiikka {
      * @param profiili 
      */
     private static void lisaaOliotListoihin(HashMap<String, Kayttaja> kayttajat, String nimimerkki, Kayttaja kayttaja, HashMap<String, KenttaProfiili> profiilit, String kenttaProfiiliNimi, KenttaProfiili profiili) {
-        if (!kayttajat.containsKey(nimimerkki)) {
+        if (!kayttajat.containsKey(nimimerkki) && !nimimerkki.equals("Anon")) {
             kayttajat.put(nimimerkki, kayttaja);
         }
         

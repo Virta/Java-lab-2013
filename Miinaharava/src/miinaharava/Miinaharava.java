@@ -24,7 +24,7 @@ public class Miinaharava {
         HashMap<String, KenttaProfiili> peliProfiilit = new HashMap<>();
         VakioProfiilit vakioProfiilit = new VakioProfiilit();
         LinkedList<Tulos> tulokset = new LinkedList<>();
-        Tulos tulos = new Tulos("1:11", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
+        Tulos tulos = new Tulos("1:11", new KenttaProfiili("joku", 10, 10), "Jaska", true);
 //        tulokset.add(tulos);
 //        tallennusLogiikka.tallenna(tulokset);
         tallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);

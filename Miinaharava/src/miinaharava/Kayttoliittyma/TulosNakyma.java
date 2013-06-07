@@ -19,7 +19,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.TakaisinNappiKuuntelija;
 
 /**
  * Tämä luokka on vastuussa tulosten esittämisestä; kuten muissakin käyttöliittymäluokissa komponentit piirretään SisaltoFrame näkymäpohjaan.
@@ -174,7 +174,7 @@ public class TulosNakyma implements Runnable {
         JPanel tulosRiviPaneeli = new JPanel();
         tulosRiviPaneeli.setLayout(new GridLayout(1, 6));
         
-        tulosRiviPaneeli.add(new JLabel(tulos.getPelaaja().getNimimerkki()));
+        tulosRiviPaneeli.add(new JLabel(tulos.getPelaaja()));
         tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getNimi()));
         tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getKoko() + ""));
         tulosRiviPaneeli.add(new JLabel(tulos.getProfiili().getMiinoja() + ""));

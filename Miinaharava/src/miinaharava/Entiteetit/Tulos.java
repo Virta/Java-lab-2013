@@ -17,7 +17,7 @@ public class Tulos implements Comparable<Object>{
     /**
      * Käyttäjä tallennetaan suoritus aikana sellaisenaan.
      */
-    private Kayttaja pelaaja;
+    private String pelaaja;
     /**
      * Tallennetaan totuusarvona päättyikö peli onnistuneesti.
      */
@@ -30,7 +30,7 @@ public class Tulos implements Comparable<Object>{
      * @param pelaaja Kuka pelasi, anon jos käyttäjä ei kirjautunut.
      * @param loppuikoOnnistuneesti Tallennetaan, jotta pelaaja voi tarkastella erikseen epäonnistumisia ja onnistumisia.
      */
-    public Tulos(String aika, KenttaProfiili profiili, Kayttaja pelaaja, boolean loppuikoOnnistuneesti){
+    public Tulos(String aika, KenttaProfiili profiili, String pelaaja, boolean loppuikoOnnistuneesti){
         this.aika = aika;
         this.pelaaja = pelaaja;
         this.profiili = profiili;
@@ -45,7 +45,7 @@ public class Tulos implements Comparable<Object>{
         return this.profiili;
     }
 
-    public Kayttaja getPelaaja() {
+    public String getPelaaja() {
         return this.pelaaja;
     }
     

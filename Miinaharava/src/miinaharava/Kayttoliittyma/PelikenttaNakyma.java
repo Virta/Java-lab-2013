@@ -14,9 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import miinaharava.Entiteetit.KenttaProfiili;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.KelloPaivittaja;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.PelikenttaKuuntelija;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.KelloPaivittaja;
+import miinaharava.Kayttoliittyma.Kuuntelijat.PelikenttaKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.TakaisinNappiKuuntelija;
 import miinaharava.Pelikentta.Moottori;
 
 /**
@@ -139,7 +139,7 @@ public class PelikenttaNakyma implements Runnable {
     /**
      * Luo uuden JPanel-olion johon luodaan uusi GridLayout joka alustetaan profiilin tiedoilla.
      * Kutsuu metodia luoSoluPainikkeet painikkeiden alustamiseksi.
-     * Luo uuden PelikenttaKuuntelija-olion jolle annetaan SisaltoFrame, solupainikkeet ja aiemmin luotu kello ja miinatietokenttä.
+     * Luo uuden PelikenttaKuuntelija-olion jolle annetaan SisaltoFrame, solupainikkeet, aiemmin luotu kello ja miinatietokenttä sekä päivittäjä, pelimoottori.
      * Lisää alustetut solut solumatriisista (Solu[][]-olio) paneeliin piirrettäväksi.
      * @return JPanel-olion komponenttina joka sisältää em. oliot.
      */
@@ -148,7 +148,7 @@ public class PelikenttaNakyma implements Runnable {
         soluPainikkeet = new JButton[profiili.getKoko()][profiili.getKoko()];
         
         luoSoluPainikkeet();
-        PelikenttaKuuntelija soluKuuntelija = new PelikenttaKuuntelija(nakyma, soluPainikkeet, this.kello, this.miinatieto);
+        PelikenttaKuuntelija soluKuuntelija = new PelikenttaKuuntelija(nakyma, soluPainikkeet, kello, miinatieto, moottori, paivittaja, profiili);
         lisaaKuuntelija(soluKuuntelija);
         
         for (int i = 0; i < soluPainikkeet.length; i++) {
@@ -178,7 +178,7 @@ public class PelikenttaNakyma implements Runnable {
     private void lisaaKuuntelija(PelikenttaKuuntelija soluKuuntelija) {
         for (int i = 0; i < soluPainikkeet.length; i++) {
             for (int j = 0; j < soluPainikkeet.length; j++) {
-                soluPainikkeet[i][j].addActionListener(soluKuuntelija);
+                soluPainikkeet[i][j].addMouseListener(soluKuuntelija);
             }
         }
     }
@@ -208,6 +208,7 @@ public class PelikenttaNakyma implements Runnable {
         
         kelloPaneeli.add(luoTakaisinNappi());
         kelloPaneeli.add(kello);
+        kelloPaneeli.add(miinatieto);
         return kelloPaneeli;
     }
     

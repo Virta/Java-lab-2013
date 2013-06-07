@@ -151,7 +151,7 @@ public class tallennusLogiikkaTest {
     }
     
     private void lisaaTulosListaan(LinkedList<Tulos> tulokset){
-        Tulos tulos = new Tulos("1:10", new KenttaProfiili("joku", 10, 10), new Kayttaja("Jaska"), true);
+        Tulos tulos = new Tulos("1:10", new KenttaProfiili("joku", 10, 10), "Jaska", true);
         tulokset.add(tulos);
     }
 }

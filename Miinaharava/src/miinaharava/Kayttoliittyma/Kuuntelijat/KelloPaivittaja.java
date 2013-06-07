@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat;
+package miinaharava.Kayttoliittyma.Kuuntelijat;
 
 import javax.swing.JLabel;
 import miinaharava.Pelikentta.Moottori;

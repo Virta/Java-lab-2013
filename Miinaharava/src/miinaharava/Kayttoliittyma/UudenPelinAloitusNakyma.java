@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPeliProfiilinLuontiKuuntelija;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPelinAloitusKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.TakaisinNappiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.UudenPeliProfiilinLuontiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.UudenPelinAloitusKuuntelija;
 
 /**
  * Tämä luokka vastaa uuden pelin aloitusnäkymän piirtämisestä.

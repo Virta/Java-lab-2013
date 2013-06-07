@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.KirjautumisKuuntelija;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.TakaisinNappiKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.KirjautumisKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.TakaisinNappiKuuntelija;
 
 /**
  * Tämä luokka vastaa kirjautumisnäkymän piirtämisestä.

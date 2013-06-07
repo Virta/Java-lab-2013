@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.PaavalikkoKuuntelija;
+import miinaharava.Kayttoliittyma.Kuuntelijat.PaavalikkoKuuntelija;
 
 /**
  * 
