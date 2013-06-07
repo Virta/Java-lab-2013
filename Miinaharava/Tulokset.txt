@@ -4,3 +4,8 @@ Jaska joku 10 10 1:10 true
 Jaska Helppo 10 10 1:11 true
 Jaska Vaikea 10 10 1:11 true
 Jaska joku 10 10 1:09 true
+Anon Helppo 15 20 0:2 false
+Anon Helppo 15 20 0:32 false
+Anon Helppo 15 20 0:38 true
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:0 false

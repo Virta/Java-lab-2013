@@ -4,6 +4,7 @@
  */
 package miinaharava.Tallennus;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
@@ -26,9 +27,9 @@ public class tallennuksenVirheilmoitus {
         frame.setPreferredSize(new Dimension(600, 100));
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         
-        frame.getContentPane().setLayout(new GridLayout(2, 1));
-        frame.getContentPane().add(new JLabel("Tulosten käsittelyssä tapahtui virhe:"));
-        frame.getContentPane().add(new JLabel(virheilmoitus));
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.getContentPane().add(new JLabel("Tulosten käsittelyssä tapahtui virhe:"), BorderLayout.NORTH);
+        frame.getContentPane().add(new JLabel(virheilmoitus), BorderLayout.SOUTH);
         
         frame.pack();
         frame.setVisible(true);

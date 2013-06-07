@@ -191,7 +191,9 @@ public class TulosNakyma implements Runnable {
     public void lisaaMuutTuloksetProfiileittain(Container container) {
 
         for (String profiiliNimi : this.peliProfiilit.keySet()) {
-            lisaaTulosPaneeli(container, profiiliNimi);
+            if (!profiiliNimi.equals("Helppo") && !profiiliNimi.equals("Keskivaikea") && !profiiliNimi.equals("Vaikea")) {
+                lisaaTulosPaneeli(container, profiiliNimi);
+            }
         }
 
     }

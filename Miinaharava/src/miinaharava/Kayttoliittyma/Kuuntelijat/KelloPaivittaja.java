@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import miinaharava.Pelikentta.Moottori;
 
 /**
- * Tämä luokka vastaa pelikentän kellon ja miinetiedon päivittämisestä.
- * Tästä luokasta luotu olio käynnistetään omassa säikeessää, jotta em. tiedot päivittyvät jatkuvasti pelin käynnistymisen jälkeen.
+ * Tämä luokka vastaa pelikentän kellon päivittämisestä.
+ * Tästä luokasta luotu olio käynnistetään omassa säikeessää, jotta em. tieto päivittyy jatkuvasti pelin käynnistymisen jälkeen.
  * @author virta
  */
 public class KelloPaivittaja implements Runnable {
@@ -25,25 +25,18 @@ public class KelloPaivittaja implements Runnable {
     private Moottori moottori;
     
     /**
-     * JLabel-olio, johon päivitetään kentän liputtamattomien miinojen määrä, oli liputus oikein tai väärin.
-     */
-    private JLabel miinojaJaljella;
-    
-    /**
      * Sisäinen totuusarvo, jota käytetään säikeen lopetuksen yhteydessä jos pelistä poistutaan ennen kuin peli loppui onnistuneesti.
      */
     private boolean keskeyta;
     
     /**
-     * Konstruktori ottaa vastaan JLabel-oliot kelloksi ja miinatietokentäksi, sekä moottorin jolta informaatio päivityksen yhteydessä haetaan.
+     * Konstruktori ottaa vastaan JLabel-olio kelloksi, sekä moottorin jolta informaatio päivityksen yhteydessä haetaan.
      * @param kello
      * @param moottori
-     * @param miinoja 
      */
-    public KelloPaivittaja(JLabel kello, Moottori moottori, JLabel miinoja){
+    public KelloPaivittaja(JLabel kello, Moottori moottori){
         this.kello = kello;
         this.moottori = moottori;
-        this.miinojaJaljella = miinojaJaljella;
         this.keskeyta = false;
     }
 
@@ -63,12 +56,8 @@ public class KelloPaivittaja implements Runnable {
             }
             
             int aika = (int) moottori.getAika();
-            String aikaString = (aika/60)+":"+(aika-((aika/60)*60));
+            String aikaString = (aika/60)+":"+(aika-((aika/60)*60))+"   ";
             kello.setText(aikaString);
-            
-            if (moottori.peliLoppuiOnnistuneesti()){
-                break;
-            }
             
             if (keskeyta){
                 break;
@@ -76,14 +65,7 @@ public class KelloPaivittaja implements Runnable {
             
         }
     }
-    
-    /**
-     * Päivittää miinatiedon asianmukaiseen kenttään.
-     */
-    public void paivitaMiinaTieto(){
-        miinojaJaljella.setText(moottori.getKentta().getMiinojaJaljella()+"");
-    }
-    
+
     /**
      * Asettaa sisäisen muuttujan keskeyta-arvoksi true, jolloin run()-metodin while silmukka voidaan keskeyttää tappamatta säiettä
      * jossa tämä luokka on ajossa.

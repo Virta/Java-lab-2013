@@ -53,16 +53,24 @@ public class Tulos implements Comparable<Object>{
         return this.loppuikoOnnistuneesti;
     }
 
+    /**
+     * Comparable toteutus, jotta tulokset voidaan järjestää ajan mukaiseen järjestykseen.
+     * Tuloksien järjestäminen profiilin tai muun mukaan jätetään kutsuvalle metodille.
+     * @param o mikä tahansa olio, muutetaan Tulos-olioksi.
+     * @return erotus joko verrattavan ja tämän minuuteista, tai jos samat, erotus sekunneista.
+     */
     @Override
     public int compareTo(Object o) {
         Tulos verrattava = (Tulos) o;
-        String[] verrattavanAika = verrattava.getAika().split(":");
-        int verrattavanMinuutit = Integer.parseInt(verrattavanAika[0]);
-        int verrattavanSekunnit = Integer.parseInt(verrattavanAika[1]);
+        String verrattavanAikaString = verrattava.getAika().trim();
+        String[] verrattavanAikaSplit = verrattavanAikaString.split(":");
+        int verrattavanMinuutit = Integer.parseInt(verrattavanAikaSplit[0]);
+        int verrattavanSekunnit = Integer.parseInt(verrattavanAikaSplit[1]);
         
-        String[] tamanAika = this.aika.split(":");
-        int tamanMinuutit = Integer.parseInt(tamanAika[0]);
-        int tamanSekunnit = Integer.parseInt(tamanAika[1]);
+        String tamanAikaString = this.aika.trim();
+        String[] tamanAikaSplit = tamanAikaString.split(":");
+        int tamanMinuutit = Integer.parseInt(tamanAikaSplit[0]);
+        int tamanSekunnit = Integer.parseInt(tamanAikaSplit[1]);
         
         if (verrattavanMinuutit==tamanMinuutit){
             return tamanSekunnit-verrattavanSekunnit;

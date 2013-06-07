@@ -33,13 +33,15 @@ public class TakaisinNappiKuuntelija implements ActionListener {
     }
 
     /**
-     * Painalluksen tapahtuessa luodaan uusi olio AloitusNakymasta ja käynnistetään se.
+     * Painalluksen tapahtuessa jos nappi on päällä luodaan uusi olio AloitusNakymasta ja käynnistetään se.
      * @param e 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        AloitusNakyma aloitusNakyma = new AloitusNakyma(nakyma);
-        SwingUtilities.invokeLater(aloitusNakyma);
+        if (takaisinNappi.isEnabled()) {
+            AloitusNakyma aloitusNakyma = new AloitusNakyma(nakyma);
+            SwingUtilities.invokeLater(aloitusNakyma);
+        }
     }
     
 }

@@ -5,6 +5,7 @@
 package miinaharava.Tallennus;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class tallennusLogiikka {
      * Kaikki tulokset kirjoitetaan aina, tiedoston kaikki informaatio ylikirjoitetaan suoritushetkellä olioina olevasta tiedosta.
      * Ohjelma luo tiedoston aina sulkeutuessa sen hetkisellä informaatiolla; ensimmäisellä suorituskerralla ainoastaan saateviestillä.
      * @param tulokset
-     * @throws Exception 
+     * @throws Exception Heittää poikkeuksen, jos tallennuksessa tapahtuu virhe. Virhe käsitellään täällä näyttämällä käyttäjäystävällinen virheilmoitus.
      */
     public static void tallenna(LinkedList<Tulos> tulokset) throws Exception {
         try {
@@ -41,11 +42,17 @@ public class tallennusLogiikka {
             kirjoittaja.close();
             
         } catch (Exception e) {
-            tallennuksenVirheilmoitus.naytaVirheilmoitus(e.getMessage());
+            tallennuksenVirheilmoitus.naytaVirheilmoitus("Tallennuslogiikassa virhe: "+e.toString());
         }
         
     }
     
+    /**
+     * Kirjoittaa kunkin yksittäisen tuloksen String-olioksi ja tiedostoon.
+     * @param tulokset
+     * @param kirjoittaja
+     * @throws IOException Saattaa heittää poikkeuksen jos tiedosto johon ollaan kirjoittamassa yhtäkkiä katoaa käyttäjän poistamana.
+     */
     private static void kirjoitaTulosStringit(LinkedList<Tulos> tulokset, FileWriter kirjoittaja) throws IOException {
         for (Tulos tulos : tulokset) {
             String tallennettava = tulos.getPelaaja()
@@ -88,7 +95,10 @@ public class tallennusLogiikka {
             lukija.close();
             
         } catch (Exception e){
-            tallennuksenVirheilmoitus.naytaVirheilmoitus(e.getMessage());
+            tallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
+            if (e.getClass().equals(FileNotFoundException.class)){
+                tallenna(new LinkedList<Tulos>());
+            }
         }
         
     }
@@ -130,6 +140,7 @@ public class tallennusLogiikka {
 
     /**
      * Lisää parametrina saadut oliot käyttäjistä, tuloksista ja peliprofiileista asianmukaisiin listoihin jos niitä ei ole vielä lisätty.
+     * Ei lisää käyttäjiin "Anon" eli kirjautumatonta käyttäjää.
      * @param kayttajat
      * @param nimimerkki
      * @param kayttaja
@@ -138,7 +149,7 @@ public class tallennusLogiikka {
      * @param profiili 
      */
     private static void lisaaOliotListoihin(HashMap<String, Kayttaja> kayttajat, String nimimerkki, Kayttaja kayttaja, HashMap<String, KenttaProfiili> profiilit, String kenttaProfiiliNimi, KenttaProfiili profiili) {
-        if (!kayttajat.containsKey(nimimerkki) && !nimimerkki.equals("Anon")) {
+        if (!nimimerkki.equals("Anon") &&!kayttajat.containsKey(nimimerkki)) {
             kayttajat.put(nimimerkki, kayttaja);
         }
         
@@ -146,7 +157,7 @@ public class tallennusLogiikka {
             profiilit.put(kenttaProfiiliNimi, profiili);
         }
         
-        if (!kayttajat.get(nimimerkki).getKaikkiProfiilit().containsKey(kenttaProfiiliNimi)){
+        if (!nimimerkki.equals("Anon") && !kayttajat.get(nimimerkki).getKaikkiProfiilit().containsKey(kenttaProfiiliNimi)){
             kayttajat.get(nimimerkki).addProfiili(profiili);
         }
         
