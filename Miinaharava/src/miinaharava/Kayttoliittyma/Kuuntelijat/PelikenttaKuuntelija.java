@@ -7,19 +7,13 @@ package miinaharava.Kayttoliittyma.Kuuntelijat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import miinaharava.Kayttoliittyma.AloitusNakyma;
@@ -28,7 +22,6 @@ import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
 import miinaharava.Tallennus.tallennuksenVirheilmoitus;
 import miinaharava.Tallennus.tallennusLogiikka;
-import oracle.jrockit.jfr.JFR;
 
 /**
  * Tämä luokka vastaa pelikentässä tapahtuvien painallusten toiminnallisuuden
