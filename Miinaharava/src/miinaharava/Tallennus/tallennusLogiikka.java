@@ -95,9 +95,11 @@ public class tallennusLogiikka {
             lukija.close();
             
         } catch (Exception e){
-            tallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
             if (e.getClass().equals(FileNotFoundException.class)){
+                tallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: ei ladattavaa tulostiedostoa; luodaan uusi tulostiedosto Tulokset.txt!");
                 tallenna(new LinkedList<Tulos>());
+            } else {
+                tallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
             }
         }
         
