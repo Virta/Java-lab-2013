@@ -21,7 +21,7 @@ import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPeliProfiilinLu
 import miinaharava.Kayttoliittyma.KayttoliittymaKuuntelijat.UudenPelinAloitusKuuntelija;
 
 /**
- * Tämä luokka vastaa uuden pelin aloituksesta.
+ * Tämä luokka vastaa uuden pelin aloitusnäkymän piirtämisestä.
  * @author virta
  */
 public class UudenPelinAloitusNakyma implements Runnable {

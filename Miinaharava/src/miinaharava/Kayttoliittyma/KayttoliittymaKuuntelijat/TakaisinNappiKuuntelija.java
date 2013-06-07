@@ -12,12 +12,19 @@ import miinaharava.Kayttoliittyma.AloitusNakyma;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
 
 /**
- *
+ * Tämä luokka on geneerinen takaisin-napin kuuntelija, jonka toiminta vie aina takaisin päävalikkoon.
  * @author virta
  */
 public class TakaisinNappiKuuntelija implements ActionListener {
     
+    /**
+     * Kaikille näkymä- ja kuuntelijaluokille yhteinen näkymä, jonka ikkunaan komponentit piirretään.
+     */
     private SisaltoFrame nakyma;
+    
+    /**
+     * JButton-olio jota kuunnellaan toiminnallisuuden toteuttamiseksi.
+     */
     private JButton takaisinNappi;
     
     public TakaisinNappiKuuntelija(JButton nappi, SisaltoFrame nakyma){
@@ -25,6 +32,10 @@ public class TakaisinNappiKuuntelija implements ActionListener {
         this.takaisinNappi = nappi;
     }
 
+    /**
+     * Painalluksen tapahtuessa luodaan uusi olio AloitusNakymasta ja käynnistetään se.
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         AloitusNakyma aloitusNakyma = new AloitusNakyma(nakyma);

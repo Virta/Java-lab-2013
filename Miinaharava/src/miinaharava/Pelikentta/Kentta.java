@@ -24,7 +24,7 @@ public class Kentta {
     private KenttaProfiili profiili;
 
     /**
-     * Konstruktori alustaa luokan sisäiset muuttujat annetun profiilin perusteella ja luo kentän.
+     * Konstruktori alustaa luokan sisäiset muuttujat annetun profiilin perusteella, kutsuu sisäistä metodia luoKentta() kentän luomiseksi.
      * @param profiili KenttaProfiili jolla kenttä alustetaan.
      */
     public Kentta(KenttaProfiili profiili) {
