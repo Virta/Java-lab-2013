@@ -1,0 +1,70 @@
+Tekijä: Frans Ojala
+
+Miinaharava on kirjoitettu javalla touko-kesäkuussa 2013 Ohjelmoinnin harjoitustyönä.
+
+Valitsin aiheekseni kirjoittaa miinaharava-pelin.
+Peli on suunnattu kaikille jotka osaavat käyttää hiirtä; vaikeustasoja on vakiona kolme ja lisäksi käyttäjä (vast. pelaaja) voi luoda omia vakeustasojaan. Peli tallentaa pelaajan tulokset ja niitä voi tarkastella graafisen käyttöliittymän kautta. Tuloksia ei ole salattu, joten niitä voi periaatteessa muokata käsin Tulokset.txt tiedostosta. Tämä jätetään pelaajan itsensä harkinnan varaan, tiedostossa on saateviesti kehottaen pelaajaa muokkaamasta tiedostoa.
+
+Pelissä on graafinen käyttöliittymä joka on kirjoitettu käyttäen javan Swing-käyttöliittymäkomponenttikirjastoa.
+
+
+Toiminnot:
+	Uusi peli: näyttää uuden pelin aloitusnäkymän, josta pelaaja voi valita kentän pelattavakseen.
+		Vakiona profiileja on kolme: helppo, keskivaikea ja vaikea; nämä ovat kaikille samat ja niitä voi pelata kirjautumatta.
+		Jos pelaaja on kirjautunut, hän voi valita pelattavakseen jonkin hänen luomansa kentän jos olemassa. Pelaaja voi myös luoda tästä näkymästä omanlaisenta kentän.
+
+		Peliprofiilin luominen: pelaajalle näytetään näkymä jossa hän voi valita uudelle profiilille nimen, kentän koon ja miinojen määrän kentässä. Profiilin nimi ei saa olla käytössä, eikä miinojen määrä kentässä saa ylittää määrää koko*koko.
+	
+	Tulokset: näyttää pelaajalle kaikki tulokset (tiedostosta Tulokset.txt) joita on tähän asti kerätty. Kustakin kentästä näytetään 10 ensimmäistä tulosta, saatiin peli onnistuneesti läpi tai ei. Pelin jatkokehittämisessä saattaisi olla hyvä antaa käyttäjän valita mitä tuloksia näytetään.
+
+	Kirjautuminen: näyttää pelaajalle kirjautumisnäkymän jos tämä ei ole kirjautunut. Pelaajan tulee syöttää aiemmin luotu kirjautumisnimimerkki oikeassa muodossa, mutta salasana tarkistus ei ole käytössä. Jos pelaaja ei ole pelannut luomallaan nimimerkillä, sitä ei tallenneta ja hänen tulee luoda nimimerkki uudestaan. Pelaaja voi luoda uuden nimimerkin, jonka alle tulokset tallennetaan. Uusi nimimerkki ei saa olla käytössä ja pelaajalle huomautetaan tästä.
+
+Pelin tavoitteena on avata kaikki kentän solut jotka eivät ole miinoja, mahdollisimman lyhyessä ajassa. Jos pelaaja avaa miinan peli päättyy epäonnistuneesti, jos taas pelaaja onnistuu avaamaan kaikki kentän solut joissa ei ole miinaa peli loppuu onnistuneesti. Pelin loputtua pelaajalle näytetään uusi ikkuna jossa on pelin tulos aika. Tulos tallennetaan samalla suoraan tiedostoon.
+
+
+Rakenne:
+	Peli on jaettu kuuteen pakettiin:
+		miinaharava
+			Miinaharava.java: pelin pääluokka joka käynnistää pelin; palauttaa tulokset ja käynnistää käyttöliittymän.
+
+		miinaharava.Entiteetit: tallennettavat oliot (entiteetit)
+			Kayttaja.java: tiedot käyttäjästä
+			KenttaProfiili.java: tiedot kentästä; nimi, koko, miinojen määrä.
+			Tulos.java: tiedot tuloksesta; käyttäjä, aika, kenttäprofiili, loppuiko onnistuneesti
+			VakioProfiilit.java: kovakoodatut vakioprofiilit, käyttää KenttaProfiili-luokkaa
+
+		miinaharava.Kayttoliittyma
+			AloitusNakyma.java: päävalikko
+			KirjautumisNakyma.java: sisään- ja uloskirjautuminen
+			PeliProfiilinLuontiNakyma.java: sisäänkirjautuneelle pelaajalle; peliprofiilin luonti
+			PelikenttaNakyma.java: varsinainen pelikenttä
+			SisaltoFrame.java: kaikkien käyttöliittymänäkymien pohja, jonka ikkunaan muut näkymät piirretään ja joka sisältää listat käyttäjistä, kenttäprofiileista ja tuloksista.
+			TulosNakyma.java: tuloksien tarkastelu.
+				Kyselee SisaltoFramen käyttäjä-, profiili ja tuloslistat tulosten näyttämisessä.
+			UudenPelinAloitusNakyma.java: pelaamisen aloittaminen kenttäprofiililla ja profiilin luonti
+				Kyselee SisaltoFramen käyttäjä- ja profiililistat mahdollisten pelikenttien profiileista.
+
+		miinaharava.Kayttoliittyma.Kuuntelijat
+			KelloPaivittaja.java: uuteen säikeeseen käynnistettävä luokka joka päivittää kentän kellon
+			KirjautumisKuuntelija.java: toiminnallisuus kirjautumisnäkymään
+				Kyselee SisaltoFramen käyttäjälistasta käyttäjän syötettä, luodessa nimierkkiä tai kirjautuessa.
+			PaaValikkoKuuntelija.java: toiminnallisuus päävalikkoon
+			PelikenttaKuuntelija.java: toiminnallisuus pelikenttään
+				Kyselee SisaltoFramen kirjautumisnimimerkkiä uuden tuloksen muodostuksessa
+			SuljeNappulanKuuntelija.java: toiminnallisuus pelin päättymiseen liittyvän ikkunan nappia varten.
+			TakaisinNappiKuuntelija.java: kaikissa näkymissä paitsi päävalikossa olevan takaisin-napin toiminnallisuus. Painettaessa näkymä palaa aina päävalikkoon.
+			UudenPeliProfiiliLuontiKuuntelija.java: toiminnallisuus peliprofiilin luontiin siirtymiseen ja luomiseen
+				Kyselee SisaltoFramen profiililistasta nimeä sitä luodessa ettei tehdä päällekkäisyyksiä
+			UudenPelinAloitusKuuntelija.java: toiminnallisuus pelin aloitusta varten
+				Käynnistää uuden pelin (PelikenttaNakyma.java) valitusta profiilista.
+
+		miinaharava.Pelikentta
+			Kentta.java: luo solumatriisin ja pitää niistä kirjaa
+				Käyttää Solu-luokkaa, luo mahdollisuuden metodipropagaatiolle.
+			Moottori.java: pelimoottori joka hallinnoi toimintoja soluihin liittyen, käyttää Kentta-luokkaa
+				Käyttää Kentta- ja Solu-luokkia, luo mahdollisuuden metodipropagaatiolle.
+			Solu.java: yksittäinen solu kentässä
+
+		miinaharava.Tallennus
+			TallennuksenVirheilmoitus.java: käyttäjäystävällisen virheilmoituksen näyttäminen liittyen poikkeuksiin tallennuksen ja palautuksen operaatioissa
+			TallennusLogiikka.java: pelin tulosten palautus ja 

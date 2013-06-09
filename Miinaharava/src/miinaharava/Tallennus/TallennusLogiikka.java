@@ -22,7 +22,7 @@ import miinaharava.Entiteetit.Tulos;
  *
  * @author virta
  */
-public class tallennusLogiikka {
+public class TallennusLogiikka {
 
     /**
      * Tallentaa parametrina saadun tuloslistan tietostoon Tulokset.txt.
@@ -42,7 +42,7 @@ public class tallennusLogiikka {
             kirjoittaja.close();
             
         } catch (Exception e) {
-            tallennuksenVirheilmoitus.naytaVirheilmoitus("Tallennuslogiikassa virhe: "+e.toString());
+            TallennuksenVirheilmoitus.naytaVirheilmoitus("Tallennuslogiikassa virhe: "+e.toString());
         }
         
     }
@@ -96,10 +96,10 @@ public class tallennusLogiikka {
             
         } catch (Exception e){
             if (e.getClass().equals(FileNotFoundException.class)){
-                tallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: ei ladattavaa tulostiedostoa; luodaan uusi tulostiedosto Tulokset.txt!");
+                TallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: ei ladattavaa tulostiedostoa; luodaan uusi tulostiedosto Tulokset.txt!");
                 tallenna(new LinkedList<Tulos>());
             } else {
-                tallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
+                TallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
             }
         }
         

@@ -20,8 +20,8 @@ import miinaharava.Kayttoliittyma.AloitusNakyma;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
 import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
-import miinaharava.Tallennus.tallennuksenVirheilmoitus;
-import miinaharava.Tallennus.tallennusLogiikka;
+import miinaharava.Tallennus.TallennuksenVirheilmoitus;
+import miinaharava.Tallennus.TallennusLogiikka;
 
 /**
  * Tämä luokka vastaa pelikentässä tapahtuvien painallusten toiminnallisuuden
@@ -188,7 +188,7 @@ public class PelikenttaKuuntelija implements MouseListener {
     private void luoTulos(boolean loppuikoOnnistuneesti) throws Exception {
         Tulos tulos = new Tulos(kelloKentta.getText().trim(), profiili, nakyma.getKirjautunutNimimerkki(), loppuikoOnnistuneesti);
         this.nakyma.getTulokset().add(tulos);
-        tallennusLogiikka.tallenna(this.nakyma.getTulokset());
+        TallennusLogiikka.tallenna(this.nakyma.getTulokset());
     }
 
     /**
@@ -344,7 +344,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      * @param ex 
      */
     private void kasittelePoikkeus(Exception ex) {
-        tallennuksenVirheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
+        TallennuksenVirheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
         paivittaja.keskeytaPaivitys();
         AloitusNakyma aloitusNakyma = new AloitusNakyma(this.nakyma);
         SwingUtilities.invokeLater(aloitusNakyma);

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package miinaharava.EntiteettiTestit;
+package miinaharava.Entiteetti;
 
 import miinaharava.Entiteetit.VakioProfiilit;
 import org.junit.After;

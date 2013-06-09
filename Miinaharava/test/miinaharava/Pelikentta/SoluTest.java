@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package miinaharava.PelikenttaTestit;
+package miinaharava.Pelikentta;
 
 import miinaharava.Pelikentta.Solu;
 import org.junit.After;

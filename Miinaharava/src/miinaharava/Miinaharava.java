@@ -8,7 +8,7 @@ import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
-import miinaharava.Tallennus.tallennusLogiikka;
+import miinaharava.Tallennus.TallennusLogiikka;
 
 /**
  * Tämä on Miinaharavan pääluokka, se palauttaa tulokset tiedostosta, käynnistää käyttöliittymän.
@@ -25,7 +25,7 @@ public class Miinaharava {
         VakioProfiilit vakioProfiilit = new VakioProfiilit();
         LinkedList<Tulos> tulokset = new LinkedList<>();
 
-        tallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);
+        TallennusLogiikka.palauta(pelaajat, peliProfiilit, tulokset);
 
         SisaltoFrame kayttoliittyma = new SisaltoFrame(pelaajat, peliProfiilit, vakioProfiilit, tulokset);
         SwingUtilities.invokeLater(kayttoliittyma);

@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
  *
  * @author virta
  */
-public class tallennuksenVirheilmoitus {
+public class TallennuksenVirheilmoitus {
     
     /**
      * Jos tulosten latauksessa tapahtuu virhe, kutsutaan tätä metodia, näytetään graafinen virheilmoitus; käyttäjän sulkiessa ikkunan ohjelma sulkeutuu.

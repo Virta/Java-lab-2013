@@ -100,7 +100,7 @@ public class PelikenttaNakyma implements Runnable {
     private void luoKomponentit(Container container) {
         container.add(luoAlkutekstit());
         luoMoottori();
-        container.add(luoKelloJaMiinaKentatJaTakaisinNappi());
+        container.add(luoKelloMiinaKentatTakaisinNappi());
         container.add(luoPelikentta());
     }
 
@@ -220,7 +220,7 @@ public class PelikenttaNakyma implements Runnable {
      *
      * @return JPanel-olion komponenttina sisältäen em. oliot.
      */
-    private Component luoKelloJaMiinaKentatJaTakaisinNappi() {
+    private Component luoKelloMiinaKentatTakaisinNappi() {
         JPanel kelloPaneeli = new JPanel();
         kelloPaneeli.setLayout(new BoxLayout(kelloPaneeli, BoxLayout.X_AXIS));
 

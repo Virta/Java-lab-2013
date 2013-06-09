@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package miinaharava.TallennusLogiikkaTestit;
+package miinaharava.TallennusLogiikka;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 import miinaharava.Entiteetit.Kayttaja;
 import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
-import miinaharava.Tallennus.tallennusLogiikka;
+import miinaharava.Tallennus.TallennusLogiikka;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,7 +47,7 @@ public class tallennusLogiikkaTest {
 
     @Test
     public void tallentaaSaateviestin() throws Exception {
-        tallennusLogiikka.tallenna(new LinkedList<Tulos>());
+        TallennusLogiikka.tallenna(new LinkedList<Tulos>());
         File tulokset = new File("Tulokset.txt");
         assertNotNull(tulokset);
         Scanner lukija = new Scanner(tulokset);
@@ -59,7 +59,7 @@ public class tallennusLogiikkaTest {
         LinkedList<Tulos> tulokset = new LinkedList<>();
         lisaaTulosListaan(tulokset);
 
-        tallennusLogiikka.tallenna(tulokset);
+        TallennusLogiikka.tallenna(tulokset);
         File tulosTiedosto = new File("Tulokset.txt");
         assertNotNull(tulokset);
 
@@ -91,7 +91,7 @@ public class tallennusLogiikkaTest {
         lisaaTulosListaan(tulokset);
         lisaaTulosListaan(tulokset);
 
-        tallennusLogiikka.tallenna(tulokset);
+        TallennusLogiikka.tallenna(tulokset);
 
         File tulosTiedosto = new File("Tulokset.txt");
         Scanner lukija = new Scanner(tulosTiedosto);
@@ -115,13 +115,13 @@ public class tallennusLogiikkaTest {
     public void palauttaaTuloksenOikein() throws Exception{
         LinkedList<Tulos> tulokset = new LinkedList<>();
         lisaaTulosListaan(tulokset);
-        tallennusLogiikka.tallenna(tulokset);
+        TallennusLogiikka.tallenna(tulokset);
         
         tulokset.clear();
         HashMap<String, Kayttaja> kayttajat = new HashMap<>();
         HashMap<String, KenttaProfiili> profiilit = new HashMap<>();
         
-        tallennusLogiikka.palauta(kayttajat, profiilit, tulokset);
+        TallennusLogiikka.palauta(kayttajat, profiilit, tulokset);
         
         assertEquals(true, kayttajat.containsKey("Jaska"));
         assertEquals(true, profiilit.containsKey("joku"));
@@ -136,14 +136,14 @@ public class tallennusLogiikkaTest {
         lisaaTulosListaan(tulokset);
         lisaaTulosListaan(tulokset);
         lisaaTulosListaan(tulokset);
-        tallennusLogiikka.tallenna(tulokset);
+        TallennusLogiikka.tallenna(tulokset);
         
         tulokset.clear();
         
         HashMap<String, Kayttaja> kayttajat = new HashMap<>();
         HashMap<String, KenttaProfiili> profiilit = new HashMap<>();
         
-        tallennusLogiikka.palauta(kayttajat, profiilit, tulokset);
+        TallennusLogiikka.palauta(kayttajat, profiilit, tulokset);
         
         assertEquals(3, tulokset.size());
         assertEquals(1, kayttajat.size());
