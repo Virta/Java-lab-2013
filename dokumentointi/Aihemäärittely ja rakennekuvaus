@@ -67,4 +67,4 @@ Rakenne:
 
 		miinaharava.Tallennus
 			TallennuksenVirheilmoitus.java: käyttäjäystävällisen virheilmoituksen näyttäminen liittyen poikkeuksiin tallennuksen ja palautuksen operaatioissa
-			TallennusLogiikka.java: pelin tulosten palautus ja 
+			TallennusLogiikka.java: pelin tulosten palautus ja tallennus
