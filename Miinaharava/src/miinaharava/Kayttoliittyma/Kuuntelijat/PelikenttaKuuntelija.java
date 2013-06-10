@@ -4,17 +4,13 @@
  */
 package miinaharava.Kayttoliittyma.Kuuntelijat;
 
-import com.sun.media.sound.JavaSoundAudioClip;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,9 +22,9 @@ import miinaharava.Kayttoliittyma.AloitusNakyma;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
 import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
-import miinaharava.Tallennus.TallennuksenVirheilmoitus;
+import miinaharava.Kayttoliittyma.Virheilmoitus;
+import miinaharava.Sounds.Aanet;
 import miinaharava.Tallennus.TallennusLogiikka;
-import miinaharava.Sounds.SoundFiles;
 
 /**
  * Tämä luokka vastaa pelikentässä tapahtuvien painallusten toiminnallisuuden
@@ -153,6 +149,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaYksi(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseYksi(x, y);
+        Aanet.toistaAani("singleOpen");
         toimiPalautteesta(palaute);
     }
 
@@ -162,11 +159,14 @@ public class PelikenttaKuuntelija implements MouseListener {
      * @param x
      * @param y
      */
-    private void asetaLippu(int x, int y) throws FileNotFoundException, IOException {
+    private void asetaLippu(int x, int y) throws FileNotFoundException, IOException, InterruptedException {
         if (!moottori.getKentta().getSolu(x, y).isAuki()) {
             moottori.getKentta().asetaFlagi(x, y);
             this.miinatietoKentta.setText("     Miinoja: " + moottori.getKentta().getMiinojaJaljella());
             paivitaNakyma();
+            if (moottori.getKentta().getSolu(x, y).getFlagi()==1) {
+                Aanet.toistaAani("flag");
+            }
         }
     }
 
@@ -181,6 +181,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaMonta(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseMonta(x, y);
+        Aanet.toistaAani("singleOpen");
         toimiPalautteesta(palaute);
     }
 
@@ -258,7 +259,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      * Pelaajan avatessa solun pävitetään näkymä ja kentän painikkeet tällä
      * metodilla.
      */
-    private void paivitaNakyma() throws FileNotFoundException, IOException {
+    private void paivitaNakyma() throws FileNotFoundException, IOException, InterruptedException {
         for (int i = 0; i < soluPainikkeet.length; i++) {
             for (int j = 0; j < soluPainikkeet.length; j++) {
                 JButton soluPainike = soluPainikkeet[i][j];
@@ -331,7 +332,8 @@ public class PelikenttaKuuntelija implements MouseListener {
         if (soluPainike.isEnabled()) {
             int flagi = solu.getFlagi();
             String soluText = "";
-            Color soluVari = Color.WHITE;
+            Color soluVari = null;
+            
             switch (flagi) {
                 case 0:
                     soluText = " ";
@@ -344,26 +346,28 @@ public class PelikenttaKuuntelija implements MouseListener {
                     soluText = "?";
                     soluVari = Color.CYAN;
             }
-//            new JavaSoundAudioClip(new FileInputStream(new File("/cs/fs/home/frojala/Ohjelmoinnin harjoitustyö/Javalabra-miinaharava/Miinaharava/src/miinaharava/Sounds/flag2.wav"))).play();
             soluPainike.setBackground(soluVari);
             soluPainike.setText(soluText);
         }
     }
 
     /**
-     * Tämä metodi käsittelee poikkeuksen, joka johtuu tallennuksessa tapahtuneesta virheestä.
-     * Näytetään käyttäjäystävällinen virheilmoitus ja palataan aloitusnäkymään.
-     * @param ex 
+     * Tämä metodi käsittelee poikkeuksen, joka johtuu tallennuksessa
+     * tapahtuneesta virheestä. Näytetään käyttäjäystävällinen virheilmoitus ja
+     * palataan aloitusnäkymään.
+     *
+     * @param ex
      */
     private void kasittelePoikkeus(Exception ex) {
-        TallennuksenVirheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
+        Virheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
         paivittaja.keskeytaPaivitys();
         AloitusNakyma aloitusNakyma = new AloitusNakyma(this.nakyma);
         SwingUtilities.invokeLater(aloitusNakyma);
     }
 
     /**
-     * Pelin kulussa kutsutaan tätä metodia, ja käynnistetään kellon päivittäjäsäie vain jos peli alkoi juuri.
+     * Pelin kulussa kutsutaan tätä metodia, ja käynnistetään kellon
+     * päivittäjäsäie vain jos peli alkoi juuri.
      */
     private void aloitaPaivittaja() {
         if (!paivittajaAloitettu) {
@@ -373,9 +377,12 @@ public class PelikenttaKuuntelija implements MouseListener {
     }
 
     /**
-     * Pelin kulussa kutsutaan tätä metodia tarkistamaan moottorilta päättyikö peli onnistuneesti.
+     * Pelin kulussa kutsutaan tätä metodia tarkistamaan moottorilta päättyikö
+     * peli onnistuneesti.
+     *
      * @param palaute
-     * @throws Exception Heittää poikkeuksen jos tuloksen tallennuksessa tapahtuu virhe, heitetään eteenpäin.
+     * @throws Exception Heittää poikkeuksen jos tuloksen tallennuksessa
+     * tapahtuu virhe, heitetään eteenpäin.
      */
     private void tarkistaLoppuikoPeli(boolean palaute) throws Exception {
         if (moottori.peliLoppuiOnnistuneesti()) {
@@ -383,24 +390,30 @@ public class PelikenttaKuuntelija implements MouseListener {
             luoTulos(palaute);
             naytaLopetusNakyma();
             naytaPeliTulosIkkuna(palaute);
+            Aanet.toistaAani("levelComplete");
         }
     }
 
     /**
-     * Jos moottorin palaute on kutsuvassa metodissa false peli päättyi epäonnistuneesti ja kutsutaan tätä metodia.
+     * Jos moottorin palaute on kutsuvassa metodissa false peli päättyi
+     * epäonnistuneesti ja kutsutaan tätä metodia.
+     *
      * @param palaute
-     * @throws Exception Heittää poikkeuksen jos tuloksen tallennuksessa tapahtui virhe, heitetään eteenpäin.
+     * @throws Exception Heittää poikkeuksen jos tuloksen tallennuksessa
+     * tapahtui virhe, heitetään eteenpäin.
      */
     private void peliPaattyiEpaonnistuneesti(boolean palaute) throws Exception {
         paivittaja.keskeytaPaivitys();
         luoTulos(palaute);
         naytaLopetusNakyma();
         naytaPeliTulosIkkuna(palaute);
+        Aanet.toistaAani("mineExplosion");
     }
 
     /**
      * Ei käytössä.
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -408,7 +421,8 @@ public class PelikenttaKuuntelija implements MouseListener {
 
     /**
      * Ei käytössä.
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -416,7 +430,8 @@ public class PelikenttaKuuntelija implements MouseListener {
 
     /**
      * Ei käytössä.
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseExited(MouseEvent e) {

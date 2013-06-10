@@ -4,6 +4,7 @@
  */
 package miinaharava.Tallennus;
 
+import miinaharava.Kayttoliittyma.Virheilmoitus;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -42,7 +43,7 @@ public class TallennusLogiikka {
             kirjoittaja.close();
             
         } catch (Exception e) {
-            TallennuksenVirheilmoitus.naytaVirheilmoitus("Tallennuslogiikassa virhe: "+e.toString());
+            Virheilmoitus.naytaVirheilmoitus("Tallennuslogiikassa virhe: "+e.toString());
         }
         
     }
@@ -96,10 +97,10 @@ public class TallennusLogiikka {
             
         } catch (Exception e){
             if (e.getClass().equals(FileNotFoundException.class)){
-                TallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: ei ladattavaa tulostiedostoa; luodaan uusi tulostiedosto Tulokset.txt!");
+                Virheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: ei ladattavaa tulostiedostoa; luodaan uusi tulostiedosto Tulokset.txt!");
                 tallenna(new LinkedList<Tulos>());
             } else {
-                TallennuksenVirheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
+                Virheilmoitus.naytaVirheilmoitus("Palautuslogiikassa virhe: "+e.toString());
             }
         }
         
