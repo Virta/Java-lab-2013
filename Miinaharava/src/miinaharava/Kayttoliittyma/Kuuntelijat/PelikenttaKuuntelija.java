@@ -4,11 +4,17 @@
  */
 package miinaharava.Kayttoliittyma.Kuuntelijat;
 
+import com.sun.media.sound.JavaSoundAudioClip;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +28,7 @@ import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
 import miinaharava.Tallennus.TallennuksenVirheilmoitus;
 import miinaharava.Tallennus.TallennusLogiikka;
+import miinaharava.Sounds.SoundFiles;
 
 /**
  * Tämä luokka vastaa pelikentässä tapahtuvien painallusten toiminnallisuuden
@@ -155,7 +162,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      * @param x
      * @param y
      */
-    private void asetaLippu(int x, int y) {
+    private void asetaLippu(int x, int y) throws FileNotFoundException, IOException {
         if (!moottori.getKentta().getSolu(x, y).isAuki()) {
             moottori.getKentta().asetaFlagi(x, y);
             this.miinatietoKentta.setText("     Miinoja: " + moottori.getKentta().getMiinojaJaljella());
@@ -251,7 +258,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      * Pelaajan avatessa solun pävitetään näkymä ja kentän painikkeet tällä
      * metodilla.
      */
-    private void paivitaNakyma() {
+    private void paivitaNakyma() throws FileNotFoundException, IOException {
         for (int i = 0; i < soluPainikkeet.length; i++) {
             for (int j = 0; j < soluPainikkeet.length; j++) {
                 JButton soluPainike = soluPainikkeet[i][j];
@@ -320,20 +327,25 @@ public class PelikenttaKuuntelija implements MouseListener {
      * @param solu
      * @param soluPainike
      */
-    private void asetaNapilleFlagi(Solu solu, JButton soluPainike) {
+    private void asetaNapilleFlagi(Solu solu, JButton soluPainike) throws FileNotFoundException, IOException {
         if (soluPainike.isEnabled()) {
             int flagi = solu.getFlagi();
             String soluText = "";
+            Color soluVari = Color.WHITE;
             switch (flagi) {
                 case 0:
                     soluText = " ";
                     break;
                 case 1:
                     soluText = "!";
+                    soluVari = Color.RED;
                     break;
                 case 2:
                     soluText = "?";
+                    soluVari = Color.CYAN;
             }
+//            new JavaSoundAudioClip(new FileInputStream(new File("/cs/fs/home/frojala/Ohjelmoinnin harjoitustyö/Javalabra-miinaharava/Miinaharava/src/miinaharava/Sounds/flag2.wav"))).play();
+            soluPainike.setBackground(soluVari);
             soluPainike.setText(soluText);
         }
     }
