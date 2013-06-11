@@ -23,7 +23,7 @@ import miinaharava.Kayttoliittyma.SisaltoFrame;
 import miinaharava.Pelikentta.Moottori;
 import miinaharava.Pelikentta.Solu;
 import miinaharava.Kayttoliittyma.Virheilmoitus;
-import miinaharava.Sounds.Aanet;
+import miinaharava.Aanentoisto.Aanet;
 import miinaharava.Tallennus.TallennusLogiikka;
 
 /**
@@ -359,7 +359,11 @@ public class PelikenttaKuuntelija implements MouseListener {
      * @param ex
      */
     private void kasittelePoikkeus(Exception ex) {
-        Virheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
+        if (ex.equals(FileNotFoundException.class)) {
+            Virheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
+        } else {
+            Virheilmoitus.naytaVirheilmoitus("Äänentoistossa virhe: "+ex.toString());
+        }
         paivittaja.keskeytaPaivitys();
         AloitusNakyma aloitusNakyma = new AloitusNakyma(this.nakyma);
         SwingUtilities.invokeLater(aloitusNakyma);

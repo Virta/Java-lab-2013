@@ -8,7 +8,7 @@ import miinaharava.Entiteetit.KenttaProfiili;
 import miinaharava.Entiteetit.Tulos;
 import miinaharava.Entiteetit.VakioProfiilit;
 import miinaharava.Kayttoliittyma.SisaltoFrame;
-import miinaharava.Sounds.Aanet;
+import miinaharava.Aanentoisto.Aanet;
 import miinaharava.Tallennus.TallennusLogiikka;
 
 /**

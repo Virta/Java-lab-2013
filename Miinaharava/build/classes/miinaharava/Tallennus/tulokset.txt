@@ -1,0 +1,25 @@
+Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!
+Jaska joku 10 10 1:11 true
+Jaska joku 10 10 1:10 true
+Jaska Helppo 10 10 1:11 true
+Jaska Vaikea 10 10 1:11 true
+Jaska joku 10 10 1:09 true
+Anon Helppo 15 20 0:2 false
+Anon Helppo 15 20 0:32 false
+Anon Helppo 15 20 0:38 true
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:1 false
+Anon Helppo 15 20 0:49 true
+Anon Vaikea 25 100 0:0 false
+Anon Vaikea 25 100 0:2 false
+Anon Helppo 15 20 0:11 false
+Anon Helppo 15 20 0:1 false
+Anon Helppo 15 20 0:4 false
+Anon Helppo 15 20 0:26 false
+Anon Helppo 15 20 0:47 true
+Anon Helppo 15 20 0:4 false
+Anon Helppo 15 20 0:37 false
+Anon Helppo 15 20 0:0 false

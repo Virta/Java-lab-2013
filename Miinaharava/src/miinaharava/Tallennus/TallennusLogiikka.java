@@ -6,9 +6,15 @@ package miinaharava.Tallennus;
 
 import miinaharava.Kayttoliittyma.Virheilmoitus;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -34,8 +40,12 @@ public class TallennusLogiikka {
      */
     public static void tallenna(LinkedList<Tulos> tulokset) throws Exception {
         try {
-            FileWriter kirjoittaja = new FileWriter("Tulokset.txt");
-            String alkuosa = "Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!\n";
+            
+            URI uri = TallennusLogiikka.class.getResource("tulokset.txt").toURI();
+            
+            FileWriter kirjoittaja = new FileWriter(new File(uri));
+            
+            String alkuosa = "Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!\n";
             kirjoittaja.write(alkuosa);
             
             kirjoitaTulosStringit(tulokset, kirjoittaja);
