@@ -77,10 +77,6 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private JButton takaisinNappi;
     /**
-     * Ääniraidan toiston samanaikaisuuden halluntaan.
-     */
-    private boolean toistaaAanta;
-    /**
      * Annetaan mahdollisuus ohjelmalliseen mykistämiseen.
      */
     private JButton mykistysNappi;
@@ -113,7 +109,6 @@ public class PelikenttaKuuntelija implements MouseListener {
         this.paivittajaAloitettu = false;
         this.profiili = profiili;
         this.takaisinNappi = takaisin;
-        this.toistaaAanta = false;
         this.mykistysNappi = mykista;
     }
 
@@ -147,21 +142,21 @@ public class PelikenttaKuuntelija implements MouseListener {
                         break;
                 }
             }
-            
-            if (e.getSource() == mykistysNappi){
+
+            if (e.getSource() == mykistysNappi) {
                 mykistaAanet();
             }
         } catch (Exception ex) {
             kasittelePoikkeus(ex);
         }
     }
-    
-    private void mykistaAanet(){
-        if (this.mykistysPaalla){
-            this.mykistysPaalla=false;
+
+    private void mykistaAanet() {
+        if (this.mykistysPaalla) {
+            this.mykistysPaalla = false;
             this.mykistysNappi.setText("((< >))");
         } else {
-            this.mykistysPaalla=true;
+            this.mykistysPaalla = true;
             this.mykistysNappi.setText(" </> ");
         }
     }
@@ -177,11 +172,6 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaYksi(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseYksi(x, y);
-        if (!mykistysPaalla && !toistaaAanta) {
-            toistaaAanta = true;
-            Aanet.toistaAani("singleOpen", toistaaAanta);
-            toistaaAanta = false;
-        }
         toimiPalautteesta(palaute);
     }
 
@@ -196,10 +186,9 @@ public class PelikenttaKuuntelija implements MouseListener {
             moottori.getKentta().asetaFlagi(x, y);
             this.miinatietoKentta.setText("     Miinoja: " + moottori.getKentta().getMiinojaJaljella());
             paivitaNakyma();
-            if (moottori.getKentta().getSolu(x, y).getFlagi() == 1 && !mykistysPaalla && !toistaaAanta) {
-                toistaaAanta = true;
-                Aanet.toistaAani("flag", toistaaAanta);
-                toistaaAanta = false;
+            if (moottori.getKentta().getSolu(x, y).getFlagi() == 1 && !mykistysPaalla) {
+                Thread aaniSaie = new Thread(new Aanet("flag"));
+                aaniSaie.start();
             }
         }
     }
@@ -215,11 +204,6 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaMonta(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseMonta(x, y);
-        if (!mykistysPaalla && !toistaaAanta) {
-            toistaaAanta = true;
-            Aanet.toistaAani("singleOpen", toistaaAanta);
-            toistaaAanta = false;
-        }
         toimiPalautteesta(palaute);
     }
 
@@ -461,10 +445,15 @@ public class PelikenttaKuuntelija implements MouseListener {
             luoTulos(palaute);
             naytaLopetusNakyma();
             naytaPeliTulosIkkuna(palaute);
+            
             if (!mykistysPaalla) {
-                toistaaAanta = true;
-                Aanet.toistaAani("levelComplete", toistaaAanta);
-                toistaaAanta = false;
+                Thread aaniSaie = new Thread(new Aanet("levelComplete"));
+                aaniSaie.start();
+            }
+        } else {
+            if (!mykistysPaalla) {
+                Thread aaniSaie = new Thread(new Aanet("singleOpen"));
+                aaniSaie.start();
             }
         }
     }
@@ -483,9 +472,8 @@ public class PelikenttaKuuntelija implements MouseListener {
         naytaLopetusNakyma();
         naytaPeliTulosIkkuna(palaute);
         if (!mykistysPaalla) {
-            toistaaAanta = true;
-            Aanet.toistaAani("mineExplosion", toistaaAanta);
-            toistaaAanta = false;
+            Thread aaniSaie = new Thread(new Aanet("explosion"));
+            aaniSaie.start();
         }
     }
 
