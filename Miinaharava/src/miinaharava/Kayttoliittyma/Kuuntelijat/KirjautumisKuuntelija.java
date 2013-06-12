@@ -112,7 +112,7 @@ public class KirjautumisKuuntelija implements ActionListener {
      */
     private void luoUusiNimimerkki(){
         String nimimerkki = nimiKentta.getText();
-        if (nimimerkki.length()<11 && nimimerkki.length() > 0){
+        if (nimimerkki.length()<11 && nimimerkki.length() > 0 && !nimimerkki.contains(" ")){
             this.nakyma.getPelaajat().put(nimimerkki, new Kayttaja(nimimerkki));
             this.nakyma.setKirjautunutNimimerkki(nimimerkki);
             palaaAloitusNakymaan();
