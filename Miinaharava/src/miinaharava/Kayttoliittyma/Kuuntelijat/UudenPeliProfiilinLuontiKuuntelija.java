@@ -173,7 +173,7 @@ public class UudenPeliProfiilinLuontiKuuntelija implements ActionListener {
     private void tarkistaJaToimi(int miinojaInteger, int kentanKokoInteger) {
         if (miinojaInteger < kentanKokoInteger*kentanKokoInteger){
             String profiiliNimiString = this.profiiliNimi.getText();
-            if (profiiliNimiString.length()<11 && !this.nakyma.getPeliProfiilit().keySet().contains(profiiliNimiString)){
+            if (profiiliNimiString.length()<11 && profiiliNimiString.length() >0 && !this.nakyma.getPeliProfiilit().keySet().contains(profiiliNimiString)){
                 luoProfiiliJaPalaaPaavalikkoon(profiiliNimiString, kentanKokoInteger, miinojaInteger);
             } else {
                 viestikentta.setText("Profiilinimi ei kelpaa: on jo käytössä tai väärän pituinen.");
