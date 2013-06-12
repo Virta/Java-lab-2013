@@ -177,8 +177,10 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaYksi(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseYksi(x, y);
-        if (!mykistysPaalla) {
+        if (!mykistysPaalla && !toistaaAanta) {
+            toistaaAanta = true;
             Aanet.toistaAani("singleOpen", toistaaAanta);
+            toistaaAanta = false;
         }
         toimiPalautteesta(palaute);
     }
@@ -194,8 +196,10 @@ public class PelikenttaKuuntelija implements MouseListener {
             moottori.getKentta().asetaFlagi(x, y);
             this.miinatietoKentta.setText("     Miinoja: " + moottori.getKentta().getMiinojaJaljella());
             paivitaNakyma();
-            if (moottori.getKentta().getSolu(x, y).getFlagi() == 1 && !mykistysPaalla) {
+            if (moottori.getKentta().getSolu(x, y).getFlagi() == 1 && !mykistysPaalla && !toistaaAanta) {
+                toistaaAanta = true;
                 Aanet.toistaAani("flag", toistaaAanta);
+                toistaaAanta = false;
             }
         }
     }
@@ -211,8 +215,10 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaMonta(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseMonta(x, y);
-        if (!mykistysPaalla) {
+        if (!mykistysPaalla && !toistaaAanta) {
+            toistaaAanta = true;
             Aanet.toistaAani("singleOpen", toistaaAanta);
+            toistaaAanta = false;
         }
         toimiPalautteesta(palaute);
     }
@@ -456,7 +462,9 @@ public class PelikenttaKuuntelija implements MouseListener {
             naytaLopetusNakyma();
             naytaPeliTulosIkkuna(palaute);
             if (!mykistysPaalla) {
+                toistaaAanta = true;
                 Aanet.toistaAani("levelComplete", toistaaAanta);
+                toistaaAanta = false;
             }
         }
     }
@@ -475,7 +483,9 @@ public class PelikenttaKuuntelija implements MouseListener {
         naytaLopetusNakyma();
         naytaPeliTulosIkkuna(palaute);
         if (!mykistysPaalla) {
+            toistaaAanta = true;
             Aanet.toistaAani("mineExplosion", toistaaAanta);
+            toistaaAanta = false;
         }
     }
 

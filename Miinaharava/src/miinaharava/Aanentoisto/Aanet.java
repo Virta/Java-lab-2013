@@ -19,13 +19,14 @@ public class Aanet {
         
         if (!toistossa) {
             try {
-                toistossa=true;
+//                toistossa=true;
                 URL url = Aanet.class.getResource(soundName + ".wav");
                 AudioClip aani = Applet.newAudioClip(url);
                 aani.play();
-                toistossa = false;
+//                toistossa = false;
                 
             } catch (Exception ex) {
+//                toistossa = false;
                 Virheilmoitus.naytaVirheilmoitus("Virhe äänen toistossa: " + ex.getMessage());
             }
         }

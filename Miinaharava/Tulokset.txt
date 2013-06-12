@@ -29,3 +29,5 @@ Anon Helppo 15 20 0:0 false
 Anon Keskivaikea 20 40 0:5 false
 Anon Helppo 15 20 0:0 false
 Anon Helppo 15 20 0:3 false
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:1 false
