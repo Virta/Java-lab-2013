@@ -76,6 +76,10 @@ public class PelikenttaKuuntelija implements MouseListener {
      * hetkellisesti käytöstä.
      */
     private JButton takaisinNappi;
+    /**
+     * Ääniraidan toiston samanaikaisuuden halluntaan.
+     */
+    private boolean toistaaAanta;
 
     /**
      * Konstruktorissa alustetaan sisäiset muuttujat.
@@ -101,6 +105,7 @@ public class PelikenttaKuuntelija implements MouseListener {
         this.paivittajaAloitettu = false;
         this.profiili = profiili;
         this.takaisinNappi = takaisin;
+        this.toistaaAanta = false;
     }
 
     /**
@@ -149,7 +154,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaYksi(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseYksi(x, y);
-        Aanet.toistaAani("singleOpen");
+        Aanet.toistaAani("singleOpen", toistaaAanta);
         toimiPalautteesta(palaute);
     }
 
@@ -164,8 +169,8 @@ public class PelikenttaKuuntelija implements MouseListener {
             moottori.getKentta().asetaFlagi(x, y);
             this.miinatietoKentta.setText("     Miinoja: " + moottori.getKentta().getMiinojaJaljella());
             paivitaNakyma();
-            if (moottori.getKentta().getSolu(x, y).getFlagi()==1) {
-                Aanet.toistaAani("flag");
+            if (moottori.getKentta().getSolu(x, y).getFlagi() == 1) {
+                Aanet.toistaAani("flag", toistaaAanta);
             }
         }
     }
@@ -181,7 +186,7 @@ public class PelikenttaKuuntelija implements MouseListener {
      */
     private void avaaMonta(int x, int y) throws Exception {
         boolean palaute = moottori.aukaiseMonta(x, y);
-        Aanet.toistaAani("singleOpen");
+        Aanet.toistaAani("singleOpen", toistaaAanta);
         toimiPalautteesta(palaute);
     }
 
@@ -266,7 +271,9 @@ public class PelikenttaKuuntelija implements MouseListener {
                 Solu solu = moottori.getKentta().getSolu(i, j);
                 if (solu.isAuki()) {
                     if (solu.getVieressaMiinoja() > 0) {
-                        soluPainike.setText(moottori.getKentta().getSolu(i, j).getVieressaMiinoja() + "");
+                        int vieressaMiinoja = moottori.getKentta().getSolu(i, j).getVieressaMiinoja();
+                        soluPainike.setText(vieressaMiinoja + "");
+                        soluPainike.setForeground(getSolulleVari(vieressaMiinoja));
                         soluPainike.setBackground(Color.LIGHT_GRAY);
                     } else {
                         soluPainike.setEnabled(false);
@@ -275,6 +282,33 @@ public class PelikenttaKuuntelija implements MouseListener {
                     asetaNapilleFlagi(solu, soluPainike);
                 }
             }
+        }
+    }
+
+    /**
+     * Muutetaan vieressä olevien miinojen määrä väriksi tällä metodilla.
+     *
+     * @param miinoja
+     * @return Color-väriarvo (määrätty arvo) joka vastaa miinojen määrää.
+     */
+    private Color getSolulleVari(int miinoja) {
+        switch (miinoja) {
+            case 1:
+                return Color.BLUE;
+            case 2:
+                return Color.GREEN;
+            case 3:
+                return Color.RED;
+            case 4:
+                return Color.BLACK;
+            case 5:
+                return Color.getHSBColor(0, 1, 0.5f);
+            case 6:
+                return Color.ORANGE;
+            case 7:
+                return Color.YELLOW;
+            default:
+                return Color.CYAN;
         }
     }
 
@@ -333,7 +367,7 @@ public class PelikenttaKuuntelija implements MouseListener {
             int flagi = solu.getFlagi();
             String soluText = "";
             Color soluVari = null;
-            
+
             switch (flagi) {
                 case 0:
                     soluText = " ";
@@ -362,7 +396,7 @@ public class PelikenttaKuuntelija implements MouseListener {
         if (ex.equals(FileNotFoundException.class)) {
             Virheilmoitus.naytaVirheilmoitus("Pelikenttäkuuntelijassa virhe: " + ex.toString());
         } else {
-            Virheilmoitus.naytaVirheilmoitus("Äänentoistossa virhe: "+ex.toString());
+            Virheilmoitus.naytaVirheilmoitus("Äänentoistossa virhe: " + ex.toString());
         }
         paivittaja.keskeytaPaivitys();
         AloitusNakyma aloitusNakyma = new AloitusNakyma(this.nakyma);
@@ -394,7 +428,7 @@ public class PelikenttaKuuntelija implements MouseListener {
             luoTulos(palaute);
             naytaLopetusNakyma();
             naytaPeliTulosIkkuna(palaute);
-            Aanet.toistaAani("levelComplete");
+            Aanet.toistaAani("levelComplete", toistaaAanta);
         }
     }
 
@@ -411,7 +445,7 @@ public class PelikenttaKuuntelija implements MouseListener {
         luoTulos(palaute);
         naytaLopetusNakyma();
         naytaPeliTulosIkkuna(palaute);
-        Aanet.toistaAani("mineExplosion");
+        Aanet.toistaAani("mineExplosion", toistaaAanta);
     }
 
     /**
@@ -441,6 +475,11 @@ public class PelikenttaKuuntelija implements MouseListener {
     public void mouseExited(MouseEvent e) {
     }
 
+    /**
+     * Ei käytössä.
+     *
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
     }

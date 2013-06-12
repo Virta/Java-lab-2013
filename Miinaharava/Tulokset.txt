@@ -1,4 +1,4 @@
-Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!
+Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!
 Jaska joku 10 10 1:11 true
 Jaska joku 10 10 1:10 true
 Jaska Helppo 10 10 1:11 true
@@ -22,3 +22,9 @@ Anon Helppo 15 20 0:26 false
 Anon Helppo 15 20 0:47 true
 Anon Helppo 15 20 0:4 false
 Anon Helppo 15 20 0:37 false
+Anon Helppo 15 20 1:12 true
+Anon Helppo 15 20 0:0 false
+Anon Helppo 15 20 0:7 false
+Anon Helppo 15 20 0:0 false
+Anon Keskivaikea 20 40 0:5 false
+Anon Helppo 15 20 0:0 false

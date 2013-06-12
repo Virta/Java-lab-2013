@@ -41,9 +41,7 @@ public class TallennusLogiikka {
     public static void tallenna(LinkedList<Tulos> tulokset) throws Exception {
         try {
             
-            URI uri = TallennusLogiikka.class.getResource("tulokset.txt").toURI();
-            
-            FileWriter kirjoittaja = new FileWriter(new File(uri));
+            FileWriter kirjoittaja = new FileWriter(new File("Tulokset.txt"));
             
             String alkuosa = "Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!\n";
             kirjoittaja.write(alkuosa);

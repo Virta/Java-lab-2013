@@ -1,2 +1,3 @@
-Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!
+Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!
 Anon Helppo 15 20 0:44 true
+Anon Helppo 15 20 0:32 true

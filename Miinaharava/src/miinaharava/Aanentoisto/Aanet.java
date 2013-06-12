@@ -15,14 +15,19 @@ import miinaharava.Kayttoliittyma.Virheilmoitus;
  */
 public class Aanet {
     
-    public static void toistaAani(String soundName) {
-        try {
-            URL url = Aanet.class.getResource(soundName+".wav");
-            AudioClip aani = Applet.newAudioClip(url);
-            aani.play();
-
-        } catch (Exception ex) {
-            Virheilmoitus.naytaVirheilmoitus("Virhe äänen toistossa: " + ex.getMessage());
+    public static void toistaAani(String soundName, boolean toistossa) {
+        
+        if (!toistossa) {
+            try {
+                toistossa=true;
+                URL url = Aanet.class.getResource(soundName + ".wav");
+                AudioClip aani = Applet.newAudioClip(url);
+                aani.play();
+                toistossa = false;
+                
+            } catch (Exception ex) {
+                Virheilmoitus.naytaVirheilmoitus("Virhe äänen toistossa: " + ex.getMessage());
+            }
         }
     }
 
