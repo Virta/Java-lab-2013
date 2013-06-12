@@ -4,7 +4,6 @@
  */
 package miinaharava.Kayttoliittyma;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -57,14 +56,14 @@ public class PelikenttaNakyma implements Runnable {
      * alustaminen ja myhöempi toiminnallisuuden vastuun siirtäminen
      * kuuntelijalle ja sitä myöten KelloPäivittäjälle onnistuu.
      */
-    private JLabel kello;
+    private JLabel kelloKentta;
     /**
      * JLabel, johon päivitetään liputettujen miinojen määrä, sisäisenä
      * muuttujana jotta alustaminen ja myöhempi toiminnallisuuden vastuun
      * siirtäminen kuuntelijalle ja sitä myöten KelloPaivittaja-oliolle
      * onnistuu.
      */
-    private JLabel miinatieto;
+    private JLabel miinatietoKentta;
     /**
      * KelloPaivittaja-olio, joka alustetaan tässä luokassa, ja jonka
      * varsinainen toiminnallisuuden aloittaminen siirretään
@@ -75,6 +74,10 @@ public class PelikenttaNakyma implements Runnable {
      * Sisäisenä muuttujana, jotta nappi voidaan antaa kuuntelijalle.
      */
     private JButton takaisinNappi;
+    /**
+     * Sisaisena muuttujana, jotta voidaan antaa kuuntelijalle.
+     */
+    private JButton mykistaNappi;
 
     public PelikenttaNakyma(SisaltoFrame nakyma, KenttaProfiili profiili) {
         this.nakyma = nakyma;
@@ -101,7 +104,7 @@ public class PelikenttaNakyma implements Runnable {
     private void luoKomponentit(Container container) {
         container.add(luoAlkutekstit());
         luoMoottori();
-        container.add(luoKelloMiinaKentatTakaisinNappi());
+        container.add(luoKelloMiinaKentatTakaisinMykistys());
         container.add(luoPelikentta());
     }
 
@@ -170,7 +173,18 @@ public class PelikenttaNakyma implements Runnable {
         soluPainikkeet = new JButton[profiili.getKoko()][profiili.getKoko()];
 
         luoSoluPainikkeet();
-        PelikenttaKuuntelija soluKuuntelija = new PelikenttaKuuntelija(nakyma, soluPainikkeet, kello, miinatieto, moottori, paivittaja, profiili, takaisinNappi);
+        
+        PelikenttaKuuntelija soluKuuntelija = new PelikenttaKuuntelija(
+                nakyma, 
+                soluPainikkeet, 
+                kelloKentta, 
+                miinatietoKentta, 
+                moottori, 
+                paivittaja, 
+                profiili, 
+                takaisinNappi, 
+                mykistaNappi);
+        
         lisaaKuuntelija(soluKuuntelija);
 
         for (int i = 0; i < soluPainikkeet.length; i++) {
@@ -205,6 +219,7 @@ public class PelikenttaNakyma implements Runnable {
                 soluPainikkeet[i][j].addMouseListener(soluKuuntelija);
             }
         }
+        this.mykistaNappi.addMouseListener(soluKuuntelija);
     }
 
     /**
@@ -218,23 +233,34 @@ public class PelikenttaNakyma implements Runnable {
      * Luo JLabel-oliot kellolle ja miinatiedolle ja alustaa ne moottorilta
      * kyselyllä saatavilla tiedoilla. Luodaan samaan paneeliin myös
      * takaisin-nappi, jotta on ylhäällä saatavilla myös isossa kentässä.
+     * Luodaan myös mykistysnappi, joka lisätään samaan paneeliin.
      *
      * @return JPanel-olion komponenttina sisältäen em. oliot.
      */
-    private Component luoKelloMiinaKentatTakaisinNappi() {
+    private Component luoKelloMiinaKentatTakaisinMykistys() {
         JPanel kelloPaneeli = new JPanel();
         kelloPaneeli.setLayout(new BoxLayout(kelloPaneeli, BoxLayout.X_AXIS));
 
         int aika = (int) moottori.getAika();
         String aikaString = (aika / 60) + ":" + (aika - (aika / 60)) + "   ";
 
-        this.kello = new JLabel(aikaString);
-        this.miinatieto = new JLabel("     Miinoja: " + moottori.getKentta().getMiinojaJaljella());
-        this.paivittaja = new KelloPaivittaja(kello, moottori);
+        this.kelloKentta = new JLabel(aikaString);
+        this.miinatietoKentta = new JLabel("     Miinoja: " + moottori.getKentta().getMiinojaJaljella()+"   ");
+        this.paivittaja = new KelloPaivittaja(kelloKentta, moottori);
         
-        kelloPaneeli.add(kello);
+        kelloPaneeli.add(kelloKentta);
         kelloPaneeli.add(luoTakaisinNappi());
-        kelloPaneeli.add(miinatieto);
+        kelloPaneeli.add(miinatietoKentta);
+        kelloPaneeli.add(luoMykistysNappi());
         return kelloPaneeli;
+    }
+    
+    /**
+     * Luo JButton-olion mykistysnapille.
+     * @return 
+     */
+    private Component luoMykistysNappi(){
+        this.mykistaNappi = new JButton("((< >))");
+        return mykistaNappi;
     }
 }

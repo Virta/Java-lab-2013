@@ -27,6 +27,9 @@ Rakenne:
 		miinaharava
 			Miinaharava.java: pelin pääluokka joka käynnistää pelin; palauttaa tulokset ja käynnistää käyttöliittymän.
 
+		miinaharava.Aanentoisto: Pelin äänet ja niiden toistaminen.
+			Aanet.java: toteuttaa äänen toistamisen ohjelmassa metodilla toistaAani(...).
+			
 		miinaharava.Entiteetit: tallennettavat oliot (entiteetit)
 			Kayttaja.java: tiedot käyttäjästä
 			KenttaProfiili.java: tiedot kentästä; nimi, koko, miinojen määrä.
