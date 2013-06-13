@@ -51,7 +51,7 @@ public class tallennusLogiikkaTest {
         File tulokset = new File("Tulokset.txt");
         assertNotNull(tulokset);
         Scanner lukija = new Scanner(tulokset);
-        assertEquals("Tämä on automaattisesti generoitu tiedosto, älä muuta, rikot vielä jotain!", lukija.nextLine());
+        assertEquals("Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!", lukija.nextLine());
     }
 
     @Test

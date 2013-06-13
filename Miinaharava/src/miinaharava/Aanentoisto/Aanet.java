@@ -47,7 +47,7 @@ public class Aanet implements Runnable {
                 if (line != null){
                     line.start();
                     int bytesRead = 0;
-                    byte[] data = new byte[524288];
+                    byte[] data = new byte[524288]; //128kb puskuria
                     try {
                         while (bytesRead!=-1){
                             bytesRead = stream.read(data, 0, data.length);
@@ -72,5 +72,5 @@ public class Aanet implements Runnable {
     public void run() {
         toistaAani();
     }
-
+    
 }
