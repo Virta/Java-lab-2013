@@ -41,7 +41,7 @@ public class TallennusLogiikka {
     public static void tallenna(LinkedList<Tulos> tulokset) throws Exception {
         try {
             
-            FileWriter kirjoittaja = new FileWriter(new File("Tulokset.txt"));
+            FileWriter kirjoittaja = new FileWriter("MiinaharavaTulokset.txt");
             
             String alkuosa = "Tämä on automaattisesti luotu tiedosto, älä muuta, rikot vielä jotain!\n";
             kirjoittaja.write(alkuosa);
@@ -93,7 +93,7 @@ public class TallennusLogiikka {
      */
     public static void palauta(HashMap<String, Kayttaja> kayttajat, HashMap<String, KenttaProfiili> profiilit, LinkedList<Tulos> tulokset) throws Exception {
         try {
-            File tulosTiedosto = new File("Tulokset.txt");
+            File tulosTiedosto = new File("MiinaharavaTulokset.txt");
             Scanner lukija = new Scanner(tulosTiedosto, "UTF-8");
             if (lukija.hasNextLine()){
                 lukija.nextLine();
